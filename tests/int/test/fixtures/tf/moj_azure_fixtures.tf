@@ -18,7 +18,7 @@ variable "env" {
 
 variable "vnetname" {
   type    = "string"
-  default = "sandbox-core-infra-vnet-dev"
+  default = "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/sandbox-core-infra-dev/providers/Microsoft.Network/virtualNetworks/sandbox-core-infra-vnet-dev"
 }
 
 variable "subnetname" {
@@ -47,7 +47,7 @@ module "waf" {
   product        = "${var.random_name}-waf"
   location       = "${var.location}"
   env            = "${var.env}"
-  vnetname       = "${data.terraform_remote_state.core_sandbox_infrastructure.vnetname}"
+  vnetname       = "${data.terraform_remote_state.core_sandbox_infrastructure.vnet_id}"
   subnetname     = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_names[0]}"
   backendaddress = "${var.backendaddress}"
 }
