@@ -17,11 +17,13 @@ variable "env" {
 }
 
 variable "vnetname" {
-  type = "string"
+  type    = "string"
+  default = "sandbox-core-infra-vnet-dev"
 }
 
 variable "subnetname" {
-  type = "string"
+  type    = "string"
+  default = "sandbox-core-infra-subnet-0-dev"
 }
 
 variable "backendaddresspools" {
