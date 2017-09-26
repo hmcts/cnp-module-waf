@@ -18,6 +18,7 @@ resource "azurerm_template_deployment" "waf" {
 
   parameters = {
     name               = "${var.product}-${var.env}"
+    location           = "${var.location}"
     virtualNetworkName = "${var.vnetname}"
     subnetName         = "${var.subnetname}"
     backendaddress     = "${var.backendaddress}"
