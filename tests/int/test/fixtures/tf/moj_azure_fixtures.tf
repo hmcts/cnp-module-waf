@@ -27,11 +27,8 @@ variable "subnetname" {
 }
 
 variable "backendaddresspools" {
-  type = "map"
-
-  default = {
-    IpAddress = "51.140.71.70"
-  }
+  type    = "list"
+  default = ["51.140.71.70"]
 }
 
 data "terraform_remote_state" "core_sandbox_infrastructure" {

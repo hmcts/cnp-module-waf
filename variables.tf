@@ -20,5 +20,5 @@ variable "env" {
 }
 
 variable "backendaddresspools" {
-  type = "map"
+  type = "list"
 }
