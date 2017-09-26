@@ -98,7 +98,7 @@
   },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
-    "publicIPAddressName": "[concat(parameters('name'), '-', 'ip']",
+    "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
