@@ -17,9 +17,9 @@ resource "azurerm_template_deployment" "waf" {
   deployment_mode     = "Incremental"
 
   parameters = {
-    name                = "${var.product}-${var.env}"
-    virtualNetworkName  = "${var.vnetname}"
-    subnetName          = "${var.subnetname}"
-    backendAddressPools = "${jsonencode(var.backendaddresspools)}"
+    name               = "${var.product}-${var.env}"
+    virtualNetworkName = "${var.vnetname}"
+    subnetName         = "${var.subnetname}"
+    backendaddress     = "${var.backendaddress}"
   }
 }

@@ -19,6 +19,6 @@ variable "env" {
   type = "string"
 }
 
-variable "backendaddresspools" {
-  type = "list"
+variable "backendaddress" {
+  type = "string"
 }

@@ -26,9 +26,9 @@ variable "subnetname" {
   default = "sandbox-core-infra-subnet-0-dev"
 }
 
-variable "backendaddresspools" {
-  type    = "list"
-  default = ["51.140.71.70"]
+variable "backendaddress" {
+  type    = "string"
+  default = "51.140.71.70"
 }
 
 data "terraform_remote_state" "core_sandbox_infrastructure" {
@@ -43,13 +43,13 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
 }
 
 module "waf" {
-  source              = "../../../../../"
-  product             = "${var.random_name}-waf"
-  location            = "${var.location}"
-  env                 = "${var.env}"
-  vnetname            = "${data.terraform_remote_state.core_sandbox_infrastructure.vnetname}"
-  subnetname          = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_names[0]}"
-  backendaddresspools = "${var.backendaddresspools}"
+  source         = "../../../../../"
+  product        = "${var.random_name}-waf"
+  location       = "${var.location}"
+  env            = "${var.env}"
+  vnetname       = "${data.terraform_remote_state.core_sandbox_infrastructure.vnetname}"
+  subnetname     = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_names[0]}"
+  backendaddress = "${var.backendaddress}"
 }
 
 output "random_name" {

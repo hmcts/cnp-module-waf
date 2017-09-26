@@ -38,10 +38,10 @@
         "description": "Number of instances"
       }
     },
-    "backendAddressPools": {
+    "backendaddress": {
       "type": "string",
       "metadata": {
-        "description": "IP Addresses for Backend Servers"
+        "description": "IP Addresses for backend endpoint"
       }
     },
     "wafEnabled": {
@@ -105,7 +105,7 @@
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
-    "base64BackEndPoolsObject": "[base64(parameters('backendAddressPools'))]"
+    "backEndAddress": "[parameters('backendaddress')]"
   },
   "resources": [
     {
@@ -163,7 +163,11 @@
           {
             "name": "appGatewayBackendPool",
             "properties": {
-              "BackendAddresses": "[base64ToJson(variables('base64BackEndPoolsObject'))]"
+              "BackendAddresses": [
+                {
+                  "IpAddress": "[variables('backEndAddress')]"
+                }
+              ]
             }
           }
         ],
