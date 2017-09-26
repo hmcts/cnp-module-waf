@@ -34,6 +34,7 @@ variable "backendaddresspools" {
 
 data "terraform_remote_state" "core_sandbox_infrastructure" {
   backend = "azure"
+
   config {
     resource_group_name  = "contino-moj-tf-state"
     storage_account_name = "continomojtfstate"
