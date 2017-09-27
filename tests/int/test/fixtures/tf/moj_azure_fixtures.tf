@@ -44,7 +44,7 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
 
 module "waf" {
   source         = "../../../../../"
-  product        = "${var.random_name}"
+  product        = "${var.random_name}-waf"
   location       = "${var.location}"
   env            = "${var.env}"
   vnetname       = "${data.terraform_remote_state.core_sandbox_infrastructure.vnet_id}"
