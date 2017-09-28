@@ -22,3 +22,7 @@ variable "env" {
 variable "backendaddress" {
   type = "string"
 }
+
+variable "resourcegroupname" {
+  type = "string"
+}

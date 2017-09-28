@@ -31,6 +31,11 @@ variable "backendaddress" {
   default = "51.140.71.70"
 }
 
+variable "resourcegroupname" {
+  type    = "string"
+  default = "inspect"
+}
+
 data "terraform_remote_state" "core_sandbox_infrastructure" {
   backend = "azure"
 
@@ -43,13 +48,14 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
 }
 
 module "waf" {
-  source         = "../../../../../"
-  product        = "${var.random_name}-waf"
-  location       = "${var.location}"
-  env            = "${var.env}"
-  vnetname       = "${data.terraform_remote_state.core_sandbox_infrastructure.vnet_id}"
-  subnetname     = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_names[0]}"
-  backendaddress = "${var.backendaddress}"
+  source            = "../../../../../"
+  product           = "${var.random_name}-waf"
+  location          = "${var.location}"
+  env               = "${var.env}"
+  vnetname          = "${data.terraform_remote_state.core_sandbox_infrastructure.vnet_id}"
+  subnetname        = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_names[0]}"
+  backendaddress    = "${var.backendaddress}"
+  resourcegroupname = "${data.terraform_remote_state.core_sandbox_infrastructure.resourcegroup_name}"
 }
 
 output "random_name" {
