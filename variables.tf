@@ -26,3 +26,11 @@ variable "backendaddress" {
 variable "resourcegroupname" {
   type = "string"
 }
+
+variable "backend_port" {
+  default = "80"
+}
+
+variable "backend_protocol" {
+  default = "http"
+}

@@ -8,16 +8,16 @@
         "description": "The name of the waf"
       }
     },
-    "location": { 
-      "type": "string", 
-      "allowedValues": [ 
-          "UK South", 
+    "location": {
+      "type": "string",
+      "allowedValues": [
+          "UK South",
           "UK West",
           "West Europe"
-      ], 
-      "metadata": { 
-          "description": "Location of the WAF" 
-      } 
+      ],
+      "metadata": {
+          "description": "Location of the WAF"
+      }
     },
     "applicationGatewaySize": {
       "type": "string",
@@ -43,7 +43,7 @@
         8,
         9,
         10
-      ],      
+      ],
       "defaultValue": 2,
       "metadata": {
         "description": "Number of instances"
@@ -55,6 +55,18 @@
         "description": "IP Addresses for backend endpoint"
       }
     },
+    "backend_port": {
+      "type": "string",
+      "metadata": {
+        "description": "port backend endpoint"
+      }
+    },
+    "backend_protocol": {
+      "type": "string",
+      "metadata": {
+        "description": "Protocol for backend endpoint"
+      }
+    },        
     "wafEnabled": {
       "type": "bool",
       "defaultValue": true,
@@ -186,8 +198,8 @@
           {
             "name": "appGatewayBackendHttpSettings",
             "properties": {
-              "Port": 80,
-              "Protocol": "Http",
+              "Port": "[variables('backend_port')]",
+              "Protocol": "[variables('backend_protocol')]",
               "CookieBasedAffinity": "Disabled"
             }
           }
