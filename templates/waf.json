@@ -202,7 +202,13 @@
             "properties": {
               "Port": 80
             }
-          }
+          },
+          {
+            "name": "appGatewayFrontendHttpsPort1",
+            "properties": {
+              "Port": 443
+            }
+          },
         ],
         "backendAddressPools": [
           {
