@@ -208,7 +208,7 @@
             "properties": {
               "Port": 443
             }
-          },
+          }
         ],
         "backendAddressPools": [
           {
