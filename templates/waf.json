@@ -57,6 +57,7 @@
     },
     "backend_port": {
       "type": "string",
+      "defaultValue": "80",
       "metadata": {
         "description": "port backend endpoint"
       }
