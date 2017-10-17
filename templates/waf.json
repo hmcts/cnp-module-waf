@@ -57,14 +57,12 @@
     },
     "backend_port": {
       "type": "string",
-      "defaultValue": "80",
       "metadata": {
         "description": "port backend endpoint"
       }
     },
     "backend_protocol": {
       "type": "string",
-      "defaultValue": "http",
       "metadata": {
         "description": "Protocol for backend endpoint"
       }
@@ -118,7 +116,9 @@
       "type": "string",
       "metadata": {
         "description": "The name of the subnet"
-      },
+      }
+    }
+  },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
@@ -180,12 +180,6 @@
             "properties": {
               "Port": 80
             }
-          },
-          {
-            "name": "appGatewayFrontendHttpsPort1",
-            "properties": {
-              "Port": 443
-            }
           }
         ],
         "backendAddressPools": [
@@ -204,8 +198,8 @@
           {
             "name": "appGatewayBackendHttpSettings",
             "properties": {
-              "Port": "[parameters('backend_port')]",
-              "Protocol": "[parameters('backend_protocol')]",
+              "Port": "[variables('backend_port')]",
+              "Protocol": "[variables('backend_protocol')]",
               "CookieBasedAffinity": "Disabled"
             }
           }
@@ -220,7 +214,8 @@
               "FrontendPort": {
                 "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendPort')]"
               },
-              "Protocol": "Http"
+              "Protocol": "Http",
+              "SslCertificate": null
             }
           }
         ],
@@ -251,6 +246,4 @@
       }
     }
   ]
-}
-}
 }
