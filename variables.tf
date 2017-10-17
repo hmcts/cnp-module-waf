@@ -34,3 +34,9 @@ variable "backend_port" {
 variable "backend_protocol" {
   default = "http"
 }
+
+variable "certificatePfxBase64" {}
+
+variable "certificatePrefixName" {}
+
+variable "certificatePfxPassword" {}

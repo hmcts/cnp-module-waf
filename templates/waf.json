@@ -66,7 +66,7 @@
       "metadata": {
         "description": "Protocol for backend endpoint"
       }
-    },        
+    },
     "wafEnabled": {
       "type": "bool",
       "defaultValue": true,
@@ -117,6 +117,15 @@
       "metadata": {
         "description": "The name of the subnet"
       }
+    },
+    "certificatePrefixName": {
+      "type": "string"
+    },
+    "certificatePfxBase64": {
+      "type": "securestring"
+    },
+    "certificatePfxPassword": {
+      "type": "securestring"
     }
   },
   "variables": {
@@ -128,9 +137,23 @@
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
-    "backEndAddress": "[parameters('backendaddress')]"
+    "backEndAddress": "[parameters('backendaddress')]",
+    "certificateName": "[concat(parameters('certificatePrefixName'), uniqueString(resourceGroup().id))]"
   },
   "resources": [
+    {
+    "apiVersion": "2015-08-01",
+    "name": "[variables('certificateName')]",
+    "type": "Microsoft.Web/certificates",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "pfxBlob": "[parameters('certificatePfxBase64')]",
+      "password": "[parameters('certificatePfxPassword')]"
+    },
+    "tags": {
+      "displayName": "Certificate"
+    }
+  },
     {
       "apiVersion": "2017-03-01",
       "type": "Microsoft.Network/publicIPAddresses",
@@ -242,8 +265,25 @@
           "ruleSetType": "[parameters('wafRuleSetType')]",
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
           "disabledRuleGroups": []
-        }
+        },
+        "sslCertificates": [
+          {
+           "id": "string",
+           "properties": {
+             "data": "string",
+             "password": "string",
+             "publicCertData": "string"
+           },
+           "name": "string"
+         }
+       ]
       }
     }
-  ]
+  ],
+  "outputs": {
+  "certificateThumbprint": {
+    "type": "string",
+    "value": "[reference(resourceId('Microsoft.Web/certificates', variables('certificateName')), providers('Microsoft.Web', 'certificates').apiVersions[0]).thumbprint]"
+  }
+ }
 }
