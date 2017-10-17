@@ -265,7 +265,7 @@
           {
             "Name": "redirectHTTP",
                     "properties": {
-                      "redirectType": "Permament",
+                      "redirectType": "Permanent",
                       "targetListener": {
                         "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
                       }
