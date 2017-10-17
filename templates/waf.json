@@ -262,6 +262,17 @@
             }
           }
         ],
+        "redirectConfigurations": [
+          {
+            "Name": "redirectConfig1",
+            "properties": {
+              "redirectType": "Permanent",
+              "targetListener": {
+                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
+              }
+            }
+          }
+        ],
         "requestRoutingRules": [
           {
             "Name": "rule1",
@@ -275,6 +286,9 @@
               },
               "backendHttpSettings": {
                 "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+              },
+              "redirectConfiguration": {
+                "id": "[concat(variables('applicationGatewayID'), '/redirectConfigurations/redirectConfig1')]"
               }
             }
           }
