@@ -24,7 +24,7 @@ resource "azurerm_template_deployment" "waf" {
     backend_port       = "${var.backend_port}"
     backend_protocol   = "${var.backend_protocol}"
     backendaddress     = "${var.backendaddress}"
-    certPassword       = "${var.certPassword}"
-    certData           = "${var.certData}"
+  #  certPassword       = "${var.certPassword}"
+  #  certData           = "${var.certData}"
   }
 }
