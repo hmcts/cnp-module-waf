@@ -35,8 +35,6 @@ variable "backend_protocol" {
   default = "http"
 }
 
-variable "certificatePfxBase64" {}
+variable "certPassword" {}
 
-variable "certificatePrefixName" {}
-
-variable "certificatePfxPassword" {}
+variable "certData" {}
