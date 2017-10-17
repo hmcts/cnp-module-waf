@@ -57,12 +57,14 @@
     },
     "backend_port": {
       "type": "string",
+      "defaultValue": "80",
       "metadata": {
         "description": "port backend endpoint"
       }
     },
     "backend_protocol": {
       "type": "string",
+      "defaultValue": "http",
       "metadata": {
         "description": "Protocol for backend endpoint"
       }
