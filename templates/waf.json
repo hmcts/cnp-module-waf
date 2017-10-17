@@ -118,20 +118,7 @@
       "type": "string",
       "metadata": {
         "description": "The name of the subnet"
-      }
-    },
-    "certData": {
-      "type": "string",
-      "metadata": {
-        "description": "Base-64 encoded form of the .pfx file"
-      }
-    },
-    "certPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Password for .pfx certificate"
-      }
-  },
+      },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
@@ -167,15 +154,6 @@
           "tier": "WAF",
           "capacity": "[parameters('capacity')]"
         },
-        "sslCertificates": [
-          {
-            "name": "appGatewaySslCert",
-            "properties": {
-              "data": "[parameters('certData')]",
-              "password": "[parameters('certPassword')]"
-            }
-          }
-        ],
         "gatewayIPConfigurations": [
           {
             "name": "appGatewayIpConfig",
@@ -244,34 +222,8 @@
               },
               "Protocol": "Http"
             }
-          },
-          {
-            "name": "appGatewayHttpsListener1",
-            "properties": {
-              "FrontendIPConfiguration": {
-                "Id": "[concat(variables('applicationGatewayID'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-              },
-              "FrontendPort": {
-                "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendHttpsPort1')]"
-              },
-              "Protocol": "Https",
-              "SslCertificate": {
-                "Id": "[concat(variables('applicationGatewayID'), '/sslCertificates/appGatewaySslCert')]"
-              }
-            }
           }
         ],
-        "redirectConfigurations": [
-          {
-            "Name": "redirectHTTP",
-                    "properties": {
-                      "redirectType": "Permanent",
-                      "targetListener": {
-                        "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
-                      }
-                    }
-                  }
-                ],
         "requestRoutingRules": [
           {
             "Name": "rule1",
@@ -285,9 +237,6 @@
               },
               "backendHttpSettings": {
                 "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
-              },
-              "redirectConfiguration": {
-                "id": "[concat(variables('applicationGatewayID'), '/redirectConfigurations/redirectHTTP')]"
               }
             }
           }
