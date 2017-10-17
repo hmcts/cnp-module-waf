@@ -223,8 +223,8 @@
           {
             "name": "appGatewayBackendHttpSettings",
             "properties": {
-              "Port": "[variables('backend_port')]",
-              "Protocol": "[variables('backend_protocol')]",
+              "Port": "[parameters('backend_port')]",
+              "Protocol": "[parameters('backend_protocol')]",
               "CookieBasedAffinity": "Disabled"
             }
           }
