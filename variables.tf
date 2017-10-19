@@ -38,3 +38,5 @@ variable "backend_protocol" {
 variable "certPassword" {}
 
 variable "certData" {}
+
+variable "backendPublicKeyData" {}

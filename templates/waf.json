@@ -130,6 +130,12 @@
       "metadata": {
         "description": "Password for .pfx certificate"
       }
+    },
+    "backendPublicKeyData": {
+      "type": "string",
+      "metadata": {
+        "description": "Base-64 encoded form of the public key for the cert on ilb."
+      }
     }
   },
   "variables": {
@@ -174,6 +180,14 @@
               "data": "[parameters('certData')]",
               "password": "[parameters('certPassword')]"
             }
+          }
+        ],
+        "authenticationCertificates": [
+          {
+            "properties": {
+              "data": "[parameters('backendPublicKeyData')]"
+            },
+            "name": "appGatewayBackendCert"
           }
         ],
         "gatewayIPConfigurations": [
