@@ -28,7 +28,7 @@ variable "backend_port" {
 }
 
 variable "backend_protocol" {
-  default = "http"
+  default = "https"
 }
 
 variable "certPassword" {}

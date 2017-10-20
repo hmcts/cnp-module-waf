@@ -19,6 +19,13 @@
           "description": "Location of the WAF"
       }
     },
+    "backendaddress": {
+      "type": "string",
+      "defaultValue": "0.0.0.0",
+      "metadata": {
+        "description": "IP Addresses for backend endpoint"
+      }
+    },
     "applicationGatewaySize": {
       "type": "string",
       "allowedValues": [
@@ -129,13 +136,15 @@
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
     "backend_port": "[parameters('backend_port')]",
+    "backend_protocol": "[parameters('backend_protocol')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
     "vnetID": "[variables('virtualNetworkName')]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]"
+    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
+    "backendaddress": "[parameters('backendaddress')]"
   },
   "resources": [
     {
@@ -148,7 +157,7 @@
       }
     },
     {
-      "apiVersion": "2017-03-01",
+      "apiVersion": "2017-04-01",
       "name": "[variables('applicationGatewayName')]",
       "type": "Microsoft.Network/applicationGateways",
       "location": "[parameters('location')]",
@@ -167,6 +176,23 @@
             "properties": {
               "data": "[parameters('certData')]",
               "password": "[parameters('certPassword')]"
+            }
+          }
+        ],
+        "requestRoutingRules": [
+          {
+            "Name": "rule1",
+            "properties": {
+              "RuleType": "Basic",
+              "httpListener": {
+                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpListener')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
+              },
+              "backendHttpSettings": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+              }
             }
           }
         ],
@@ -204,7 +230,18 @@
             }
           }
         ],
-
+        "backendAddressPools": [
+          {
+            "name": "appGatewayBackendPool",
+            "properties": {
+              "BackendAddresses": [
+                {
+                  "IpAddress": "[variables('backEndAddress')]"
+                }
+              ]
+            }
+          }
+        ],
         "backendHttpSettingsCollection": [
           {
             "name": "appGatewayBackendHttpSettings",
