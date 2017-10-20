@@ -49,12 +49,6 @@
         "description": "Number of instances"
       }
     },
-    "backendaddress": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Addresses for backend endpoint"
-      }
-    },
     "backend_port": {
       "type": "string",
       "defaultValue": "80",
@@ -130,12 +124,6 @@
       "metadata": {
         "description": "Password for .pfx certificate"
       }
-    },
-    "backendPublicKeyData": {
-      "type": "string",
-      "metadata": {
-        "description": "Base-64 encoded form of the public key for the cert on ilb."
-      }
     }
   },
   "variables": {
@@ -146,8 +134,7 @@
     "vnetID": "[variables('virtualNetworkName')]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
-    "backEndAddress": "[parameters('backendaddress')]"
+    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]"
   },
   "resources": [
     {
@@ -180,14 +167,6 @@
               "data": "[parameters('certData')]",
               "password": "[parameters('certPassword')]"
             }
-          }
-        ],
-        "authenticationCertificates": [
-          {
-            "properties": {
-              "data": "[parameters('backendPublicKeyData')]"
-            },
-            "name": "appGatewayBackendCert"
           }
         ],
         "gatewayIPConfigurations": [
@@ -224,18 +203,7 @@
             }
           }
         ],
-        "backendAddressPools": [
-          {
-            "name": "appGatewayBackendPool",
-            "properties": {
-              "BackendAddresses": [
-                {
-                  "IpAddress": "[variables('backEndAddress')]"
-                }
-              ]
-            }
-          }
-        ],
+
         "backendHttpSettingsCollection": [
           {
             "name": "appGatewayBackendHttpSettings",
@@ -283,26 +251,6 @@
               "redirectType": "Permanent",
               "targetListener": {
                 "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
-              }
-            }
-          }
-        ],
-        "requestRoutingRules": [
-          {
-            "Name": "rule1",
-            "properties": {
-              "RuleType": "Basic",
-              "httpListener": {
-                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpListener')]"
-              },
-              "backendAddressPool": {
-                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
-              },
-              "backendHttpSettings": {
-                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
-              },
-              "redirectConfiguration": {
-                "id": "[concat(variables('applicationGatewayID'), '/redirectConfigurations/redirectConfig1')]"
               }
             }
           }

@@ -19,10 +19,6 @@ variable "env" {
   type = "string"
 }
 
-variable "backendaddress" {
-  type = "string"
-}
-
 variable "resourcegroupname" {
   type = "string"
 }
@@ -38,5 +34,3 @@ variable "backend_protocol" {
 variable "certPassword" {}
 
 variable "certData" {}
-
-variable "backendPublicKeyData" {}
