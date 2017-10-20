@@ -51,7 +51,7 @@
     },
     "backend_port": {
       "type": "string",
-      "defaultValue": "80",
+      "defaultValue": "443",
       "metadata": {
         "description": "port backend endpoint"
       }
@@ -128,6 +128,7 @@
   },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
+    "backend_port": "[parameters('backend_port')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",

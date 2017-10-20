@@ -24,7 +24,7 @@ variable "resourcegroupname" {
 }
 
 variable "backend_port" {
-  default = "80"
+  default = "443"
 }
 
 variable "backend_protocol" {
