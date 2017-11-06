@@ -119,6 +119,18 @@
       "metadata": {
         "description": "The name of the subnet"
       }
+    },
+    "certData": {
+      "type": "string",
+      "metadata": {
+        "description": "Base-64 encoded form of the .pfx file"
+      }
+    },
+    "certPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for .pfx certificate"
+      }
     }
   },
   "variables": {
@@ -145,17 +157,6 @@
       }
     },
     {
-       "type":"Microsoft.Web/certificates",
-       "name":"[parameters('certificateName')]",
-       "apiVersion":"2016-03-01",
-       "location":"[parameters('location')]",
-       "properties":{
-          "keyVaultId":"[parameters('key_vault_id')]",
-          "keyVaultSecretName":"appGwCert",
-          "serverFarmId":"[resourceId('Microsoft.Web/serverfarms/', concat('app-compute-', parameters('env')))]"
-       }
-    },
-    {
       "apiVersion": "2017-04-01",
       "name": "[variables('applicationGatewayName')]",
       "type": "Microsoft.Network/applicationGateways",
@@ -171,8 +172,11 @@
         },
         "sslCertificates": [
           {
-            "name": "appGwCert",
-            "id": "[reference(resourceId('Microsoft.Web/certificates', parameters('appGwCert')))"
+            "name": "appGatewaySslCert",
+            "properties": {
+              "data": "[parameters('certData')]",
+              "password": "[parameters('certPassword')]"
+            }
           }
         ],
         "requestRoutingRules": [
@@ -202,12 +206,6 @@
             }
           }
         ],
-        "sslPolicy": {
-          "disabledSslProtocols": [
-            "TLSv1_0",
-            "TLSv1_1"
-          ]
-        },
         "frontendIPConfigurations": [
           {
             "name": "appGatewayFrontendIP",
