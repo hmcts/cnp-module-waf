@@ -36,3 +36,5 @@ variable "pfxPass" {}
 variable "file-ca-cert" {
   default = "./waf.pfx"
 }
+
+variable "backendaddress" {}
