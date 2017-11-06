@@ -19,10 +19,18 @@ variable "env" {
   type = "string"
 }
 
-variable "backendaddress" {
-  type = "string"
-}
-
 variable "resourcegroupname" {
   type = "string"
 }
+
+variable "backend_port" {
+  default = "443"
+}
+
+variable "backend_protocol" {
+  default = "https"
+}
+
+variable "certPassword" {}
+
+variable "certData" {}
