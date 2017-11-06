@@ -8,16 +8,16 @@
         "description": "The name of the waf"
       }
     },
-    "location": { 
-      "type": "string", 
-      "allowedValues": [ 
-          "UK South", 
+    "location": {
+      "type": "string",
+      "allowedValues": [
+          "UK South",
           "UK West",
           "West Europe"
-      ], 
-      "metadata": { 
-          "description": "Location of the WAF" 
-      } 
+      ],
+      "metadata": {
+          "description": "Location of the WAF"
+      }
     },
     "applicationGatewaySize": {
       "type": "string",
@@ -43,7 +43,7 @@
         8,
         9,
         10
-      ],      
+      ],
       "defaultValue": 2,
       "metadata": {
         "description": "Number of instances"
@@ -152,6 +152,12 @@
             }
           }
         ],
+        "sslPolicy": {
+          "disabledSslProtocols": [
+            "TLSv1_0",
+            "TLSv1_1"
+          ]
+        },
         "frontendIPConfigurations": [
           {
             "name": "appGatewayFrontendIP",
