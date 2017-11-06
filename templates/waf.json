@@ -206,12 +206,6 @@
             }
           }
         ],
-        "sslPolicy": {
-          "disabledSslProtocols": [
-            "TLSv1_0",
-            "TLSv1_1"
-          ]
-        },
         "frontendIPConfigurations": [
           {
             "name": "appGatewayFrontendIP",

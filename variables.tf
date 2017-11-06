@@ -31,6 +31,8 @@ variable "backend_protocol" {
   default = "https"
 }
 
-variable "certPassword" {}
+variable "pfxPass" {}
 
-variable "certData" {}
+variable "file-ca-cert" {
+  default = "./waf.pfx"
+}
