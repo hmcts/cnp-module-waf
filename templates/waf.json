@@ -119,6 +119,18 @@
       "metadata": {
         "description": "The name of the subnet"
       }
+    },
+    "certData": {
+      "type": "string",
+      "metadata": {
+        "description": "Base-64 encoded form of the .pfx file"
+      }
+    },
+    "certPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for .pfx certificate"
+      }
     }
   },
   "variables": {
@@ -158,6 +170,15 @@
           "tier": "WAF",
           "capacity": "[parameters('capacity')]"
         },
+        "sslCertificates": [
+          {
+            "name": "appGatewaySslCert",
+            "properties": {
+              "data": "[parameters('certData')]",
+              "password": "[parameters('certPassword')]"
+            }
+          }
+        ],
         "requestRoutingRules": [
           {
             "Name": "rule1",
@@ -243,6 +264,32 @@
               },
               "Protocol": "Http",
               "SslCertificate": null
+            }
+          },
+          {
+            "name": "appGatewayHttpsListener1",
+            "properties": {
+              "FrontendIPConfiguration": {
+                "Id": "[concat(variables('applicationGatewayID'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+              },
+              "FrontendPort": {
+                "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendHttpsPort1')]"
+              },
+              "Protocol": "Https",
+              "SslCertificate": {
+                "Id": "[concat(variables('applicationGatewayID'), '/sslCertificates/appGatewaySslCert')]"
+              }
+            }
+          }
+        ],
+        "redirectConfigurations": [
+          {
+            "Name": "redirectConfig1",
+            "properties": {
+              "redirectType": "Permanent",
+              "targetListener": {
+                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
+              }
             }
           }
         ],
