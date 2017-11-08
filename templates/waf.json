@@ -8,23 +8,16 @@
         "description": "The name of the waf"
       }
     },
-    "location": {
-      "type": "string",
-      "allowedValues": [
-          "UK South",
+    "location": { 
+      "type": "string", 
+      "allowedValues": [ 
+          "UK South", 
           "UK West",
           "West Europe"
-      ],
-      "metadata": {
-          "description": "Location of the WAF"
-      }
-    },
-    "backendaddress": {
-      "type": "string",
-      "defaultValue": "0.0.0.0",
-      "metadata": {
-        "description": "IP Addresses for backend endpoint"
-      }
+      ], 
+      "metadata": { 
+          "description": "Location of the WAF" 
+      } 
     },
     "applicationGatewaySize": {
       "type": "string",
@@ -50,23 +43,16 @@
         8,
         9,
         10
-      ],
+      ],      
       "defaultValue": 2,
       "metadata": {
         "description": "Number of instances"
       }
     },
-    "backend_port": {
-      "type": "string",
-      "defaultValue": "443",
-      "metadata": {
-        "description": "port backend endpoint"
-      }
-    },
-    "backend_protocol": {
+    "backendaddress": {
       "type": "string",
       "metadata": {
-        "description": "Protocol for backend endpoint"
+        "description": "IP Addresses for backend endpoint"
       }
     },
     "wafEnabled": {
@@ -119,24 +105,10 @@
       "metadata": {
         "description": "The name of the subnet"
       }
-    },
-    "certData": {
-      "type": "string",
-      "metadata": {
-        "description": "Base-64 encoded form of the .pfx file"
-      }
-    },
-    "certPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Password for .pfx certificate"
-      }
     }
   },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
-    "backend_port": "[parameters('backend_port')]",
-    "backend_protocol": "[parameters('backend_protocol')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
     "subnetName": "[parameters('subnetName')]",
@@ -144,7 +116,7 @@
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
-    "backendaddress": "[parameters('backendaddress')]"
+    "backEndAddress": "[parameters('backendaddress')]"
   },
   "resources": [
     {
@@ -157,7 +129,7 @@
       }
     },
     {
-      "apiVersion": "2017-04-01",
+      "apiVersion": "2017-03-01",
       "name": "[variables('applicationGatewayName')]",
       "type": "Microsoft.Network/applicationGateways",
       "location": "[parameters('location')]",
@@ -170,32 +142,6 @@
           "tier": "WAF",
           "capacity": "[parameters('capacity')]"
         },
-        "sslCertificates": [
-          {
-            "name": "appGatewaySslCert",
-            "properties": {
-              "data": "[parameters('certData')]",
-              "password": "[parameters('certPassword')]"
-            }
-          }
-        ],
-        "requestRoutingRules": [
-          {
-            "Name": "rule1",
-            "properties": {
-              "RuleType": "Basic",
-              "httpListener": {
-                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpListener')]"
-              },
-              "backendAddressPool": {
-                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
-              },
-              "backendHttpSettings": {
-                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
-              }
-            }
-          }
-        ],
         "gatewayIPConfigurations": [
           {
             "name": "appGatewayIpConfig",
@@ -222,12 +168,6 @@
             "properties": {
               "Port": 80
             }
-          },
-          {
-            "name": "appGatewayFrontendHttpsPort1",
-            "properties": {
-              "Port": 443
-            }
           }
         ],
         "backendAddressPools": [
@@ -246,8 +186,8 @@
           {
             "name": "appGatewayBackendHttpSettings",
             "properties": {
-              "Port": "[variables('backend_port')]",
-              "Protocol": "[variables('backend_protocol')]",
+              "Port": 80,
+              "Protocol": "Http",
               "CookieBasedAffinity": "Disabled"
             }
           }
@@ -265,30 +205,21 @@
               "Protocol": "Http",
               "SslCertificate": null
             }
-          },
-          {
-            "name": "appGatewayHttpsListener1",
-            "properties": {
-              "FrontendIPConfiguration": {
-                "Id": "[concat(variables('applicationGatewayID'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
-              },
-              "FrontendPort": {
-                "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendHttpsPort1')]"
-              },
-              "Protocol": "Https",
-              "SslCertificate": {
-                "Id": "[concat(variables('applicationGatewayID'), '/sslCertificates/appGatewaySslCert')]"
-              }
-            }
           }
         ],
-        "redirectConfigurations": [
+        "requestRoutingRules": [
           {
-            "Name": "redirectConfig1",
+            "Name": "rule1",
             "properties": {
-              "redirectType": "Permanent",
-              "targetListener": {
-                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener1')]"
+              "RuleType": "Basic",
+              "httpListener": {
+                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpListener')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
+              },
+              "backendHttpSettings": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
               }
             }
           }

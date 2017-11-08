@@ -19,22 +19,10 @@ variable "env" {
   type = "string"
 }
 
-variable "resourcegroupname" {
+variable "backendaddress" {
   type = "string"
 }
 
-variable "backend_port" {
-  default = "443"
+variable "resourcegroupname" {
+  type = "string"
 }
-
-variable "backend_protocol" {
-  default = "https"
-}
-
-variable "pfxPass" {}
-
-variable "file-ca-cert" {
-  default = "./waf.pfx"
-}
-
-variable "backendaddress" {}
