@@ -4,7 +4,7 @@ import uk.gov.hmcts.contino.Testing
 import uk.gov.hmcts.contino.Tagging
 
 GITHUB_PROTOCOL = "https"
-GITHUB_REPO = "github.com/contino/moj-module-waf/"
+GITHUB_REPO = "github.com:contino/moj-module-waf.git"
 
 properties(
     [[$class: 'GithubProjectProperty', projectUrlStr: 'https://www.github.com/contino/moj-module-waf/'],
