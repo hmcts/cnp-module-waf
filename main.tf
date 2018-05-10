@@ -27,7 +27,7 @@ resource "azurerm_application_gateway" "wafuks" {
 
   gateway_ip_configuration {
     name      = "appGatewayIpConfig"
-    subnet_id = "${element(${var.subnetname}, 1)}"
+    subnet_id = "${element(var.subnetname, 1)}"
   }
 
   frontend_port {
@@ -129,7 +129,7 @@ resource "azurerm_application_gateway" "wafukw" {
 
   gateway_ip_configuration {
     name      = "appGatewayIpConfig"
-    subnet_id = "${element(${var.subnetname}, 2)}"
+    subnet_id = "${element(var.subnetname, 2)}"
   }
 
   frontend_port {
