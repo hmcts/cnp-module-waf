@@ -1,7 +1,7 @@
 # Public ip for assigning to app gateway - Only created if var.is_frontend is set to true
 resource "azurerm_public_ip" "appGwPIP" {
   count                        = 2
-  name                         = "appGW-${count.index}"
+  name                         = "appGW-${element(var.locations, count.index)}"
   location                     = "${element(var.locations, count.index)}"
   resource_group_name          = "${var.resourcegroupname}"
   public_ip_address_allocation = "dynamic"
@@ -10,7 +10,7 @@ resource "azurerm_public_ip" "appGwPIP" {
 # Application gateway with WAF - Only created if var.is_frontend is set to true
 resource "azurerm_application_gateway" "waf" {
   count               = 2
-  name                = "${var.product}-${var.env}"
+  name                = "${var.product}-${var.env}-${element(var.locations, count.index)}"
   resource_group_name = "${var.resourcegroupname}"
   location            = "${element(var.locations, count.index)}"
 
