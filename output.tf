@@ -3,5 +3,5 @@ output "appGwUksID" {
 }
 
 output "appGwUkwID" {
-  vvalue = "${azurerm_application_gateway.wafukw.name}"
+  value = "${azurerm_application_gateway.wafukw.name}"
 }
