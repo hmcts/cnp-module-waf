@@ -1,7 +1,7 @@
-output "appGwUksID" {
-  value = "${azurerm_application_gateway.wafuks.name}"
+output "appGwUksIP" {
+  value = "${azurerm_public_ip.appGwPIP-uks.ip_address}"
 }
 
-output "appGwUkwID" {
-  value = "${azurerm_application_gateway.wafukw.name}"
+output "appGwUkwIP" {
+  value = "${azurerm_public_ip.appGwPIP-ukw.ip_address}"
 }
