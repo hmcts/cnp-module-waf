@@ -117,7 +117,6 @@ resource "azurerm_application_gateway" "wafuks" {
   }
 }
 
-# Application gateway with WAF - Only created if var.is_frontend is set to true
 resource "azurerm_application_gateway" "wafukw" {
   count               = 2
   name                = "${var.product}-${var.env}-ukw"
