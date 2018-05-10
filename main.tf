@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "appGwPIP-ukw" {
 }
 
 # Application gateways with WAF 
-resource "azurerm_application_gateway" "waf" {
+resource "azurerm_application_gateway" "wafuks" {
   count               = 2
   name                = "${var.product}-${var.env}-uks"
   resource_group_name = "${var.resourcegroupname}"
@@ -118,7 +118,7 @@ resource "azurerm_application_gateway" "waf" {
 }
 
 # Application gateway with WAF - Only created if var.is_frontend is set to true
-resource "azurerm_application_gateway" "waf" {
+resource "azurerm_application_gateway" "wafukw" {
   count               = 2
   name                = "${var.product}-${var.env}-ukw"
   resource_group_name = "${var.resourcegroupname}"
