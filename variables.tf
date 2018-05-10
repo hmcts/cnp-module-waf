@@ -8,11 +8,11 @@ variable "locations" {
 }
 
 variable "vnetname" {
-  type = "string"
+  type = "list"
 }
 
 variable "subnetname" {
-  type = "string"
+  type = "list"
 }
 
 variable "env" {
