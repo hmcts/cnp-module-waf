@@ -37,7 +37,7 @@ resource "azurerm_application_gateway" "waf" {
 
   frontend_ip_configuration {
     name                 = "appGW-IP"
-    public_ip_address_id = "${azurerm_public_ip.appGwPIP.id[${count.index}]}"
+    public_ip_address_id = "${azurerm_public_ip.appGwPIP.id[count.index]}"
   }
 
   backend_address_pool {
