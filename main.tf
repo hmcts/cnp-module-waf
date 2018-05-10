@@ -12,7 +12,7 @@ resource "azurerm_application_gateway" "waf" {
   count               = 2
   name                = "${var.product}-${var.env}-${element(var.locations, count.index)}"
   resource_group_name = "${var.resourcegroupname}"
-  location            = "${element(var.locations, count.index)}"
+  location            = "${replace(${element(var.locations, count.index)},"uk ","")}"
 
   sku {
     name     = "WAF_Medium"
