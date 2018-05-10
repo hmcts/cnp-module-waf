@@ -23,7 +23,11 @@ variable "resourcegroupname" {
   type = "string"
 }
 
-variable "ilbIp" {
+variable "ilbUKS" {
+  default = "0.0.0.0"
+}
+
+variable "ilbUKW" {
   default = "0.0.0.0"
 }
 
