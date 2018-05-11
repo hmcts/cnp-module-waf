@@ -1,3 +1,7 @@
-output "webapp_name" {
-  value = "${azurerm_template_deployment.waf.name}"
+output "appGwUksIP" {
+  value = "${azurerm_public_ip.appGwPIP-uks.ip_address}"
+}
+
+output "appGwUkwIP" {
+  value = "${azurerm_public_ip.appGwPIP-ukw.ip_address}"
 }
