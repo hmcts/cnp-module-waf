@@ -7,6 +7,7 @@ resource "azurerm_public_ip" "appGwPIP-uks" {
 }
 
 resource "azurerm_public_ip" "appGwPIP-ukw" {
+  count                        = "${var.multiRegion}"
   name                         = "appGW-ukw"
   location                     = "uk west"
   resource_group_name          = "${var.resourcegroupname}"
@@ -117,6 +118,7 @@ resource "azurerm_application_gateway" "wafuks" {
 }
 
 resource "azurerm_application_gateway" "wafukw" {
+  count               = "${var.multiRegion}"
   name                = "${var.product}-${var.env}-ukw"
   resource_group_name = "${var.resourcegroupname}"
   location            = "${azurerm_public_ip.appGwPIP-ukw.location}"

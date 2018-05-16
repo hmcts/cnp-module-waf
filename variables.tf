@@ -45,3 +45,7 @@ variable "unhealthyThreshold" {
   default     = "3"
   description = "unhealthy threshold applied to healthprobe"
 }
+
+variable "multiRegion" {
+  default = false
+}
