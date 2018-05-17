@@ -105,7 +105,19 @@
       "metadata": {
         "description": "The name of the subnet"
       }
-    }
+    },
+    "env": {
+      "type": "string"
+    },
+    "team_name": {
+      "type": "string"
+    },
+    "team_contact": {
+      "type": "string"
+    },
+    "destroy_me": {
+      "type": "string"
+    }  
   },
   "variables": {
     "applicationGatewayName": "[parameters('name')]",
@@ -123,6 +135,12 @@
       "apiVersion": "2017-03-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
+      "tags": {
+        "Environment": "[parameters('env')]",
+        "Team": "[parameters('team_name')]",
+        "Contact": "[parameters('team_contact')]",
+        "Destroy Me": "[parameters('destroy_me')]"
+      },
       "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic"
@@ -131,6 +149,12 @@
     {
       "apiVersion": "2017-03-01",
       "name": "[variables('applicationGatewayName')]",
+      "tags": {
+        "Environment": "[parameters('env')]",
+        "Team": "[parameters('team_name')]",
+        "Contact": "[parameters('team_contact')]",
+        "Destroy Me": "[parameters('destroy_me')]"
+      },
       "type": "Microsoft.Network/applicationGateways",
       "location": "[parameters('location')]",
       "dependsOn": [
