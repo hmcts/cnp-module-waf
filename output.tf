@@ -3,5 +3,5 @@ output "appGwUksIP" {
 }
 
 output "appGwUkwIP" {
-  value = "${azurerm_public_ip.appGwPIP-ukw.*.ip_address}"
+  value = "${azurerm_public_ip.appGwPIP-ukw.ip_address}"
 }
