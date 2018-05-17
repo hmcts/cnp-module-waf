@@ -121,7 +121,7 @@ resource "azurerm_application_gateway" "wafukw" {
   count               = "${var.multiRegion}"
   name                = "${var.product}-${var.env}-ukw"
   resource_group_name = "${var.resourcegroupname}"
-  location            = "${azurerm_public_ip.appGwPIP-ukw.location}"
+  location            = "${azurerm_public_ip.appGwPIP-ukw.*.location}"
 
   sku {
     name     = "WAF_Medium"
@@ -146,7 +146,7 @@ resource "azurerm_application_gateway" "wafukw" {
 
   frontend_ip_configuration {
     name                 = "appGW-IP"
-    public_ip_address_id = "${azurerm_public_ip.appGwPIP-ukw.id}"
+    public_ip_address_id = "${azurerm_public_ip.appGwPIP-ukw.*.id}"
   }
 
   backend_address_pool {

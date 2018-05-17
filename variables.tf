@@ -49,3 +49,9 @@ variable "unhealthyThreshold" {
 variable "multiRegion" {
   default = false
 }
+
+variable "team_name" {}
+
+variable "team_contact" {}
+
+variable "destroy_me" {}
