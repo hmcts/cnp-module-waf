@@ -4,6 +4,13 @@ resource "azurerm_public_ip" "appGwPIP-uks" {
   location                     = "uk south"
   resource_group_name          = "${var.resourcegroupname}"
   public_ip_address_allocation = "dynamic"
+
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
+  }
 }
 
 resource "azurerm_public_ip" "appGwPIP-ukw" {
@@ -12,6 +19,13 @@ resource "azurerm_public_ip" "appGwPIP-ukw" {
   location                     = "uk west"
   resource_group_name          = "${var.resourcegroupname}"
   public_ip_address_allocation = "dynamic"
+
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
+  }
 }
 
 # Application gateways with WAF 
@@ -115,6 +129,12 @@ resource "azurerm_application_gateway" "wafuks" {
     unhealthy_threshold = "${var.unhealthyThreshold}"
     timeout             = "60"
   }
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
+  }
 }
 
 resource "azurerm_application_gateway" "wafukw" {
@@ -217,5 +237,11 @@ resource "azurerm_application_gateway" "wafukw" {
     interval            = "${var.healthCheckInterval}"
     unhealthy_threshold = "${var.unhealthyThreshold}"
     timeout             = "60"
+  }
+  tags {
+    "Deployment Environment" = "${var.env}"
+    "Team Name"              = "${var.team_name}"
+    "Team Contact"           = "${var.team_contact}"
+    "Destroy Me"             = "${var.destroy_me}"
   }
 }
