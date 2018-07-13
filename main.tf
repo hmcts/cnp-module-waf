@@ -31,5 +31,12 @@ resource "azurerm_template_deployment" "waf" {
     team_name      = "${var.team_name}"
     team_contact   = "${var.team_contact}"
     destroy_me     = "${var.destroy_me}"
+    certData       = "${chomp(file("base64"))}"
+    certPassword   = "${data.azurerm_key_vault_secret.certPassword.value}"
   }
+}
+
+data "azurerm_key_vault_secret" "certPassword" {
+  name      = "certPassword"
+  vault_uri = "${var.vaultURI}" //"https://core-compute-sandbox.vault.azure.net/"
 }

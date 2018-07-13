@@ -2,6 +2,18 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "certData": {
+      "type": "string",
+      "metadata": {
+        "description": "Base-64 encoded form of the .pfx file"
+      }
+    },
+    "certPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for .pfx certificate"
+      }
+    },
     "destroy_me":{
       "type": "string",
       "defaultValue": ""
@@ -179,6 +191,15 @@
           "tier": "WAF",
           "capacity": "[parameters('capacity')]"
         },
+       "sslCertificates": [
+        {
+          "name": "appGatewaySslCert",
+          "properties": {
+          "data": "[parameters('certData')]",
+          "password": "[parameters('certPassword')]"
+            }
+          }
+        ],
         "gatewayIPConfigurations": [
           {
             "name": "appGatewayIpConfig",
@@ -216,6 +237,12 @@
             "name": "appGatewayFrontendPort",
             "properties": {
               "Port": 80
+            }
+          },
+          {
+            "name": "appGatewayFrontendPortHttps",
+            "properties": {
+              "Port": 443
             }
           }
         ],
@@ -262,13 +289,28 @@
               "Protocol": "Http",
               "SslCertificate": null
             }
+          },
+          {
+            "name": "appGatewayHttpsListener",
+            "properties": {
+              "FrontendIPConfiguration": {
+                "Id": "[concat(variables('applicationGatewayID'), '/frontendIPConfigurations/appGatewayFrontendIP')]"
+              },
+              "FrontendPort": {
+                "Id": "[concat(variables('applicationGatewayID'), '/frontendPorts/appGatewayFrontendPortHttps')]"
+              },
+              "Protocol": "Https",
+              "SslCertificate": {
+                "Id": "[concat(variables('applicationGatewayID'), '/sslCertificates/appGatewaySslCert')]"
+              }
+            }
           }
         ],
         "probes": [
           {
             "Name": "httpHealthProbe",
             "properties":{
-              "protocol": "http",
+              "protocol": "Http",
               "host":"[parameters('appPrivateFqdn')]",
               "path": "[parameters('probePath')]",
               "interval": "[parameters('probeInterval')]",
@@ -279,7 +321,7 @@
           {
             "Name": "httpsHealthProbe",
             "properties":{
-              "protocol": "https",
+              "protocol": "Https",
               "host":"[parameters('appPrivateFqdn')]",
               "path": "[parameters('probePath')]",
               "interval": "[parameters('probeInterval')]",
@@ -301,6 +343,21 @@
               },
               "backendHttpSettings": {
                 "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpSettings')]"
+              }
+            }
+          },
+          {
+            "Name": "rule2",
+            "properties": {
+              "RuleType": "Basic",
+              "httpListener": {
+                "id": "[concat(variables('applicationGatewayID'), '/httpListeners/appGatewayHttpsListener')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendAddressPools/appGatewayBackendPool')]"
+              },
+              "backendHttpSettings": {
+                "id": "[concat(variables('applicationGatewayID'), '/backendHttpSettingsCollection/appGatewayBackendHttpsSettings')]"
               }
             }
           }
