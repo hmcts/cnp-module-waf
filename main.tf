@@ -13,7 +13,7 @@ data "template_file" "sitetemplate" {
 resource "azurerm_template_deployment" "waf" {
   template_body       = "${data.template_file.sitetemplate.rendered}"
   name                = "${var.product}-${var.env}"
-  resource_group_name = "${var.resourcegroupname}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   deployment_mode     = "Incremental"
 
   parameters = {
@@ -21,6 +21,12 @@ resource "azurerm_template_deployment" "waf" {
     location           = "${var.location}"
     virtualNetworkName = "${var.vnetname}"
     subnetName         = "${var.subnetname}"
-    backendaddress     = "${var.backendaddress}"
+
+    //When private dns is in place, we should look at using the internal app fqdn
+    //over ilb ip
+    backendaddress = "${var.backendaddress}"
+
+    appPrivateFqdn = "${var.appPrivateFqdn}"
+    probePath      = "${var.probePath}"
   }
 }

@@ -26,3 +26,12 @@ variable "backendaddress" {
 variable "resourcegroupname" {
   type = "string"
 }
+
+variable "appPrivateFqdn" {
+  description = "fqdn of app to health check for example rhubarb.service.sandbox.hmcts.net"
+}
+
+variable "probePath" {
+  description = "health check endpoint for app"
+  default     = "/health"
+}
