@@ -28,5 +28,8 @@ resource "azurerm_template_deployment" "waf" {
 
     appPrivateFqdn = "${var.appPrivateFqdn}"
     probePath      = "${var.probePath}"
+    team_name      = "${var.team_name}"
+    team_contact   = "${var.team_contact}"
+    destroy_me     = "${var.destroy_me}"
   }
 }

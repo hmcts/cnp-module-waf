@@ -2,6 +2,18 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "destroy_me":{
+      "type": "string",
+      "defaultValue": ""
+    },
+    "team_name":{
+      "type": "string",
+      "defaultValue": ""      
+    },
+    "team_contact": {
+      "type": "string",
+      "defaultValue": ""
+    },
     "name": {
       "type": "string",
       "metadata": {
@@ -273,8 +285,8 @@
               "interval": "[parameters('probeInterval')]",
               "unhealthyThreshold":"[parameters('unhealthyThreshold')]",
               "timeout": "[parameters('probeTimeout')]"
+            }
           }
-        }
         ],
         "requestRoutingRules": [
           {
@@ -300,6 +312,11 @@
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
           "disabledRuleGroups": []
         }
+      },
+      "tags":{
+        "team_name": "[parameters('team_name')]",
+        "team_contact": "[parameters('team_contact')]",
+        "destroy_me:": "[parameters('destroy_me')]"
       }
     }
   ]

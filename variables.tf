@@ -35,3 +35,9 @@ variable "probePath" {
   description = "health check endpoint for app"
   default     = "/health"
 }
+
+variable "team_name" {}
+
+variable "team_contact" {}
+
+variable "destroy_me" {}
