@@ -55,15 +55,13 @@ variable "capacity" {
   default = "2"
 }
 
-variable "frontEndPorts" {
+variable "gatewayIpConfigurations" {
   default = [
     {
-      name = "frontendPort80"
-      port = 80
-    },
-    {
-      name = "frontendPort443"
-      port = 443
+      name   = "internalNetwork"
+      vNetRG = "RG-VN-MAN-UKS-1"
+      vNet   = "VN-MAN-UKS-1"
+      subnet = "SN-VN-MAN-UKS-1-APPGATEWAY"
     },
   ]
 }
@@ -77,21 +75,15 @@ variable "frontendIPConfigurations" {
   ]
 }
 
-variable "httpListeners" {
+variable "frontEndPorts" {
   default = [
     {
-      name                    = "appGatewayHttpListener"
-      FrontendIPConfiguration = "appGatewayFrontendIP"
-      FrontendPort            = "frontendPort80"
-      Protocol                = "Http"
-      SslCertificate          = ""
+      name = "frontendPort80"
+      port = 80
     },
     {
-      name                    = "appGatewayHttpsListener"
-      FrontendIPConfiguration = "appGatewayFrontendIP"
-      FrontendPort            = "frontendPort443"
-      Protocol                = "Https"
-      SslCertificate          = "test-frontend-cert"
+      name = "frontendPort443"
+      port = 443
     },
   ]
 }
@@ -106,17 +98,29 @@ variable "sslCertificates" {
   ]
 }
 
-variable "backendAddressPools" {
+variable "httpListeners" {
   default = [
     {
-      name = "default"
-
-      backendAddresses = [
-        {
-          ipAddress = "1.1.1.1"
-        },
-      ]
+      name                    = "rhubarb-fe-http-listener"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort            = "frontendPort80"
+      Protocol                = "Http"
+      SslCertificate          = ""
+      hostName                = "rhubarb.test.com"
     },
+    {
+      name                    = "rhubarb-fe-https-listener"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort            = "frontendPort443"
+      Protocol                = "Https"
+      SslCertificate          = "test-frontend-cert"
+      hostName                = "rhubarb.test.com"
+    },
+  ]
+}
+
+variable "backendAddressPools" {
+  default = [
     {
       name = "rhubarb-frontend"
 
@@ -132,11 +136,14 @@ variable "backendAddressPools" {
 variable "backendHttpSettingsCollection" {
   default = [
     {
-      name                       = "backend-80-nocookies"
-      port                       = 80
-      Protocol                   = "Http"
-      CookieBasedAffinity        = "Disabled"
-      AuthenticationCertificates = ""
+      name                           = "backend-80-nocookies"
+      port                           = 80
+      Protocol                       = "Http"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = ""
+      probeEnabled                   = "True"
+      probe                          = "default-http-probe"
+      PickHostNameFromBackendAddress = "True"
     },
   ]
 }
@@ -144,22 +151,18 @@ variable "backendHttpSettingsCollection" {
 variable "requestRoutingRules" {
   default = [
     {
-      name                = "HTTPSRule"
+      name                = "rhubarb-fe-http"
       RuleType            = "Basic"
-      httpListener        = "appGatewayHttpsListener"
-      backendAddressPool  = "default"
+      httpListener        = "rhubarb-fe-http-listener"
+      backendAddressPool  = "rhubarb-frontend"
       backendHttpSettings = "backend-80-nocookies"
     },
-  ]
-}
-
-variable "gatewayIpConfigurations" {
-  default = [
     {
-      name   = "internalNetwork"
-      vNetRG = "RG-VN-MAN-UKS-1"
-      vNet   = "VN-MAN-UKS-1"
-      subnet = "SN-VN-MAN-UKS-1-APPGATEWAY"
+      name                = "rhubarb-fe-https"
+      RuleType            = "Basic"
+      httpListener        = "rhubarb-fe-https-listener"
+      backendAddressPool  = "rhubarb-frontend"
+      backendHttpSettings = "backend-80-nocookies"
     },
   ]
 }
@@ -167,14 +170,14 @@ variable "gatewayIpConfigurations" {
 variable "probes" {
   default = [
     {
-      name               = "HTTP-health-Probe"
+      name               = "default-http-probe"
       protocol           = "Http"
       path               = "/health"
       interval           = 30
       timeout            = 30
       unhealthyThreshold = 3
 
-      # Can be used if backed is resolvable in DNS - Will allow one probe for all rules
+      # Can be used if backed is resolvable in DNS
       pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "backend-80-nocookies"
     },

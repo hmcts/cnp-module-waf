@@ -208,6 +208,10 @@
     "requestRoutingRules": {
       "type": "array",
       "value": "[variables('joinedParameters').requestRoutingRules]"
+    },
+    "probes": {
+      "type": "array",
+      "value": "[variables('joinedParameters').probes]"
     }
   }
 }

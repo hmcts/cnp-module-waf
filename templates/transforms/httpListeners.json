@@ -28,7 +28,8 @@
                     "Protocol": "[parameters('source').protocol]",
                     "SslCertificate": {
                         "Id": "[concat(parameters('applicationGatewayID'), '/sslCertificates/', parameters('source').SslCertificate)]"
-                    }
+                    },
+                    "hostname": "[parameters('source').hostName]"
                 }
             }
         ],
@@ -43,7 +44,8 @@
                         "Id": "[concat(parameters('applicationGatewayID'), '/frontendPorts/', parameters('source').FrontendPort)]"
                     },
                     "Protocol": "[parameters('source').protocol]",
-                    "SslCertificate": null
+                    "SslCertificate": null,
+                    "hostname": "[parameters('source').hostName]"
                 }
             }
         ]
