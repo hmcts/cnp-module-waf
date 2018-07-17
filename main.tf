@@ -12,7 +12,7 @@ data "template_file" "wafTemplate" {
 
 # Create the resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "${local.wafName}"
+  name     = "${var.resourcegroupname}"
   location = "${var.location}"
 }
 

@@ -18,13 +18,17 @@ variable "env" {
   type    = "string"
 }
 
+variable "ilbIp" {
+  type = "string"
+}
+
 # variable "backendaddress" {
 #   type = "string"
 # }
 
-# variable "resourcegroupname" {
-#   type = "string"
-# }
+variable "resourcegroupname" {
+  type = "string"
+}
 
 # variable "appPrivateFqdn" {
 #   description = "fqdn of app to health check for example rhubarb.service.sandbox.hmcts.net"
@@ -35,11 +39,11 @@ variable "env" {
 #   default     = "/health"
 # }
 
-# variable "team_name" {}
+variable "team_name" {}
 
-# variable "team_contact" {}
+variable "team_contact" {}
 
-# variable "destroy_me" {}
+variable "destroy_me" {}
 
 # variable "vaultURI" {}
 
