@@ -1,6 +1,6 @@
 # Define local variables
 locals {
-  wafName   = "${var.product}-${var.env}"
+  wafName   = "${var.product}-${var.env}-multi"
   saAccount = "${var.product}${var.env}${random_id.randomKey.hex}"
   tags      = ""
 }
