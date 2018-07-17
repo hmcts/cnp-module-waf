@@ -1,0 +1,42 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "state": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "source": {
+            "type": "object"
+        },
+        "applicationGatewayID": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "instance": [
+            {
+                "Name": "[parameters('source').name]",
+                "properties": {
+                    "RuleType": "[parameters('source').RuleType]",
+                    "httpListener": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
+                    },
+                    "backendAddressPool": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
+                    },
+                    "backendHttpSettings": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
+                    }
+                }
+            }
+        ]
+    },
+    "resources": [],
+    "outputs": {
+        "collection": {
+            "type": "array",
+            "value": "[concat(parameters('state'), variables('instance'))]"
+        }
+    }
+}

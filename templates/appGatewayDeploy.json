@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appGatewaySettings": {
+            "type": "object"
+        },
+        "sslCertificates": {
+            "type": "array"
+        },
+        "gatewayIPConfigurations": {
+            "type": "array"
+        },
+        "frontendIPConfigurations": {
+            "type": "array"
+        },
+        "frontendPorts": {
+            "type": "array"
+        },
+        "backendAddressPools": {
+            "type": "array"
+        },
+        "backendHttpSettingsCollection": {
+            "type": "array"
+        },
+        "httpListeners": {
+            "type": "array"
+        },
+        "requestRoutingRules": {
+            "type": "array"
+        },
+        "probes": {
+            "type": "array"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-03-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('appGatewaySettings').frontendIPConfigurations[copyindex()].PublicIPName]",
+            "location": "[resourcegroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "copy": {
+                "count": "[length(parameters('appGatewaySettings').frontendIPConfigurations)]",
+                "mode": "Serial",
+                "name": "pipCopy"
+            }
+        },
+        {
+            "apiVersion": "2017-06-01",
+            "name": "[parameters('appGatewaySettings').name]",
+            "type": "Microsoft.Network/applicationGateways",
+            "location": "[resourcegroup().location]",
+            "dependsOn": [
+                "pipCopy"
+            ],
+            "properties": {
+                "sku": {
+                    "name": "[parameters('appGatewaySettings').size]",
+                    "tier": "[parameters('appGatewaySettings').tier]",
+                    "capacity": "[parameters('appGatewaySettings').capacity]"
+                }, 
+                "gatewayIPConfigurations": "[parameters('gatewayIPConfigurations')]",
+                "authenticationCertificates": [],
+                "frontendIPConfigurations": "[parameters('frontendIPConfigurations')]",
+                "frontendPorts": "[parameters('frontendPorts')]",
+                "backendAddressPools": "[parameters('backendAddressPools')]",
+                "backendHttpSettingsCollection": "[parameters('backendHttpSettingsCollection')]",
+                "httpListeners": "[parameters('httpListeners')]",
+                "requestRoutingRules": "[parameters('requestRoutingRules')]",
+                "sslCertificates": "[parameters('sslCertificates')]",
+                "probes": "[parameters('probes')]"
+            }
+        }
+    ],
+    "outputs": {}
+}

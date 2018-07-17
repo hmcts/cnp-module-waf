@@ -1,0 +1,51 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "state": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "source": {
+            "type": "object"
+        },
+        "applicationGatewayID": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "instance": "[if(equals(tolower(parameters('source').Protocol), 'http'), variables('instanceHTTP'), variables('instanceHTTPS'))]",
+        "instanceHTTPS": [
+            {
+                "name": "[parameters('source').name]",
+                "properties": {
+                    "Port": "[parameters('source').port]",
+                    "Protocol": "[parameters('source').Protocol]",
+                    "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
+                    "AuthenticationCertificates": [
+                        {
+                            "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
+                        }
+                    ]
+                }
+            }
+        ],
+        "instanceHTTP": [
+            {
+                "name": "[parameters('source').name]",
+                "properties": {
+                    "Port": "[parameters('source').port]",
+                    "Protocol": "[parameters('source').Protocol]",
+                    "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]"
+                }
+            }
+        ]
+    },
+    "resources": [],
+    "outputs": {
+        "collection": {
+            "type": "array",
+            "value": "[concat(parameters('state'), variables('instance'))]"
+        }
+    }
+}

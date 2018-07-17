@@ -1,22 +1,23 @@
-variable "subscription" {
-  default = "testing"
-  type    = "string"
-}
+# variable "product" {
+#   type = "string"
+# }
 
-variable "product" {
-  default = "testing"
-  type    = "string"
-}
+# variable "location" {
+#   type    = "string"
+#   default = "UK South"
+# }
 
-variable "location" {
-  type    = "string"
-  default = "UK South"
-}
+# variable "vnetname" {
+#   type = "string"
+# }
 
-variable "env" {
-  default = "sandbox"
-  type    = "string"
-}
+# variable "subnetname" {
+#   type = "string"
+# }
+
+# variable "env" {
+#   type = "string"
+# }
 
 # variable "backendaddress" {
 #   type = "string"
@@ -43,18 +44,6 @@ variable "env" {
 
 # variable "vaultURI" {}
 
-variable "size" {
-  default = "WAF_Medium"
-}
-
-variable "tier" {
-  default = "WAF"
-}
-
-variable "capacity" {
-  default = "2"
-}
-
 variable "frontEndPorts" {
   default = [
     {
@@ -71,8 +60,8 @@ variable "frontEndPorts" {
 variable "frontendIPConfigurations" {
   default = [
     {
-      name         = "appGatewayFrontendIP"
-      publicIpName = "pip-agw-sand-pub-1"
+      name = "appGatewayFrontendIP"
+      ip   = "pip-agw-sand-pub-1"
     },
   ]
 }
@@ -107,22 +96,18 @@ variable "sslCertificates" {
 }
 
 variable "backendAddressPools" {
+  type = "list"
+
   default = [
     {
-      name = "default"
+      name = "firstBackendPool"
 
       backendAddresses = [
         {
-          ipAddress = "1.1.1.1"
+          IpAddress = "1.1.1.1"
         },
-      ]
-    },
-    {
-      name = "rhubarb-frontend"
-
-      backendAddresses = [
         {
-          fqdn = "rhubarb-frontend-prod.service.core-compute-prod.internal"
+          IpAddress = "2.2.2.2"
         },
       ]
     },
@@ -147,36 +132,8 @@ variable "requestRoutingRules" {
       name                = "HTTPSRule"
       RuleType            = "Basic"
       httpListener        = "appGatewayHttpsListener"
-      backendAddressPool  = "default"
+      backendAddressPool  = "firstBackendPool"
       backendHttpSettings = "backend-80-nocookies"
-    },
-  ]
-}
-
-variable "gatewayIpConfigurations" {
-  default = [
-    {
-      name   = "internalNetwork"
-      vNetRG = "RG-VN-MAN-UKS-1"
-      vNet   = "VN-MAN-UKS-1"
-      subnet = "SN-VN-MAN-UKS-1-APPGATEWAY"
-    },
-  ]
-}
-
-variable "probes" {
-  default = [
-    {
-      name               = "HTTP-health-Probe"
-      protocol           = "Http"
-      path               = "/health"
-      interval           = 30
-      timeout            = 30
-      unhealthyThreshold = 3
-
-      # Can be used if backed is resolvable in DNS - Will allow one probe for all rules
-      pickHostNameFromBackendHttpSettings = "true"
-      backendHttpSettings                 = "backend-80-nocookies"
     },
   ]
 }

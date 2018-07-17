@@ -1,0 +1,88 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "transformTemplateUri": {
+            "type": "string"
+        },
+        "state": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "source": {
+            "type": "object"
+        },
+        "appGWName": {
+            "type": "string"
+        },
+        "appGWID": {
+            "type": "string"
+        },
+        "section": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "count": "[length(parameters('source')[parameters('section')])]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "[concat('transform-', parameters('appGWName'), '-', parameters('section'), '-0')]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [],
+                    "outputs": {
+                        "collection": {
+                            "type": "array",
+                            "value": "[parameters('state')]"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "[concat('transform-', parameters('appGWName'), '-', parameters('section'), '-', copyindex(1))]",
+            "copy": {
+                "name": "iterator",
+                "count": "[variables('count')]",
+                "mode": "serial"
+            },
+            "dependsOn": [
+                "[concat('transform-', parameters('appGWName'), '-', parameters('section'), '-0')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('transformTemplateUri')]"
+                },
+                "parameters": {
+                    "source": {
+                        "value": "[parameters('source')[parameters('section')][copyindex()]]"
+                    },
+                    "state": {
+                        "value": "[reference(concat('transform-', parameters('appGWName'), '-', parameters('section'), '-', copyindex())).outputs.collection.value]"
+                    },
+                    "applicationGatewayID": {
+                        "value": "[parameters('appGWID')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "result": {
+            "type": "array",
+            "value": "[reference(concat('transform-', parameters('source').name, '-', parameters('section'), '-', variables('count'))).outputs.collection.value]"
+        }
+    }
+}

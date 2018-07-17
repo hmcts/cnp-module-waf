@@ -1,0 +1,213 @@
+{
+  "$schema":
+    "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "timestamp": {
+      "type": "string"
+    },
+    "sasToken": {
+      "type": "string"
+    },
+    "baseUri": {
+      "type": "string"
+    },
+    "frontendIPConfigurations": {
+      "type": "string"
+    },
+    "frontEndPorts": {
+      "type": "string"
+    },
+    "httpListeners": {
+      "type": "string"
+    },
+    "sslCertificates": {
+      "type": "string"
+    },
+    "backendAddressPools": {
+      "type": "string"
+    },
+    "backendHttpSettingsCollection": {
+      "type": "string"
+    },
+    "requestRoutingRules": {
+      "type": "string"
+    },
+    "gatewayIpConfigurations": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string"
+    },
+    "capacity": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "probes": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "joinedParameters": {
+      "name": "[parameters('name')]",
+      "size": "[parameters('size')]",
+      "tier": "[parameters('tier')]",
+      "capacity": "[parameters('capacity')]",
+      "frontendIPConfigurations":
+        "[base64ToJson(parameters('frontendIPConfigurations'))]",
+      "frontendPorts": "[base64ToJson(parameters('frontEndPorts'))]",
+      "httpListeners": "[base64ToJson(parameters('httpListeners'))]",
+      "sslCertificates": "[base64ToJson(parameters('sslCertificates'))]",
+      "backendAddressPools":
+        "[base64ToJson(parameters('backendAddressPools'))]",
+      "backendHttpSettingsCollection":
+        "[base64ToJson(parameters('backendHttpSettingsCollection'))]",
+      "requestRoutingRules": "[base64ToJson(parameters('requestRoutingRules'))]",
+      "probes": "[base64ToJson(parameters('probes'))]",
+      "gatewayIPConfigurations": "[base64ToJson(parameters('gatewayIpConfigurations'))]"
+    },
+    "appGWSections": [
+      "sslCertificates",
+      "gatewayIPConfigurations",
+      "frontendIPConfigurations",
+      "frontendPorts",
+      "backendAddressPools",
+      "backendHttpSettingsCollection",
+      "httpListeners",
+      "requestRoutingRules",
+      "probes"
+    ]
+  },
+  "resources": [
+    {
+      "apiVersion": "2017-05-10",
+      "name":
+        "[concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[copyIndex()])]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri":
+            "[concat(parameters('baseUri'), 'appGatewayCollector.json', parameters('sasToken'))]"
+        },
+        "parameters": {
+          "source": {
+            "value": "[variables('joinedParameters')]"
+          },
+          "transformTemplateUri": {
+            "value":
+              "[concat(parameters('baseUri'), 'transforms/', variables('appGWSections')[copyIndex()],'.json', parameters('sasToken'))]"
+          },
+          "appGWName": {
+            "value": "[variables('joinedParameters').name]"
+          },
+          "appgwID": {
+            "value":
+              "[resourceId('Microsoft.Network/applicationGateways',variables('joinedParameters').name)]"
+          },
+          "section": {
+            "value": "[variables('appGWSections')[copyindex()]]"
+          }
+        }
+      },
+      "copy": {
+        "count": "[length(variables('appGWSections'))]",
+        "mode": "Parallel",
+        "name": "agwCollector"
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "[concat('deploy-', variables('joinedParameters').name)]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri":
+            "[concat(parameters('baseUri'), 'appGatewayDeploy.json', parameters('sasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appGatewaySettings": {
+            "value": "[variables('joinedParameters')]"
+          },
+          "sslCertificates": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[0])).outputs.result.value]"
+          },
+          "gatewayIPConfigurations": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[1])).outputs.result.value]"
+          },
+          "frontendIPConfigurations": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[2])).outputs.result.value]"
+          },
+          "frontendPorts": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[3])).outputs.result.value]"
+          },
+          "backendAddressPools": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[4])).outputs.result.value]"
+          },
+          "backendHttpSettingsCollection": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[5])).outputs.result.value]"
+          },
+          "httpListeners": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[6])).outputs.result.value]"
+          },
+          "requestRoutingRules": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[7])).outputs.result.value]"
+          },
+          "probes": {
+            "value":
+              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[8])).outputs.result.value]"
+          }
+        }
+      },
+      "dependsOn": ["agwCollector"]
+    }
+  ],
+  "outputs": {
+    "frontendIPConfigurations": {
+      "type": "array",
+      "value": "[variables('joinedParameters').frontendIPConfigurations]"
+    },
+    "frontendPorts": {
+      "type": "array",
+      "value": "[variables('joinedParameters').frontendPorts]"
+    },
+    "httpListeners": {
+      "type": "array",
+      "value": "[variables('joinedParameters').httpListeners]"
+    },
+    "sslCertificates": {
+      "type": "array",
+      "value": "[variables('joinedParameters').sslCertificates]"
+    },
+    "backendAddressPools": {
+      "type": "array",
+      "value": "[variables('joinedParameters').backendAddressPools]"
+    },
+    "backendHttpSettingsCollection": {
+      "type": "array",
+      "value": "[variables('joinedParameters').backendHttpSettingsCollection]"
+    },
+    "requestRoutingRules": {
+      "type": "array",
+      "value": "[variables('joinedParameters').requestRoutingRules]"
+    }
+  }
+}
