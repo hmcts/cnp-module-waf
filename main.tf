@@ -87,6 +87,7 @@ resource "null_resource" "uploadTemplate" {
 
 # Run the WAF Template
 resource "azurerm_template_deployment" "waf" {
+  depends_on          = "[data.azurerm_storage_account_sas.templateStoreSas]"
   template_body       = "${data.template_file.wafTemplate.rendered}"
   name                = "${local.wafName}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
