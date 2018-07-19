@@ -17,6 +17,11 @@ try {
     stage('Terraform Linting Checks') {
       sh 'terraform validate -check-variables=false -no-color'
     }
+
+    withSubscription(subscription) {
+    stage("get ssl certs") {
+      retrieveCert(environment)
+    }
   }
 }
 catch (err) {
