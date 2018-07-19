@@ -34,7 +34,7 @@ resource "azurerm_storage_account" "templateStore" {
 resource "azurerm_storage_container" "templates" {
   name                  = "templates"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
-  storage_account_name  = "${azurerm_storage_account.templateStore.name}"
+  storage_account_name  = "${local.saAccount}"
   container_access_type = "private"
   depends_on            = ["azurerm_storage_account.templateStore"]
 }
