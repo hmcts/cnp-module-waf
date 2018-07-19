@@ -98,7 +98,8 @@
           "disabledRuleGroups": []
         },
         "sslPolicy": {
-          "policyName": "[parameters('sslPolicy')]"
+          "policyName": "[parameters('sslPolicy')]",
+          "policyType": "Predefined"
         }
       }
     }
