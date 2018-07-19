@@ -10,6 +10,10 @@ try {
       checkout scm
     }
 
+    stage("get ssl certs") {
+      retrieveCert(environment)
+    }
+
     stage('Terraform init') {
       sh 'terraform init'
     }
@@ -17,12 +21,6 @@ try {
     stage('Terraform Linting Checks') {
       sh 'terraform validate -check-variables=false -no-color'
     }
-
-    withSubscription(subscription) {
-    stage("get ssl certs") {
-      retrieveCert(environment)
-    }
-  }
 }
 catch (err) {
   throw err
