@@ -71,6 +71,10 @@ variable "wafRuleSetVersion" {
   default = "3.0"
 }
 
+variable "sslPolicy" {
+  default = "AppGwSslPolicy20170401S"
+}
+
 variable "capacity" {
   default = "2"
 }
@@ -122,8 +126,4 @@ variable "probes" {
       backendHttpSettings                 = "backend-80-nocookies"
     },
   ]
-}
-
-variable "sslPolicy" {
-  default = "AppGwSslPolicy20170401S"
 }
