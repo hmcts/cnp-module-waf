@@ -82,7 +82,7 @@
     "outputs": {
         "result": {
             "type": "array",
-            "value": "[reference(concat('transform-', parameters('source').name, '-', parameters('section'), '-', variables('count'))).outputs.collection.value]"
+            "value": "[reference(concat('transform-waf-', parameters('section'), '-', variables('count'))).outputs.collection.value]"
         }
     }
 }
