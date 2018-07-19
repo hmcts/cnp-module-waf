@@ -36,10 +36,12 @@ resource "azurerm_storage_container" "templates" {
   resource_group_name   = "${azurerm_resource_group.rg.name}"
   storage_account_name  = "${azurerm_storage_account.templateStore.name}"
   container_access_type = "private"
+  depends_on            = ["azurerm_storage_account.templateStore"]
 }
 
 # Create the SAS key
 data "azurerm_storage_account_sas" "templateStoreSas" {
+  depends_on        = ["azurerm_storage_container.templates"]
   connection_string = "${azurerm_storage_account.templateStore.primary_connection_string}"
   https_only        = true
 
