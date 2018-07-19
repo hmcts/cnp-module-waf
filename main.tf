@@ -41,7 +41,7 @@ resource "azurerm_storage_container" "templates" {
 
 # Create the SAS key
 data "azurerm_storage_account_sas" "templateStoreSas" {
-  depends_on        = ["azurerm_storage_account.templateStore"]
+  depends_on        = ["azurerm_storage_container.templates"]
   connection_string = "${azurerm_storage_account.templateStore.primary_connection_string}"
   https_only        = true
 
@@ -76,6 +76,8 @@ data "azurerm_storage_account_sas" "templateStoreSas" {
 
 # Run bash script to upload the templates
 resource "null_resource" "uploadTemplate" {
+  depends_on = ["azurerm_storage_account.templateStore"]
+
   triggers {
     trigger = "${timestamp()}"
   }
