@@ -90,7 +90,7 @@
     {
       "apiVersion": "2017-05-10",
       "name":
-        "[concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[copyIndex()])]",
+        "[concat('collector-waf-', variables('appGWSections')[copyIndex()])]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
@@ -141,39 +141,39 @@
           },
           "sslCertificates": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[0])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[0])).outputs.result.value]"
           },
           "gatewayIPConfigurations": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[1])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[1])).outputs.result.value]"
           },
           "frontendIPConfigurations": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[2])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[2])).outputs.result.value]"
           },
           "frontendPorts": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[3])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[3])).outputs.result.value]"
           },
           "backendAddressPools": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[4])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[4])).outputs.result.value]"
           },
           "backendHttpSettingsCollection": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[5])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[5])).outputs.result.value]"
           },
           "httpListeners": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[6])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[6])).outputs.result.value]"
           },
           "requestRoutingRules": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[7])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[7])).outputs.result.value]"
           },
           "probes": {
             "value":
-              "[reference(concat('collector-', variables('joinedParameters').name, '-', variables('appGWSections')[8])).outputs.result.value]"
+              "[reference(concat('collector-waf-', variables('appGWSections')[8])).outputs.result.value]"
           }
         }
       },
