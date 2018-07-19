@@ -41,7 +41,7 @@ resource "azurerm_storage_container" "templates" {
 
 # Create the SAS key
 data "azurerm_storage_account_sas" "templateStoreSas" {
-  depends_on        = ["azurerm_storage_container.templates"]
+  depends_on        = ["azurerm_storage_account.templateStore"]
   connection_string = "${azurerm_storage_account.templateStore.primary_connection_string}"
   https_only        = true
 
