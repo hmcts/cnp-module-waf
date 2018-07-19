@@ -3,6 +3,15 @@ locals {
   wafName   = "${var.wafName}-${var.env}"
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
+
+  ilbAuthCert = [
+    {
+      name = "core-compute-${var.env}"
+      data = "${chomp(data.local_file.ilbCert.content)}"
+    },
+  ]
+
+  authenticationCertificates = "${concat(local.ilbAuthCert, var.authenticationCertificates)}"
 }
 
 # The location of the ARM Template to start the WAF build
@@ -117,6 +126,8 @@ resource "azurerm_template_deployment" "waf" {
     # The sas token created to access the files in the storage account
     sasToken = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
     # The front end ports to be created on the WAF
+    authenticationCertificates = "${base64encode(jsonencode(local.authenticationCertificates))}"
+    # The front end ports to be created on the WAF
     frontEndPorts = "${base64encode(jsonencode(var.frontEndPorts))}"
     # The front end IP Addresses to be created
     frontendIPConfigurations = "${base64encode(jsonencode(var.frontendIPConfigurations))}"
@@ -155,53 +166,57 @@ resource "azurerm_template_deployment" "waf" {
 #   vault_uri = "${var.vaultURI}" //"https://core-compute-sandbox.vault.azure.net/"
 # }
 
-
 # output "backendAddressPools" {
 #   value = "${jsonencode(var.backendAddressPools)}"
 # }
-
 
 # output "frontEndPorts" {
 #   value = "${jsonencode(var.frontEndPorts)}"
 # }
 
-
 # output "frontendIPConfigurations" {
 #   value = "${jsonencode(var.frontendIPConfigurations)}"
 # }
-
 
 # output "httpListeners" {
 #   value = "${jsonencode(var.httpListeners)}"
 # }
 
-
 # output "sslCertificates" {
 #   value = "${jsonencode(var.sslCertificates)}"
 # }
-
 
 # output "backendHttpSettingsCollection" {
 #   value = "${jsonencode(var.backendHttpSettingsCollection)}"
 # }
 
-
 # output "requestRoutingRules" {
 #   value = "${jsonencode(var.requestRoutingRules)}"
 # }
-
 
 # output "sas_url_query_string" {
 #   value = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
 # }
 
-
 # output "connectionString" {
 #   value = "${azurerm_storage_account.templateStore.primary_blob_connection_string}"
 # }
-
 
 # output "templateURI" {
 #   value = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
 # }
 
+resource "null_resource" "ilbCert" {
+  triggers {
+    trigger = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "bash -e ${path.module}/getCert.sh core-infra-${var.env} core-compute-${var.env} ${path.module} ${var.subscription}"
+  }
+}
+
+data "local_file" "ilbCert" {
+  filename   = "${path.module}/core-compute-${var.env}.base64.out"
+  depends_on = ["null_resource.ilbCert"]
+}

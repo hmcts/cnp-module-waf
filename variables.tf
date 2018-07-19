@@ -81,6 +81,11 @@ variable "capacity" {
   default = "2"
 }
 
+variable "authenticationCertificates" {
+  type    = "list"
+  default = []
+}
+
 variable "gatewayIpConfigurations" {
   type = "list"
 }

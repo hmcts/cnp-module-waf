@@ -6,6 +6,9 @@
     "appGatewaySettings": {
       "type": "object"
     },
+    "authenticationCertificates": {
+      "type": "object"
+    },
     "sslCertificates": {
       "type": "array"
     },
@@ -80,7 +83,7 @@
           "capacity": "[parameters('appGatewaySettings').capacity]"
         },
         "gatewayIPConfigurations": "[parameters('gatewayIPConfigurations')]",
-        "authenticationCertificates": [],
+        "authenticationCertificates": "[parameters('authenticationCertificates')]",
         "frontendIPConfigurations": "[parameters('frontendIPConfigurations')]",
         "frontendPorts": "[parameters('frontendPorts')]",
         "backendAddressPools": "[parameters('backendAddressPools')]",

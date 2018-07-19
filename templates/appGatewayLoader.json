@@ -98,7 +98,8 @@
       "backendHttpSettingsCollection",
       "httpListeners",
       "requestRoutingRules",
-      "probes"
+      "probes",
+      "authenticationCertificates"
     ]
   },
   "resources": [
@@ -189,6 +190,10 @@
           "probes": {
             "value":
               "[reference(concat('collector-waf-', variables('appGWSections')[8])).outputs.result.value]"
+          },
+          "authenticationCertificates": {
+            "value":
+              "[reference(concat('collector-waf-', variables('appGWSections')[9])).outputs.result.value]"
           },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
