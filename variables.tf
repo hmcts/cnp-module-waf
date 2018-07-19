@@ -59,21 +59,37 @@ variable "capacity" {
   default = "2"
 }
 
-variable "gatewayIpConfigurations" {}
+variable "gatewayIpConfigurations" {
+  type = "list"
+}
 
-variable "frontendIPConfigurations" {}
+variable "frontendIPConfigurations" {
+  type = "list"
+}
 
-variable "frontEndPorts" {}
+variable "frontEndPorts" {
+  type = "list"
+}
 
-variable "sslCertificates" {}
+variable "sslCertificates" {
+  type = "list"
+}
 
-variable "httpListeners" {}
+variable "httpListeners" {
+  type = "list"
+}
 
-variable "backendAddressPools" {}
+variable "backendAddressPools" {
+  type = "list"
+}
 
-variable "backendHttpSettingsCollection" {}
+variable "backendHttpSettingsCollection" {
+  type = "list"
+}
 
-variable "requestRoutingRules" {}
+variable "requestRoutingRules" {
+  type = "list"
+}
 
 variable "probes" {
   default = [
