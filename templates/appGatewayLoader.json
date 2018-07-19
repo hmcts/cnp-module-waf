@@ -68,6 +68,9 @@
     },
     "sslPolicy": {
       "type": "string"
+    },
+    "authenticationCertificates": {
+      "type": "string"
     }
   },
   "variables": {
@@ -85,9 +88,13 @@
         "[base64ToJson(parameters('backendAddressPools'))]",
       "backendHttpSettingsCollection":
         "[base64ToJson(parameters('backendHttpSettingsCollection'))]",
-      "requestRoutingRules": "[base64ToJson(parameters('requestRoutingRules'))]",
+      "requestRoutingRules":
+        "[base64ToJson(parameters('requestRoutingRules'))]",
       "probes": "[base64ToJson(parameters('probes'))]",
-      "gatewayIPConfigurations": "[base64ToJson(parameters('gatewayIpConfigurations'))]"
+      "gatewayIPConfigurations":
+        "[base64ToJson(parameters('gatewayIpConfigurations'))]",
+      "authenticationCertificates":
+        "[base64ToJson(parameters('authenticationCertificates'))]"
     },
     "appGWSections": [
       "sslCertificates",
@@ -206,7 +213,7 @@
           },
           "wafRuleSetVersion": {
             "value": "[parameters('wafRuleSetVersion')]"
-          },          
+          },
           "sslPolicy": {
             "value": "[parameters('sslPolicy')]"
           }
