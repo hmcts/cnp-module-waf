@@ -36,6 +36,9 @@
     "gatewayIpConfigurations": {
       "type": "string"
     },
+    "probes": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     },
@@ -51,7 +54,19 @@
     "tier": {
       "type": "string"
     },
-    "probes": {
+    "wafEnabled": {
+      "type": "string"
+    },
+    "wafMode": {
+      "type": "string"
+    },
+    "wafRuleSetType": {
+      "type": "string"
+    },
+    "wafRuleSetVersion": {
+      "type": "string"
+    },
+    "sslPolicy": {
       "type": "string"
     }
   },
@@ -174,6 +189,21 @@
           "probes": {
             "value":
               "[reference(concat('collector-waf-', variables('appGWSections')[8])).outputs.result.value]"
+          },
+          "wafEnabled": {
+            "value": "[parameters('wafEnabled')]"
+          },
+          "wafMode": {
+            "value": "[parameters('wafMode')]"
+          },
+          "wafRuleSetType": {
+            "value": "[parameters('wafRuleSetType')]"
+          },
+          "wafRuleSetVersion": {
+            "value": "[parameters('wafRuleSetVersion')]"
+          },          
+          "sslPolicy": {
+            "value": "[parameters('sslPolicy')]"
           }
         }
       },

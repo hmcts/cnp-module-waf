@@ -31,7 +31,22 @@
         },
         "probes": {
             "type": "array"
-        }
+        },
+        "wafEnabled": {
+            "type": "string"
+          },
+          "wafMode": {
+            "type": "string"
+          },
+          "wafRuleSetType": {
+            "type": "string"
+          },
+          "wafRuleSetVersion": {
+            "type": "string"
+          },
+          "sslPolicy": {
+            "type": "string"
+          }
     },
     "variables": {},
     "resources": [
@@ -72,7 +87,16 @@
                 "httpListeners": "[parameters('httpListeners')]",
                 "requestRoutingRules": "[parameters('requestRoutingRules')]",
                 "sslCertificates": "[parameters('sslCertificates')]",
-                "probes": "[parameters('probes')]"
+                "probes": "[parameters('probes')]",
+                "webApplicationFirewallConfiguration": {
+                    "enabled": "[parameters('wafEnabled')]",
+                    "firewallMode": "[parameters('wafMode')]",
+                    "ruleSetType": "[parameters('wafRuleSetType')]",
+                    "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
+                    "disabledRuleGroups": []
+                  },
+                  "ApplicationGatewaySslPolicy": "[parameters('sslPolicy')]"
+          
             }
         }
     ],

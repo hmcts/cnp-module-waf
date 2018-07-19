@@ -55,6 +55,22 @@ variable "tier" {
   default = "WAF"
 }
 
+variable "wafEnabled" {
+  default = "true"
+}
+
+variable "wafMode" {
+  default = "Prevention"
+}
+
+variable "wafRuleSetType" {
+  default = "OWASP"
+}
+
+variable "wafRuleSetVersion" {
+  default = "3.0"
+}
+
 variable "capacity" {
   default = "2"
 }
@@ -106,4 +122,8 @@ variable "probes" {
       backendHttpSettings                 = "backend-80-nocookies"
     },
   ]
+}
+
+variable "sslPolicy" {
+  default = "AppGwSslPolicy20170401S"
 }

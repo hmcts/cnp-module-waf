@@ -105,6 +105,11 @@ resource "azurerm_template_deployment" "waf" {
     # virtualNetworkName = "${var.vnetname}"
     # subnetName         = "${var.subnetname}"
 
+    wafEnabled        = "${var.wafEnabled}"
+    wafMode           = "${var.wafMode}"
+    wafRuleSetType    = "${var.wafRuleSetType}"
+    sslPolicy         = "${var.sslPolicy}"
+    wafRuleSetVersion = "${var.wafRuleSetVersion}"
     # Force update of resource on each run
     timestamp = "${timestamp()}"
     # Base URL of the storage account
