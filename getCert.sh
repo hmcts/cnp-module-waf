@@ -15,12 +15,7 @@ subscription=$4
 command="az keyvault certificate download --vault-name $vaultName --name $certName --file $fileLocation/$certName.out"
 
 echo "Grabbing certificate"
-if [ -z "$AZURE_CONFIG_DIR" ]; then
-	echo "AZURE_CONFIG_DIR is not set - running under default AZ context"
-	$command
-else
-	echo "AZURE_CONFIG_DIR is set - using $subscription"
-	env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription $command
-fi
+echo "Using $subscription"
+env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription $command
 
-cat $fileLocation/$certName.out | tr -d \" | base64 > $fileLocation/$certName.base64.out
+cat $fileLocation/$certName.out | tr -d '\n' | base64 >$fileLocation/$certName.base64.out
