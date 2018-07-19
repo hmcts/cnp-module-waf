@@ -1,6 +1,6 @@
 # Define local variables
 locals {
-  wafName   = "${var.product}-${var.env}-multi"
+  wafName   = "${var.wafName}-${var.env}"
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
 }
@@ -12,7 +12,7 @@ data "template_file" "wafTemplate" {
 
 # Create the resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.resourcegroupname}"
+  name     = "${var.resourcegroupname}-${var.env}"
   location = "${var.location}"
 }
 

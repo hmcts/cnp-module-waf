@@ -55,6 +55,8 @@ variable "tier" {
   default = "WAF"
 }
 
+variable "wafName" {}
+
 variable "wafEnabled" {
   default = "true"
 }
