@@ -35,11 +35,11 @@ fi
 if [ -z "$result" ]; then
 	echo "Cert retrieved successfully ..."
 	echo ""
-	cat $fileLocation/$certName.out
+	# cat $fileLocation/$certName.out
 	echo "Encoding file ..."
 	echo ""
 	base64 -i $fileLocation/$certName.out >$fileLocation/$certName.base64.out
-	cat $fileLocation/$certName.base64.out
+	# cat $fileLocation/$certName.base64.out
 else
 	echo "Error retrieving cert ...."
 	echo "$result"
