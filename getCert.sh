@@ -14,7 +14,7 @@ subscription=$4
 
 azureConfigDir=/opt/jenkins/.azure-$subscription
 
-command="az keyvault certificate download --vault-name $vaultName --name $certName --file $fileLocation/$certName.cer"
+command="az keyvault certificate download --vault-name $vaultName --name $certName --file $fileLocation/$certName.out"
 
 echo "Grabbing certificate"
 echo "Using $subscription"
@@ -35,10 +35,10 @@ fi
 if [ -z "$result" ]; then
 	echo "Cert retrieved successfully ..."
 	echo ""
-	cat $fileLocation/$certName.cer
+	cat $fileLocation/$certName.out
 	echo "Encoding file ..."
 	echo ""
-	base64 -i $fileLocation/$certName.cer >$fileLocation/$certName.base64.out
+	base64 -i $fileLocation/$certName.out >$fileLocation/$certName.base64.out
 	cat $fileLocation/$certName.base64.out
 else
 	echo "Error retrieving cert ...."
