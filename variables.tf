@@ -2,10 +2,6 @@ variable "subscription" {
   type = "string"
 }
 
-variable "product" {
-  type = "string"
-}
-
 variable "location" {
   type = "string"
 }
