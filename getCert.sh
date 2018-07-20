@@ -24,7 +24,7 @@ if [ -d "$azureConfigDir" ]; then
 	echo "Config dir found for subscription $subscription"
 	echo "Grabbing certificate for $certName from $vaultName"
 	echo ""
-	result=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription bash -e $command)
+	result=$(env AZURE_CONFIG_DIR=$ bash -e $azureConfigDir $command)
 else
 	echo "Config dir not found - running under current login"
 	echo "Grabbing certificate for $certName from $vaultName"
