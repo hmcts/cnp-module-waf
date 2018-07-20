@@ -11,7 +11,7 @@ locals {
     },
   ]
 
-  authenticationCertificates = "${concat(local.ilbAuthCert, var.authenticationCertificates)}"
+  authenticationCertificates = "${concat(local.ilbAuthCert)}"
 }
 
 # The location of the ARM Template to start the WAF build
