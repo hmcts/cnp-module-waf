@@ -7,7 +7,7 @@ locals {
   ilbAuthCert = [
     {
       name = "core-compute-${var.env}"
-      data = "${data.local_file.ilbCert.content}"
+      data = "${chomp(data.local_file.ilbCert.content)}"
     },
   ]
 
