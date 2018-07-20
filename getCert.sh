@@ -24,6 +24,8 @@ if [ -d "$azureConfigDir" ]; then
 	echo "Config dir found for subscription $subscription"
 	echo "Grabbing certificate for $certName from $vaultName"
 	echo ""
+	echo "Running command"
+	echo "env AZURE_CONFIG_DIR=$azureConfigDir bash -e $command"
 	result=$(env AZURE_CONFIG_DIR=$azureConfigDir bash -e $command)
 else
 	echo "Config dir not found - running under current login"
