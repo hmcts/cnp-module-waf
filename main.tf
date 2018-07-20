@@ -16,7 +16,7 @@ locals {
   ]
 
   # Default backend certificates
-  authenticationCertificates = [
+  defaultAuthenticationCertificates = [
     {
       name = "ilbCert"
       data = "${data.local_file.ilbCertFile.content}"
@@ -24,7 +24,7 @@ locals {
   ]
 
   # Adding in default Backend HTTP Settings to go to the backed on http and https
-  backendHttpSettingsCollection = [
+  defaultBackendHttpSettingsCollection = [
     {
       name                           = "ilb-http"
       port                           = 80
@@ -47,7 +47,7 @@ locals {
     },
   ]
 
-  probes = [
+  defaultProbes = [
     {
       name               = "default-http-probe"
       protocol           = "Http"
@@ -74,18 +74,18 @@ locals {
     },
   ]
 
-  frontendIPConfigurations = [
+  defaultFrontendIPConfigurations = [
     {
       name         = "appGatewayFrontendIP"
       publicIpName = "shared-waf-${var.env}-pip"
     },
   ]
 
-  frontendIPConfigurations      = "${concat(local.frontendIPConfigurations, var.frontendIPConfigurations)}"
-  frontEndPorts                 = "${concat(local.frontEndPorts, var.frontEndPorts)}"
-  authenticationCertificates    = "${concat(local.authenticationCertificates, var.authenticationCertificates)}"
-  backendHttpSettingsCollection = "${concat(local.backendHttpSettingsCollection, var.backendHttpSettingsCollection)}"
-  probes                        = "${concat(local.probes, var.probes)}"
+  frontendIPConfigurations      = "${concat(local.defaultFrontendIPConfigurations, var.frontendIPConfigurations)}"
+  frontEndPorts                 = "${concat(local.defaultFrontEndPorts, var.frontEndPorts)}"
+  authenticationCertificates    = "${concat(local.defaultAuthenticationCertificates, var.authenticationCertificates)}"
+  backendHttpSettingsCollection = "${concat(local.defaultBackendHttpSettingsCollection, var.backendHttpSettingsCollection)}"
+  probes                        = "${concat(local.defaultProbes, var.probes)}"
 }
 
 # The location of the ARM Template to start the WAF build
