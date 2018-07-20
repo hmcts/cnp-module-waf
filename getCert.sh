@@ -21,4 +21,4 @@ result=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription bash -e $command
 
 echo $result
 
-cat $fileLocation/$certName.out | tr -d '\n' | base64 >$fileLocation/$certName.base64.out
+cat $fileLocation/$certName.out | base64 >$fileLocation/$certName.base64.out
