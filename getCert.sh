@@ -17,7 +17,7 @@ command="az keyvault certificate download --vault-name $vaultName --name $certNa
 echo "Grabbing certificate"
 echo "Using $subscription"
 echo  
-$result=(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription bash -e $command)
+result=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription bash -e $command)
 
 echo $result
 
