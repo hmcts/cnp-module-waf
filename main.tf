@@ -217,6 +217,6 @@ resource "null_resource" "ilbCert" {
 }
 
 data "local_file" "ilbCert" {
-  filename   = "${path.module}/core-compute-${var.env}.out"
+  filename   = "${path.module}/core-compute-${var.env}.out.2"
   depends_on = ["null_resource.ilbCert"]
 }
