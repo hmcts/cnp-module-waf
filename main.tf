@@ -4,7 +4,7 @@ locals {
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
 
-  frontEndPorts = [
+  defaultFrontEndPorts = [
     {
       name = "frontendPort80"
       port = 80
