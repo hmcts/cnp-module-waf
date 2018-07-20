@@ -7,7 +7,7 @@
       "type": "object"
     },
     "authenticationCertificates": {
-      "type": "object"
+      "type": "array"
     },
     "sslCertificates": {
       "type": "array"
