@@ -4,14 +4,88 @@ locals {
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
 
-  ilbAuthCert = [
+  frontEndPorts = [
     {
-      name = "core-compute-${var.env}"
+      name = "frontendPort80"
+      port = 80
+    },
+    {
+      name = "frontendPort443"
+      port = 443
+    },
+  ]
+
+  # Default backend certificates
+  authenticationCertificates = [
+    {
+      name = "ilbCert"
       data = "${data.local_file.ilbCertFile.content}"
     },
   ]
 
-  authenticationCertificates = "${concat(local.ilbAuthCert)}"
+  # Adding in default Backend HTTP Settings to go to the backed on http and https
+  backendHttpSettingsCollection = [
+    {
+      name                           = "ilb-http"
+      port                           = 80
+      Protocol                       = "Http"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = ""
+      probeEnabled                   = "True"
+      probe                          = "default-http-probe"
+      PickHostNameFromBackendAddress = "True"
+    },
+    {
+      name                           = "ilb-https"
+      port                           = 443
+      Protocol                       = "Https"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = "ilbCert"
+      probeEnabled                   = "True"
+      probe                          = "default-https-probe"
+      PickHostNameFromBackendAddress = "True"
+    },
+  ]
+
+  probes = [
+    {
+      name               = "default-http-probe"
+      protocol           = "Http"
+      path               = "/health"
+      interval           = 30
+      timeout            = 30
+      unhealthyThreshold = 3
+
+      # Can be used if backed is resolvable in DNS
+      pickHostNameFromBackendHttpSettings = "true"
+      backendHttpSettings                 = "ilb-http"
+    },
+    {
+      name               = "default-https-probe"
+      protocol           = "Https"
+      path               = "/health"
+      interval           = 30
+      timeout            = 30
+      unhealthyThreshold = 3
+
+      # Can be used if backed is resolvable in DNS
+      pickHostNameFromBackendHttpSettings = "true"
+      backendHttpSettings                 = "ilb-https"
+    },
+  ]
+
+  frontendIPConfigurations = [
+    {
+      name         = "appGatewayFrontendIP"
+      publicIpName = "shared-waf-${var.env}-pip"
+    },
+  ]
+
+  frontendIPConfigurations      = "${concat(local.frontendIPConfigurations, var.frontendIPConfigurations)}"
+  frontEndPorts                 = "${concat(local.frontEndPorts, var.frontEndPorts)}"
+  authenticationCertificates    = "${concat(local.authenticationCertificates, var.authenticationCertificates)}"
+  backendHttpSettingsCollection = "${concat(local.backendHttpSettingsCollection, var.backendHttpSettingsCollection)}"
+  probes                        = "${concat(local.probes, var.probes)}"
 }
 
 # The location of the ARM Template to start the WAF build
@@ -138,73 +212,17 @@ resource "azurerm_template_deployment" "waf" {
     # The backend address pools to be created on the WAF
     backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
     # The http settings to be created on the WAF
-    backendHttpSettingsCollection = "${base64encode(jsonencode(var.backendHttpSettingsCollection))}"
+    backendHttpSettingsCollection = "${base64encode(jsonencode(local.backendHttpSettingsCollection))}"
     # The request routing rules settings to be created on the WAF
     requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
     # The internal network settings - vNet / Subnet etc
     gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
     # The probe settings
-    probes = "${base64encode(jsonencode(var.probes))}"
+    probes = "${base64encode(jsonencode(local.probes))}"
     # The request routing rules settings to be created on the WAF
     tags = "${local.tags}"
-
-    #When private dns is in place, we should look at using the internal app fqdn over ilb ip
-    # backendaddress = "${jsonencode(var.backendaddress)}"
-
-    # appPrivateFqdn = "${var.appPrivateFqdn}"
-    # probePath      = "${var.probePath}"
-    # team_name      = "${var.team_name}"
-    # team_contact   = "${var.team_contact}"
-    # destroy_me     = "${var.destroy_me}"
-    # certData       = "${chomp(file("base64"))}"
-    # certPassword   = "${data.azurerm_key_vault_secret.certPassword.value}"
   }
 }
-
-# data "azurerm_key_vault_secret" "certPassword" {
-#   name      = "certPassword"
-#   vault_uri = "${var.vaultURI}" //"https://core-compute-sandbox.vault.azure.net/"
-# }
-
-# output "backendAddressPools" {
-#   value = "${jsonencode(var.backendAddressPools)}"
-# }
-
-# output "frontEndPorts" {
-#   value = "${jsonencode(var.frontEndPorts)}"
-# }
-
-# output "frontendIPConfigurations" {
-#   value = "${jsonencode(var.frontendIPConfigurations)}"
-# }
-
-# output "httpListeners" {
-#   value = "${jsonencode(var.httpListeners)}"
-# }
-
-# output "sslCertificates" {
-#   value = "${jsonencode(var.sslCertificates)}"
-# }
-
-# output "backendHttpSettingsCollection" {
-#   value = "${jsonencode(var.backendHttpSettingsCollection)}"
-# }
-
-# output "requestRoutingRules" {
-#   value = "${jsonencode(var.requestRoutingRules)}"
-# }
-
-# output "sas_url_query_string" {
-#   value = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
-# }
-
-# output "connectionString" {
-#   value = "${azurerm_storage_account.templateStore.primary_blob_connection_string}"
-# }
-
-# output "templateURI" {
-#   value = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
-# }
 
 resource "null_resource" "ilbCert" {
   triggers {

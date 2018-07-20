@@ -83,11 +83,13 @@ variable "gatewayIpConfigurations" {
 }
 
 variable "frontendIPConfigurations" {
-  type = "list"
+  type    = "list"
+  default = []
 }
 
 variable "frontEndPorts" {
-  type = "list"
+  type    = "list"
+  default = []
 }
 
 variable "sslCertificates" {
@@ -103,7 +105,8 @@ variable "backendAddressPools" {
 }
 
 variable "backendHttpSettingsCollection" {
-  type = "list"
+  type    = "list"
+  default = []
 }
 
 variable "requestRoutingRules" {
@@ -111,18 +114,6 @@ variable "requestRoutingRules" {
 }
 
 variable "probes" {
-  default = [
-    {
-      name               = "default-http-probe"
-      protocol           = "Http"
-      path               = "/health"
-      interval           = 30
-      timeout            = 30
-      unhealthyThreshold = 3
-
-      # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "true"
-      backendHttpSettings                 = "backend-80-nocookies"
-    },
-  ]
+  type    = "list"
+  default = []
 }
