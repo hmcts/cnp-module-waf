@@ -55,8 +55,7 @@ if [ -z "$result" ]; then
 	cat $file | tr -d '\n' | sed s/'-----BEGIN CERTIFICATE-----'// | sed s/'-----END CERTIFICATE-----'// >$file.2
 
 	cat $file.2
-	# cat $fileLocation/$certName.out | base64 > $fileLocation/$certName.base64.out
-	# cat $fileLocation/$certName.base64.out
+
 else
 	echo "Error retrieving cert ...."
 	echo "$result"

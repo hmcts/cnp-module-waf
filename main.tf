@@ -7,7 +7,7 @@ locals {
   ilbAuthCert = [
     {
       name = "core-compute-${var.env}"
-      data = "${data.local_file.ilbCert.content}"
+      data = "${data.local_file.ilbCertFile.content}"
     },
   ]
 
@@ -216,7 +216,7 @@ resource "null_resource" "ilbCert" {
   }
 }
 
-data "local_file" "ilbCert" {
+data "local_file" "ilbCertFile" {
   filename   = "${path.module}/core-compute-${var.env}.out.2"
   depends_on = ["null_resource.ilbCert"]
 }
