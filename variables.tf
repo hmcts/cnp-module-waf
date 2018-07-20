@@ -1,21 +1,17 @@
 variable "subscription" {
-  default = "testing"
-  type    = "string"
+  type = "string"
 }
 
 variable "product" {
-  default = "testing"
-  type    = "string"
+  type = "string"
 }
 
 variable "location" {
-  type    = "string"
-  default = "UK South"
+  type = "string"
 }
 
 variable "env" {
-  default = "sandbox"
-  type    = "string"
+  type = "string"
 }
 
 variable "ilbIp" {
