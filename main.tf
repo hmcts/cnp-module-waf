@@ -202,9 +202,9 @@ resource "azurerm_template_deployment" "waf" {
     # The front end ports to be created on the WAF
     authenticationCertificates = "${base64encode(jsonencode(local.authenticationCertificates))}"
     # The front end ports to be created on the WAF
-    frontEndPorts = "${base64encode(jsonencode(var.frontEndPorts))}"
+    frontEndPorts = "${base64encode(jsonencode(local.frontEndPorts))}"
     # The front end IP Addresses to be created
-    frontendIPConfigurations = "${base64encode(jsonencode(var.frontendIPConfigurations))}"
+    frontendIPConfigurations = "${base64encode(jsonencode(local.frontendIPConfigurations))}"
     # The front HTTP listeners ports to be created on the WAF
     httpListeners = "${base64encode(jsonencode(var.httpListeners))}"
     # The SSL Certificates to be created on the WAF
