@@ -29,7 +29,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "name": "[concat('transform-waf-', parameters('section'), '-0')]",
+            "name": "[concat('transform-waf-', substring(uniquestring(parameters('appGWName').name),0,4), '-', parameters('section'), '-0')]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {},
@@ -51,7 +51,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "name": "[concat('transform-waf-', parameters('section'), '-', copyindex(1))]",
+            "name": "[concat('transform-waf-', substring(uniquestring(parameters('appGWName').name),0,4), '-', parameters('section'), '-', copyindex(1))]",
             "copy": {
                 "name": "iterator",
                 "count": "[variables('count')]",
@@ -70,7 +70,7 @@
                         "value": "[parameters('source')[parameters('section')][copyindex()]]"
                     },
                     "state": {
-                        "value": "[reference(concat('transform-waf-', parameters('section'), '-', copyindex())).outputs.collection.value]"
+                        "value": "[reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName').name),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value]"
                     },
                     "applicationGatewayID": {
                         "value": "[parameters('appGWID')]"
@@ -82,7 +82,7 @@
     "outputs": {
         "result": {
             "type": "array",
-            "value": "[reference(concat('transform-waf-', parameters('section'), '-', variables('count'))).outputs.collection.value]"
+            "value": "[reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName').name),0,4), '-', parameters('section'), '-', variables('count'))).outputs.collection.value]"
         }
     }
 }
