@@ -99,12 +99,37 @@ resource "azurerm_resource_group" "rg" {
   location = "${var.location}"
 }
 
+########################################################################################################################
+#
+# This section is used to grab the certificate from the vault, format it and store it for the backend authentication 
+#
+########################################################################################################################
+
+resource "null_resource" "ilbCert" {
+  triggers {
+    trigger = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "bash -e ${path.module}/getCert.sh infra-vault-${var.env} core-compute-${var.env} ${path.module} ${var.subscription}"
+  }
+}
+
+data "local_file" "ilbCertFile" {
+  filename   = "${path.module}/core-compute-${var.env}.out.2"
+  depends_on = ["null_resource.ilbCert"]
+}
+
+#
 # Create a random string to help with storage account creation
+#
 resource "random_id" "randomKey" {
   byte_length = 2
 }
 
+#
 # Create the storage account
+#
 resource "azurerm_storage_account" "templateStore" {
   name                     = "${local.saAccount}"
   resource_group_name      = "${azurerm_resource_group.rg.name}"
@@ -113,7 +138,9 @@ resource "azurerm_storage_account" "templateStore" {
   account_replication_type = "LRS"
 }
 
+#
 # Create the storage account container
+#
 resource "azurerm_storage_container" "templates" {
   name                  = "templates"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
@@ -122,7 +149,9 @@ resource "azurerm_storage_container" "templates" {
   depends_on            = ["azurerm_storage_account.templateStore"]
 }
 
+#
 # Create the SAS key
+#
 data "azurerm_storage_account_sas" "templateStoreSas" {
   depends_on        = ["azurerm_storage_account.templateStore"]
   connection_string = "${azurerm_storage_account.templateStore.primary_connection_string}"
@@ -222,19 +251,4 @@ resource "azurerm_template_deployment" "waf" {
     # The request routing rules settings to be created on the WAF
     tags = "${local.tags}"
   }
-}
-
-resource "null_resource" "ilbCert" {
-  triggers {
-    trigger = "${timestamp()}"
-  }
-
-  provisioner "local-exec" {
-    command = "bash -e ${path.module}/getCert.sh infra-vault-${var.env} core-compute-${var.env} ${path.module} ${var.subscription}"
-  }
-}
-
-data "local_file" "ilbCertFile" {
-  filename   = "${path.module}/core-compute-${var.env}.out.2"
-  depends_on = ["null_resource.ilbCert"]
 }
