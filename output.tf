@@ -3,5 +3,5 @@
 # }
 
 output "appGwIP" {
-  value = "${azurerm_template_deployment.waf.appGwIP}"
+  value = "${azurerm_template_deployment.waf.outputs["appGwIP"]}"
 }
