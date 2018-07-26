@@ -83,7 +83,8 @@
           "capacity": "[parameters('appGatewaySettings').capacity]"
         },
         "gatewayIPConfigurations": "[parameters('gatewayIPConfigurations')]",
-        "authenticationCertificates": "[parameters('authenticationCertificates')]",
+        "authenticationCertificates":
+          "[parameters('authenticationCertificates')]",
         "frontendIPConfigurations": "[parameters('frontendIPConfigurations')]",
         "frontendPorts": "[parameters('frontendPorts')]",
         "backendAddressPools": "[parameters('backendAddressPools')]",
@@ -107,5 +108,11 @@
       }
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "appGwIP": {
+      "type": "string",
+      "value":
+        "[reference(parameters('appGatewaySettings').frontendIPConfigurations[0].PublicIPName).ipAddress]"
+    }
+  }
 }
