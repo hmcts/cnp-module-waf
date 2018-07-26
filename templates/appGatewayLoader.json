@@ -226,7 +226,7 @@
     "appGwIP": {
       "type": "string",
       "value":
-      "[reference(concat('deploy-', variables('joinedParameters').name)).outputs.resourceID.value]"
+      "[reference(concat('deploy-', variables('joinedParameters').name)).outputs.appGwIP.value]"
     },
     "frontendIPConfigurations": {
       "type": "array",
