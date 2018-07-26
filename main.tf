@@ -94,10 +94,10 @@ data "template_file" "wafTemplate" {
 }
 
 # Create the resource group
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.resourcegroupname}-${var.env}"
-  location = "${var.location}"
-}
+# resource "azurerm_resource_group" "rg" {
+#   name     = "${var.resourcegroupname}-${var.env}"
+#   location = "${var.location}"
+# }
 
 ########################################################################################################################
 #
