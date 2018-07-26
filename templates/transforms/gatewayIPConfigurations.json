@@ -1,36 +1,36 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "state": {
-            "type": "array",
-            "defaultValue": []
-        },
-        "source": {
-            "type": "object"
-        },
-        "applicationGatewayID": {
-            "type": "string"
-        }
+  "$schema":
+    "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "state": {
+      "type": "array",
+      "defaultValue": []
     },
-    "variables": {
-        "appGatewaySubnetRef": "[resourceId(concat(parameters('source').vNetRG),  'Microsoft.Network/virtualNetworks/subnets', parameters('source').vNet, parameters('source').subnet)]",
-        "instance": [
-            {
-                "name": "appGatewayIpConfig",
-                "properties": {
-                    "subnet": {
-                        "id": "[variables('appGatewaySubnetRef')]"
-                    }
-                }
-            }
-        ]
+    "source": {
+      "type": "object"
     },
-    "resources": [],
-    "outputs": {
-        "collection": {
-            "type": "array",
-            "value": "[concat(parameters('state'), variables('instance'))]"
-        }
+    "applicationGatewayID": {
+      "type": "string"
     }
+  },
+  "variables": {
+    "instance": [
+      {
+        "name": "appGatewayIpConfig",
+        "properties": {
+          "subnet": {
+            "id": "[parameters('source').subnetId]"
+          }
+        }
+      }
+    ]
+  },
+  "resources": [],
+  "outputs": {
+    "collection": {
+      "type": "array",
+      "value": "[concat(parameters('state'), variables('instance'))]"
+    }
+  }
 }
