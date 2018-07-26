@@ -6,6 +6,9 @@
     "timestamp": {
       "type": "string"
     },
+    "location": {
+      "type": "string"
+    },
     "sasToken": {
       "type": "string"
     },
@@ -216,6 +219,9 @@
           },
           "sslPolicy": {
             "value": "[parameters('sslPolicy')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
           }
         }
       },

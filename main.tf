@@ -212,8 +212,8 @@ resource "azurerm_template_deployment" "waf" {
     size     = "${var.size}"
     tier     = "${var.tier}"
     capacity = "${var.capacity}"
+    location = "${var.location}"
 
-    # location           = "${var.location}"
     # virtualNetworkName = "${var.vnetname}"
     # subnetName         = "${var.subnetname}"
 
