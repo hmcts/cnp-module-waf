@@ -132,7 +132,7 @@ resource "random_id" "randomKey" {
 #
 resource "azurerm_storage_account" "templateStore" {
   name                     = "${local.saAccount}"
-  resource_group_name      = "${azurerm_resource_group.rg.name}"
+  resource_group_name      = "${var.resourcegroupname}"
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
@@ -143,7 +143,7 @@ resource "azurerm_storage_account" "templateStore" {
 #
 resource "azurerm_storage_container" "templates" {
   name                  = "templates"
-  resource_group_name   = "${azurerm_resource_group.rg.name}"
+  resource_group_name   = "${var.resourcegroupname}"
   storage_account_name  = "${local.saAccount}"
   container_access_type = "private"
   depends_on            = ["azurerm_storage_account.templateStore"]
@@ -204,7 +204,7 @@ resource "azurerm_template_deployment" "waf" {
   depends_on          = ["data.azurerm_storage_account_sas.templateStoreSas"]
   template_body       = "${data.template_file.wafTemplate.rendered}"
   name                = "${local.wafName}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
+  resource_group_name = "${var.resourcegroupname}"
   deployment_mode     = "Incremental"
 
   parameters = {
