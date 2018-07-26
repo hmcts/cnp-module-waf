@@ -1,8 +1,7 @@
 # Define local variables
 locals {
-  wafName   = "${var.wafName}-${var.env}"
-  saAccount = "templates${random_id.randomKey.hex}"
-  tags      = ""
+  wafName = "${var.wafName}-${var.env}"
+  tags    = ""
 
   defaultFrontEndPorts = [
     {
@@ -121,17 +120,10 @@ data "local_file" "ilbCertFile" {
 }
 
 #
-# Create a random string to help with storage account creation
-#
-resource "random_id" "randomKey" {
-  byte_length = 2
-}
-
-#
 # Create the storage account
 #
 resource "azurerm_storage_account" "templateStore" {
-  name                     = "${local.saAccount}"
+  name                     = "${var.storageAccountName}"
   resource_group_name      = "${var.resourcegroupname}"
   location                 = "${var.location}"
   account_tier             = "Standard"
@@ -144,7 +136,7 @@ resource "azurerm_storage_account" "templateStore" {
 resource "azurerm_storage_container" "templates" {
   name                  = "templates"
   resource_group_name   = "${var.resourcegroupname}"
-  storage_account_name  = "${local.saAccount}"
+  storage_account_name  = "${var.storageAccountName}"
   container_access_type = "private"
   depends_on            = ["azurerm_storage_account.templateStore"]
 }
