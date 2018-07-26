@@ -58,7 +58,7 @@
                 "mode": "serial"
             },
             "dependsOn": [
-                "[concat('transform-waf-', parameters('section'), '-0')]"
+                "[concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-0')]"
             ],
             "properties": {
                 "mode": "Incremental",
