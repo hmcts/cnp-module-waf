@@ -1,2 +1,2 @@
-# moj-module-waf
-A module that lets you create an Application Gatewatway with WAF.
+# cnp-module-waf
+A module that lets you create an Application Gateway with WAF enabled
