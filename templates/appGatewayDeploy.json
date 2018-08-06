@@ -110,12 +110,5 @@
         }
       }
     }
-  ],
-  "outputs": {
-    "appGwIP": {
-      "type": "string",
-      "value":
-        "[reference(parameters('appGatewaySettings').frontendIPConfigurations[0].PublicIPName).publicIPAddress]"
-    }
-  }
+  ]
 }
