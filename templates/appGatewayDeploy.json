@@ -115,7 +115,7 @@
     "appGwIP": {
       "type": "string",
       "value":
-        "[reference(parameters('appGatewaySettings').frontendIPConfigurations[0].PublicIPName).ipAddress]"
+        "[reference(parameters('appGatewaySettings').frontendIPConfigurations[0].PublicIPName).publicIPAddress]"
     }
   }
 }
