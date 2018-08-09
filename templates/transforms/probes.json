@@ -22,6 +22,7 @@
           "path": "[parameters('source').path]",
           "interval": "[parameters('source').interval]",
           "timeout": "[parameters('source').timeout]",
+          "host": "[parameters('source').host]",
           "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
           "pickHostNameFromBackendHttpSettings":
             "[bool(parameters('source').pickHostNameFromBackendHttpSettings)]"
