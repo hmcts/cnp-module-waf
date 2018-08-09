@@ -56,7 +56,7 @@ locals {
       unhealthyThreshold = 3
 
       # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "true"
+      pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings                 = "ilb-http"
     },
     {
@@ -68,7 +68,7 @@ locals {
       unhealthyThreshold = 3
 
       # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "true"
+      pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings                 = "ilb-https"
     },
   ]
