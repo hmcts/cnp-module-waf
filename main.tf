@@ -46,32 +46,32 @@ locals {
     },
   ]
 
-  #defaultProbes = [
-    #{
-   #   name               = "default-http-probe"
-  #    protocol           = "Http"
- #     path               = "/health"
-#      interval           = 30
-      #timeout            = 30
-     # unhealthyThreshold = 3
-    #  host               = "rhubarb-frontend.platform.hmts.net"  
+  defaultProbes = [
+    {
+      name               = "default-http-probe"
+      protocol           = "Http"
+      path               = "/health"
+      interval           = 30
+      timeout            = 30
+      unhealthyThreshold = 3
+      host               = "rhubarb-frontend.platform.hmts.net"  
       # Can be used if backed is resolvable in DNS
-   #   pickHostNameFromBackendHttpSettings = "false"
-  #    backendHttpSettings                 = "ilb-http"
- #   },
-#    {
-    #  name               = "default-https-probe"
-   #   protocol           = "Https"
-  #    path               = "/health"
- #     interval           = 30
-#      timeout            = 30
-      #unhealthyThreshold = 3
-     # host               = "rhubarb-frontend.platform.hmts.net" 
+      pickHostNameFromBackendHttpSettings = "false"
+      backendHttpSettings                 = "ilb-http"
+    },
+    {
+      name               = "default-https-probe"
+      protocol           = "Https"
+      path               = "/health"
+      interval           = 30
+      timeout            = 30
+      unhealthyThreshold = 3
+      host               = "rhubarb-frontend.platform.hmts.net" 
       # Can be used if backed is resolvable in DNS
-    #  pickHostNameFromBackendHttpSettings = "false"
-   #   backendHttpSettings                 = "ilb-https"
-  #  },
- # ]
+      pickHostNameFromBackendHttpSettings = "false"
+      backendHttpSettings                 = "ilb-https"
+    },
+  ]
 
   defaultFrontendIPConfigurations = [
     {
