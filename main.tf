@@ -84,7 +84,7 @@ locals {
   frontEndPorts                 = "${concat(local.defaultFrontEndPorts, var.frontEndPorts)}"
   authenticationCertificates    = "${concat(local.defaultAuthenticationCertificates, var.authenticationCertificates)}"
   backendHttpSettingsCollection = "${concat(local.defaultBackendHttpSettingsCollection, var.backendHttpSettingsCollection)}"
-  probes                        = "${var.probes}"
+  probes                        = "${concat(local.defaultProbes, var.probes)}"
 }
 
 # The location of the ARM Template to start the WAF build

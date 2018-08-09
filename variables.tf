@@ -121,7 +121,3 @@ variable "probes" {
 variable "storageAccountName" {
   type = "string"
 }
-
-variable "hostname" {
-  
-}
