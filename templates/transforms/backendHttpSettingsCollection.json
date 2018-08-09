@@ -52,7 +52,7 @@
               "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]",
-          "HostName": "[parameters('source').Host]"
+          "HostName": "[parameters('source').HostName]"
         }
       }
     ]
