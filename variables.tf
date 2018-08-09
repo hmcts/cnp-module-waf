@@ -117,7 +117,3 @@ variable "probes" {
   type    = "list"
   default = []
 }
-
-variable "storageAccountName" {
-  type = "string"
-}
