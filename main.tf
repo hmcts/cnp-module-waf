@@ -56,7 +56,7 @@ locals {
       unhealthyThreshold = 3
       host               = "rhubarb-frontend.platform.hmts.net"  
       # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "false"
+      pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-http"
     },
     {
@@ -68,7 +68,7 @@ locals {
       unhealthyThreshold = 3
       host               = "rhubarb-frontend.platform.hmts.net" 
       # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "false"
+      pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-https"
     },
   ]
