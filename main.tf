@@ -54,7 +54,7 @@ locals {
       interval           = 30
       timeout            = 30
       unhealthyThreshold = 3
-      host               = "rhubarb-frontend.platform.hmts.net"  
+
       # Can be used if backed is resolvable in DNS
       pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-http"
@@ -66,7 +66,7 @@ locals {
       interval           = 30
       timeout            = 30
       unhealthyThreshold = 3
-      host               = "rhubarb-frontend.platform.hmts.net" 
+
       # Can be used if backed is resolvable in DNS
       pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-https"
