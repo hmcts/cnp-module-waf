@@ -23,7 +23,7 @@
           "interval": "[parameters('source').interval]",
           "timeout": "[parameters('source').timeout]",
           "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
-          "Host": "[parameters('source').host]",
+          "host": "[parameters('source').host1]",
           "pickHostNameFromBackendHttpSettings":
             "[bool(parameters('source').pickHostNameFromBackendHttpSettings)]"
         },
