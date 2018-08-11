@@ -57,9 +57,9 @@ locals {
       unhealthyThreshold = 3
 
       # Can be used if backed is resolvable in DNS
-      pickHostNameFromBackendHttpSettings = "false"
+      pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-http"
-      host             = ""
+      host = ""
     },
     {
       name               = "default-https-probe"
@@ -68,6 +68,7 @@ locals {
       interval           = 30
       timeout            = 30
       unhealthyThreshold = 3
+      host               = ""
 
       # Can be used if backed is resolvable in DNS
       pickHostNameFromBackendHttpSettings = "true"
