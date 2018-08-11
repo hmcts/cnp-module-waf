@@ -23,7 +23,7 @@
           "interval": "[parameters('source').interval]",
           "timeout": "[parameters('source').timeout]",
           "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
-          "host": "[parameters('source').host]",
+          "host": "rhubarb-frontend-sandbox.service.core-compute-sandbox.internal",
           "pickHostNameFromBackendHttpSettings":
             "false"
         },
