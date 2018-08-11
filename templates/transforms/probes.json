@@ -25,7 +25,7 @@
           "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
           "host": "rhubarb-frontend-sandbox.service.core-compute-sandbox.internal",
           "pickHostNameFromBackendHttpSettings":
-            "[bool(parameters('source').pickHostNameFromBackendHttpSettings)]"
+            "false"
         },
         "name": "[parameters('source').name]"
       }
