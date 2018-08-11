@@ -86,7 +86,7 @@ locals {
   frontendIPConfigurations      = "${concat(local.defaultFrontendIPConfigurations, var.frontendIPConfigurations)}"
   frontEndPorts                 = "${concat(local.defaultFrontEndPorts, var.frontEndPorts)}"
   authenticationCertificates    = "${concat(local.defaultAuthenticationCertificates, var.authenticationCertificates)}"
-  backendHttpSettingsCollection = "${concat(local.defaultBackendHttpSettingsCollection, var.backendHttpSettingsCollection)}"
+  backendHttpSettingsCollection = "${var.backendHttpSettingsCollection}"
   probes                        = "${var.probes}"
 }
 
