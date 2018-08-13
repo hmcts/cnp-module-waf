@@ -239,7 +239,7 @@ resource "azurerm_template_deployment" "waf" {
     # The front HTTP listeners ports to be created on the WAF
     httpListeners = "${base64encode(jsonencode(var.httpListeners))}"
     # The SSL Certificates to be created on the WAF
-    sslCertificates = "${base64encode(jsonencode(var.sslCertificates))}"
+    sslCertificates = "${base64encode(jsonencode(data.local_file.certsList))}"
     # The backend address pools to be created on the WAF
     backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
     # The http settings to be created on the WAF
@@ -253,4 +253,19 @@ resource "azurerm_template_deployment" "waf" {
     # The request routing rules settings to be created on the WAF
     tags = "${local.tags}"
   }
+}
+
+resource "null_resource" "sslCerts" {
+  triggers {
+      trigger = "${timestamp()}"
+      }
+  count = "${length(var.sslCertificates)}"
+  provisioner "local-exec" {
+    command = "bash ./certTest.sh infra-vault-${var.subscription} ${element(var.sslCertificates, count.index)}"
+  }
+
+}
+
+data "local_file" "certsList" {
+    filename = "certs.json"
 }
