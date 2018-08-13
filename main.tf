@@ -267,5 +267,5 @@ resource "null_resource" "sslCerts" {
 }
 
 data "local_file" "certsList" {
-    filename = "certs.json"
+    filename = "${path.module}/certs.json"
 }
