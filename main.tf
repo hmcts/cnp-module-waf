@@ -268,4 +268,5 @@ resource "null_resource" "sslCerts" {
 
 data "local_file" "certsList" {
     filename = "${path.module}/certs.json"
+    depends_on = ["null_resource.sslCerts"]
 }
