@@ -261,7 +261,7 @@ resource "null_resource" "sslCerts" {
       }
   count = "${length(var.sslCertificates)}"
   provisioner "local-exec" {
-    command = "bash ./certTest.sh infra-vault-${var.subscription} ${element(var.sslCertificates, count.index)} ${path.module}"
+    command = "bash -e  ${path.module}/certTest.sh infra-vault-${var.subscription} ${element(var.sslCertificates, count.index)} ${path.module}"
   }
 
 }
