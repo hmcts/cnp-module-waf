@@ -13,6 +13,6 @@ echo "command = az keyvault secret show --vault-name ${vaultName} --name  ${cert
 certName=""${cert}""
 certEntryFmt=""${certEntry}""
 echo "{name="${certName}",data="${certEntryFmt}",password="${certName}"}," >> ${3}/certs.json
-cat ${3}/certs.json | tr -d '\\n' >> ${3}/certsFormated.json
+cat ${3}/certs.json | tr -d '\\n' || tr -d '' >> ${3}/certsFormated.json
 
 
