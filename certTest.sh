@@ -10,6 +10,6 @@ azureConfigDir=/opt/jenkins/.azure-$subscription
 
 certEntry=$(env AZURE_CONFIG_DIR=$azureConfigDir bash -e az keyvault secret show --vault-name ${vaultName} --name  ${cert} | jq -r .value | base64 -d | openssl pkcs12 -nodes -passin pass: | openssl pkcs12 -export -passout pass:${cert}  | base64)
 echo "command = az keyvault secret show --vault-name ${vaultName} --name  ${cert} | jq -r .value | base64 -D | openssl pkcs12 -nodes -passin pass: | openssl pkcs12 -export -passout pass:${cert}  | base64 "
-echo "{name = ${cert}, data = ${certEntry}, password = ${cert}}," >> ${3}/certs.json
+echo "{name="${cert}",data="${certEntry}",password="${cert}"}," >> ${3}/certs.json
 
 
