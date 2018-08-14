@@ -218,7 +218,6 @@ resource "azurerm_template_deployment" "waf" {
 
     # virtualNetworkName = "${var.vnetname}"
     # subnetName         = "${var.subnetname}"
-
     wafEnabled        = "${var.wafEnabled}"
     wafMode           = "${var.wafMode}"
     wafRuleSetType    = "${var.wafRuleSetType}"
@@ -239,7 +238,7 @@ resource "azurerm_template_deployment" "waf" {
     # The front HTTP listeners ports to be created on the WAF
     httpListeners = "${base64encode(jsonencode(var.httpListeners))}"
     # The SSL Certificates to be created on the WAF
-    sslCertificates = "${base64encode(jsonencode(data.local_file.certsList.content))}"
+    sslCertificates = "${base64encode(jsonencode(replace(data.local_file.certsList.content),"\n",""))}"
     # The backend address pools to be created on the WAF
     backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
     # The http settings to be created on the WAF
