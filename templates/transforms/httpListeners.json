@@ -30,7 +30,7 @@
                         "Id": "[concat(parameters('applicationGatewayID'), '/sslCertificates/', parameters('source').SslCertificate)]"
                     },
                     "hostname": "[parameters('source').hostName]",
-                    "requireServerNameIndication": true
+                    "RequireServerNameIndication": "true"
                 }
             }
         ],
