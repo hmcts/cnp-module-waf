@@ -29,7 +29,8 @@
                     "SslCertificate": {
                         "Id": "[concat(parameters('applicationGatewayID'), '/sslCertificates/', parameters('source').SslCertificate)]"
                     },
-                    "hostname": "[parameters('source').hostName]"
+                    "hostname": "[parameters('source').hostName]",
+                    "requireServerNameIndication": true
                 }
             }
         ],
