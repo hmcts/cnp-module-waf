@@ -22,7 +22,6 @@ module "appGw" {
   destroy_me         = "${var.destroy_me}"
   ilbIp              = "${var.ilbIp}"
 
-  # vNet connections
   gatewayIpConfigurations = [
     {
       name     = "internalNetwork"
@@ -38,7 +37,6 @@ module "appGw" {
     }
   ]
 
-  # Http Listeners
    httpListeners = [
     {
       name                    = "${var.product}-http-listener"
@@ -58,7 +56,6 @@ module "appGw" {
     },
   ]
 
-  # Backend address Pools
    backendAddressPools = [
     {
       name = "${var.product}-frontend-${var.env}"
@@ -71,7 +68,6 @@ module "appGw" {
     },
   ]
 
-  # Backend HTTP Settings Collection
    backendHttpSettingsCollection = [
     {
       name                           = "backend-80-nocookies"
@@ -98,7 +94,6 @@ module "appGw" {
     }
   ]
 
-  # Request routing rules
    requestRoutingRules = [
     {
       name                = "${var.product}-http"
