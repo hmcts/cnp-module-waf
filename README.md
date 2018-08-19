@@ -22,7 +22,14 @@ module "appGw" {
   team_contact       = "${var.team_contact}"
   destroy_me         = "${var.destroy_me}"
   ilbIp              = "${var.ilbIp}"
-  }
+  
+  gatewayIpConfigurations = [
+    {
+      name     = "internalNetwork"
+      subnetId = "${data.azurerm_subnet.subnet_a.id}"
+    }
+    ]
+}
 ```
 
  
