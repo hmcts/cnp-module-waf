@@ -5,7 +5,8 @@ A module that lets you create an Application Gatewatway with WAF.
 
 To use this module you require a cert for the https listener. The cert must be uploaded to the infra vault for the subscription being deployed to (infra-vault-$subscription). Once the cert exists in the vault, we use a terraform data resource to read it and pass into the app gateway module for example:
 
-``` data "azurerm_key_vault_secret" "cert" {
+``` 
+data "azurerm_key_vault_secret" "cert" {
   name      = "S{var.certificateName}"
   vault_uri = "https://infra-vault-${var.subscription}.vault.azure.net/"
 }
@@ -22,7 +23,7 @@ module "appGw" {
   destroy_me         = "${var.destroy_me}"
   ilbIp              = "${var.ilbIp}"
   }
-  ```
+```
 
  
 
