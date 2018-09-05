@@ -102,7 +102,15 @@
           "firewallMode": "[parameters('wafMode')]",
           "ruleSetType": "[parameters('wafRuleSetType')]",
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
-          "disabledRuleGroups": []
+          "disabledRuleGroups": [
+            {
+              "ruleGroupName": "SIDM-1522",
+              "rules":[
+                931130,
+                949110
+              ]
+            }
+          ]
         },
         "sslPolicy": {
           "policyType": "Custom",
