@@ -2,6 +2,10 @@
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.env}"
   location = "${var.location}"
+
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+  )}"
 }
 
 # The ARM template that creates a web app and app service plan
@@ -22,5 +26,6 @@ resource "azurerm_template_deployment" "waf" {
     virtualNetworkName = "${var.vnetname}"
     subnetName         = "${var.subnetname}"
     backendaddress     = "${var.backendaddress}"
+    teamName           = "${lookup(var.common_tags, "Team Name")}"
   }
 }

@@ -26,3 +26,10 @@ variable "backendaddress" {
 variable "resourcegroupname" {
   type = "string"
 }
+
+variable "common_tags" {
+  type = "map"
+  default = {
+    "Team Name" = "pleaseTagMe"
+  }
+}
