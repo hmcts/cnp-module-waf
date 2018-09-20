@@ -21,7 +21,6 @@ module "appGw" {
   team_name          = "${var.team_name}"
   team_contact       = "${var.team_contact}"
   destroy_me         = "${var.destroy_me}"
-  ilbIp              = "${var.ilbIp}"
   
   gatewayIpConfigurations = [
     {

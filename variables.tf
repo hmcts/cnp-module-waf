@@ -10,34 +10,15 @@ variable "env" {
   type = "string"
 }
 
-variable "ilbIp" {
-  type = "string"
-}
-
-# variable "backendaddress" {
-#   type = "string"
-# }
-
 variable "resourcegroupname" {
   type = "string"
 }
-
-# variable "appPrivateFqdn" {
-#   description = "fqdn of app to health check for example rhubarb.service.sandbox.hmcts.net"
-# }
-
-# variable "probePath" {
-#   description = "health check endpoint for app"
-#   default     = "/health"
-# }
 
 variable "team_name" {}
 
 variable "team_contact" {}
 
 variable "destroy_me" {}
-
-# variable "vaultURI" {}
 
 variable "size" {
   default = "WAF_Medium"
