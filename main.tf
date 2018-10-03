@@ -205,7 +205,7 @@ resource "null_resource" "uploadTemplate" {
 resource "azurerm_template_deployment" "waf" {
   depends_on          = ["data.azurerm_storage_account_sas.templateStoreSas"]
   template_body       = "${data.template_file.wafTemplate.rendered}"
-  name                = "${local.wafName}"
+  name                = "${local.wafName}-ag"
   resource_group_name = "${var.resourcegroupname}"
   deployment_mode     = "Incremental"
 
