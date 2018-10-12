@@ -119,6 +119,7 @@ module "appGw" {
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings                 = "backend-80-nocookies"
       host                                = "${var.product}-${var.env}.service.core-compute-${var.env}.internal"
+      healthyStatusCodes                  = "200-399"
      },
      {
       name                                = "https-probe"
@@ -131,6 +132,7 @@ module "appGw" {
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings                 = "backend-443-nocookies"
       host                                = "${var.product}-${var.env}.service.core-compute-${var.env}.internal"
+      healthyStatusCodes                  = "200-399"
      }
     ]
 }
