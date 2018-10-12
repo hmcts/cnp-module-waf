@@ -27,7 +27,7 @@
           "pickHostNameFromBackendHttpSettings": "false",
           "match": {
             "statusCodes": [
-              "[if(equals(parameters('source').healthyStatusCodes, null), '200-399', parameters('source').healthyStatusCodes)]"
+              "[parameters('source').healthyStatusCodes]"
             ]
           }
         },
