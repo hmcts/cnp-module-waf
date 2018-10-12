@@ -24,8 +24,12 @@
           "timeout": "[parameters('source').timeout]",
           "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
           "host": "[parameters('source').host]",
-          "pickHostNameFromBackendHttpSettings":
-            "false"
+          "pickHostNameFromBackendHttpSettings": "false",
+          "match": {
+            "statusCodes": [
+              "[parameters('source').healthyStatusCodes]"
+            ]
+          }
         },
         "name": "[parameters('source').name]"
       }
