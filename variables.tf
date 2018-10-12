@@ -14,10 +14,6 @@ variable "resourcegroupname" {
   type = "string"
 }
 
-variable "team_name" {}
-
-variable "team_contact" {}
-
 variable "destroy_me" {}
 
 variable "size" {

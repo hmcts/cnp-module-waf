@@ -18,8 +18,6 @@ module "appGw" {
   location           = "${var.location}"
   wafName            = "${var.product}-shared-waf"
   resourcegroupname  = "${azurerm_resource_group.shared_resource_group.name}"
-  team_name          = "${var.team_name}"
-  team_contact       = "${var.team_contact}"
   destroy_me         = "${var.destroy_me}"
   
   gatewayIpConfigurations = [
