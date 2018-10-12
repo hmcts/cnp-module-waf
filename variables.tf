@@ -14,8 +14,6 @@ variable "resourcegroupname" {
   type = "string"
 }
 
-variable "destroy_me" {}
-
 variable "size" {
   default = "WAF_Medium"
 }
