@@ -24,7 +24,7 @@ resource "azurerm_template_deployment" "waf" {
     name               = "${var.product}-${var.env}"
     location           = "${var.location}"
     virtualNetworkName = "${var.vnetname}"
-    subnetName         = "${var.subnetname}"
+    subnetId           = "${var.subnet_id}"
     backendaddress     = "${var.backendaddress}"
     teamName           = "${lookup(var.common_tags, "Team Name")}"
   }

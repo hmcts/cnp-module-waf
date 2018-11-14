@@ -100,10 +100,10 @@
         "description": "The name of the vnet"
       }
     },
-    "subnetName": {
+    "subnetID": {
       "type": "string",
       "metadata": {
-        "description": "The name of the subnet"
+        "description": "The id of the subnet"
       }
     },
     "teamName":{
@@ -114,9 +114,8 @@
     "applicationGatewayName": "[parameters('name')]",
     "publicIPAddressName": "[concat(parameters('name'), '-', 'ip')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
-    "subnetName": "[parameters('subnetName')]",
     "vnetID": "[variables('virtualNetworkName')]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetID'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',variables('applicationGatewayName'))]",
     "backEndAddress": "[parameters('backendaddress')]"
