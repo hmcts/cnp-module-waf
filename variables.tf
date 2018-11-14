@@ -7,7 +7,7 @@ variable "location" {
   default = "UK South"
 }
 
-variable "vnetname" {
+variable "vnet_name" {
   type = "string"
 }
 
@@ -19,11 +19,11 @@ variable "env" {
   type = "string"
 }
 
-variable "backendaddress" {
+variable "backend_address" {
   type = "string"
 }
 
-variable "resourcegroupname" {
+variable "resource_group_name" {
   type = "string"
 }
 

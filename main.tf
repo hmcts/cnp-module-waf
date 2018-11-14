@@ -17,15 +17,15 @@ data "template_file" "sitetemplate" {
 resource "azurerm_template_deployment" "waf" {
   template_body       = "${data.template_file.sitetemplate.rendered}"
   name                = "${var.product}-${var.env}"
-  resource_group_name = "${var.resourcegroupname}"
+  resource_group_name = "${var.resource_group_name}"
   deployment_mode     = "Incremental"
 
   parameters = {
     name               = "${var.product}-${var.env}"
     location           = "${var.location}"
-    virtualNetworkName = "${var.vnetname}"
-    subnetId           = "${var.subnet_id}"
-    backendaddress     = "${var.backendaddress}"
+    virtualNetworkName = "${var.vnet_name}"
+    subnetID           = "${var.subnet_id}"
+    backendaddress     = "${var.backend_address}"
     teamName           = "${lookup(var.common_tags, "Team Name")}"
   }
 }
