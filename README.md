@@ -1,4 +1,4 @@
-# moj-module-waf
+# cnp-module-waf
 A module that lets you create an Application Gatewatway with WAF.
 
 ## Usage
@@ -12,7 +12,7 @@ data "azurerm_key_vault_secret" "cert" {
 }
 
 module "appGw" {
-  source             = "git@github.com:hmcts/moj-module-waf?"
+  source             = "git@github.com:hmcts/cnp-module-waf?ref=stripDownWf"
   env                = "${var.env}"
   subscription       = "${var.subscription}"
   location           = "${var.location}"
@@ -85,7 +85,7 @@ module "appGw" {
       AuthenticationCertificates     = "ilbCert"
       probeEnabled                   = "True"
       probe                          = "https-probe"
-      PickHostNameFromBackendAddress = "True"
+      PickHostNameFromBackendAddress = "False"
       Host                           = "${var.product}-${var.env}.service.core-compute-${var.env}.internal"
 
     }
