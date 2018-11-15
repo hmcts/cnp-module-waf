@@ -1,12 +1,12 @@
 # Create a resource group
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.product}-${var.env}"
-  location = "${var.location}"
+# resource "azurerm_resource_group" "rg" {
+#   name     = "${var.product}-${var.env}"
+#   location = "${var.location}"
 
-  tags = "${merge(var.common_tags,
-    map("lastUpdated", "${timestamp()}")
-  )}"
-}
+#   tags = "${merge(var.common_tags,
+#     map("lastUpdated", "${timestamp()}")
+#   )}"
+# }
 
 # The ARM template that creates a web app and app service plan
 data "template_file" "sitetemplate" {
