@@ -79,7 +79,7 @@ locals {
   defaultFrontendIPConfigurations = [
     {
       name         = "appGatewayFrontendIP"
-      publicIpName = "${var.wafName}-pip"
+      publicIpName = "${local.wafName}-pip"
     },
   ]
 
