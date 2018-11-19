@@ -1,6 +1,5 @@
 {
-  "$schema":
-    "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "state": {
@@ -15,11 +14,10 @@
     }
   },
   "variables": {
-    "instance":
-      "[if(equals(tolower(parameters('source').Protocol), 'http'), variables('instanceHTTP'), variables('instanceHTTPS'))]",
+    "instance": 
+      "[if(equals(tolower(parameters('source').Protocol), 'http'), if(equals(parameters('source').PickHostNameFromBackendAddress, 'True'), variables('instanceHTTP'), variables('instanceHTTPWithHostName')), if(equals(parameters('source').PickHostNameFromBackendAddress, 'True'), variables('instanceHTTPS'), variables('instanceHTTPSWithHostName')))]",
     "instanceHTTPS": [
       {
-        "condition": "equals(parameters('source').PickHostNameFromBackendAddress, 'False')",
         "name": "[parameters('source').name]",
         "properties": {
           "Port": "[parameters('source').port]",
@@ -27,21 +25,19 @@
           "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
           "AuthenticationCertificates": [
             {
-              "Id":
-                "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
+              "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
             }
           ],
           "ProbeEnabled": "[parameters('source').probeEnabled]",
           "Probe": {
-            "id":
-              "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
-          "HostName": "[parameters('source').HostName]",
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
         }
-      },
+      }
+    ],
+    "instanceHTTPSWithHostName": [
       {
-        "condition": "equals(parameters('source').PickHostNameFromBackendAddress, 'True')",
         "name": "[parameters('source').name]",
         "properties": {
           "Port": "[parameters('source').port]",
@@ -49,15 +45,14 @@
           "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
           "AuthenticationCertificates": [
             {
-              "Id":
-                "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
+              "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
             }
           ],
           "ProbeEnabled": "[parameters('source').probeEnabled]",
           "Probe": {
-            "id":
-              "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
+          "HostName": "[parameters('source').HostName]",
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
         }
       }
@@ -71,9 +66,24 @@
           "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
           "ProbeEnabled": "[parameters('source').probeEnabled]",
           "Probe": {
-            "id":
-              "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
+          "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
+        }
+      }
+    ],
+    "instanceHTTPWithHostName": [
+      {
+        "name": "[parameters('source').name]",
+        "properties": {
+          "Port": "[parameters('source').port]",
+          "Protocol": "[parameters('source').Protocol]",
+          "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
+          "ProbeEnabled": "[parameters('source').probeEnabled]",
+          "Probe": {
+            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+          },
+          "HostName": "[parameters('source').HostName]",
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
         }
       }
