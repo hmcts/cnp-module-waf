@@ -35,7 +35,7 @@
             "id":
               "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
-          "HostName": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), parameters('source').HostName, json('null'))]",
+          "HostName": "[json('null')]",
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
         }
       }
@@ -52,7 +52,7 @@
             "id":
               "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
           },
-          "HostName": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), parameters('source').HostName, json('null'))]",
+          "HostName": "[json('null')]",
           "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
         }
       }
