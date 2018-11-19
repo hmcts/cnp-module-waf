@@ -86,7 +86,7 @@ module "appGw" {
       probeEnabled                   = "True"
       probe                          = "https-probe"
       PickHostNameFromBackendAddress = "False"
-      Host                           = "${var.product}-${var.env}.service.core-compute-${var.env}.internal"
+      HostName                       = "${var.product}-${var.env}.service.core-compute-${var.env}.internal"
 
     }
    ]
