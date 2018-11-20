@@ -14,80 +14,35 @@
     }
   },
   "variables": {
-    "instance": 
-      "[if(equals(tolower(parameters('source').Protocol), 'http'), if(equals(parameters('source').PickHostNameFromBackendAddress, 'True'), variables('instanceHTTP'), variables('instanceHTTPWithHostName')), if(equals(parameters('source').PickHostNameFromBackendAddress, 'True'), variables('instanceHTTPS'), variables('instanceHTTPSWithHostName')))]",
-    "instanceHTTPS": [
+    "instance": [
       {
         "name": "[parameters('source').name]",
-        "properties": {
-          "Port": "[parameters('source').port]",
-          "Protocol": "[parameters('source').Protocol]",
-          "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
-          "AuthenticationCertificates": [
-            {
-              "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
-            }
-          ],
-          "ProbeEnabled": "[parameters('source').probeEnabled]",
-          "Probe": {
-            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
-          },
-          "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
-        }
+        "properties": "[union(variables('base_properties'), variables('conditional_ssl_properties'), variables('conditional_request_forwarding_properties'))]"
       }
     ],
-    "instanceHTTPSWithHostName": [
-      {
-        "name": "[parameters('source').name]",
-        "properties": {
-          "Port": "[parameters('source').port]",
-          "Protocol": "[parameters('source').Protocol]",
-          "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
-          "AuthenticationCertificates": [
-            {
-              "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
-            }
-          ],
-          "ProbeEnabled": "[parameters('source').probeEnabled]",
-          "Probe": {
-            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
-          },
-          "HostName": "[parameters('source').HostName]",
-          "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
+    "base_properties": {
+      "Port": "[parameters('source').port]",
+      "Protocol": "[parameters('source').Protocol]",
+      "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
+      "ProbeEnabled": "[parameters('source').probeEnabled]",
+      "Probe": {
+        "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+      },
+      "PickHostNameFromBackendAddress": "True"
+    },
+    "conditional_ssl_properties": "[if(equals(tolower(parameters('source').Protocol), 'https'), variables('ssl_properties'), json('null'))]",
+    "ssl_properties": {
+      "AuthenticationCertificates": [
+        {
+          "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
         }
-      }
-    ],
-    "instanceHTTP": [
-      {
-        "name": "[parameters('source').name]",
-        "properties": {
-          "Port": "[parameters('source').port]",
-          "Protocol": "[parameters('source').Protocol]",
-          "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
-          "ProbeEnabled": "[parameters('source').probeEnabled]",
-          "Probe": {
-            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
-          },
-          "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
-        }
-      }
-    ],
-    "instanceHTTPWithHostName": [
-      {
-        "name": "[parameters('source').name]",
-        "properties": {
-          "Port": "[parameters('source').port]",
-          "Protocol": "[parameters('source').Protocol]",
-          "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
-          "ProbeEnabled": "[parameters('source').probeEnabled]",
-          "Probe": {
-            "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
-          },
-          "HostName": "[parameters('source').HostName]",
-          "PickHostNameFromBackendAddress": "[parameters('source').PickHostNameFromBackendAddress]"
-        }
-      }
-    ]
+      ]
+    },
+    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), json('null'))]",
+    "request_forwarding_properties": {
+      "HostName": "[parameters('source').HostName]",
+      "PickHostNameFromBackendAddress": "False"
+    }
   },
   "resources": [],
   "outputs": {
