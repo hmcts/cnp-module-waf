@@ -92,3 +92,7 @@ variable "probes" {
   type    = "list"
   default = []
 }
+
+variable "use_authentication_cert" {
+  default = false
+}

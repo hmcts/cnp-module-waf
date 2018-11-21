@@ -108,7 +108,7 @@ data "template_file" "wafTemplate" {
 ########################################################################################################################
 
 resource "null_resource" "ilbCert" {
-  count = 0
+  count = "${var.use_authentication_cert ? 1 : 0}"
   triggers {
     trigger = "${timestamp()}"
   }
@@ -119,7 +119,7 @@ resource "null_resource" "ilbCert" {
 }
 
 data "local_file" "ilbCertFile" {
-  count = 0
+  count = "${var.use_authentication_cert ? 1 : 0}"
   filename   = "${path.module}/core-compute-${var.env}.out.2"
   depends_on = ["null_resource.ilbCert"]
 }
