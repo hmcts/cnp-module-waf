@@ -15,12 +15,7 @@
     },
     "variables": {
         "instance": [
-            {
-                "properties": {
-                    "data": "[parameters('source').data]"
-                },
-                "name": "[parameters('source').name]"
-            }
+            
         ]
     },
     "resources": [],
