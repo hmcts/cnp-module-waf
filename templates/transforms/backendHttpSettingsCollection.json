@@ -30,7 +30,7 @@
       },
       "PickHostNameFromBackendAddress": "True"
     },
-    "conditional_ssl_properties": "[if(equals(tolower(parameters('source').Protocol), 'https'), variables('ssl_properties'), json('null'))]",
+    "conditional_ssl_properties": "[if(equals(tolower(parameters('source').Protocol), 'https'), variables('ssl_properties'), variables('empty_properties'))]",
     "ssl_properties": {
       "AuthenticationCertificates": [
         {
@@ -38,11 +38,12 @@
         }
       ]
     },
-    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), json('null'))]",
+    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), variables('empty_properties')]",
     "request_forwarding_properties": {
       "HostName": "[parameters('source').HostName]",
       "PickHostNameFromBackendAddress": "False"
-    }
+    },
+    "empty_properties": {}
   },
   "resources": [],
   "outputs": {
