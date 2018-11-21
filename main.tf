@@ -19,7 +19,7 @@ locals {
   defaultAuthenticationCertificates = [
     {
       name = "ilbCert"
-      data = "${element(concat({data.local_file.ilbCertFile.*.content, list("")), 0)}"
+      data = "${element(concat(data.local_file.ilbCertFile.*.content, list("")), 0)}"
     },
   ]
 
