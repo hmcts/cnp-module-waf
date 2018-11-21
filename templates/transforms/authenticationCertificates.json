@@ -14,9 +14,14 @@
         }
     },
     "variables": {
-        "instance": [
-            
-        ]
+        "instance": "[if(equals(parameters('source').data, ''), variables('cert_instance'), variables('empty_instance'))]",
+        "cert_instance": [{
+            "properties": {
+                "data": "[parameters('source').data]"
+            },
+            "name": "[parameters('source').name]"
+        }],
+        "empty_instance": []
     },
     "resources": [],
     "outputs": {
