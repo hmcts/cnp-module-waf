@@ -7,7 +7,7 @@
 # Force script to return -1 if any std errors
 set -e
 
-env=$1
+vaultName=$1
 certName=$2
 fileLocation=$3
 subscription=$4
@@ -15,12 +15,6 @@ subscription=$4
 azureConfigDir=/opt/jenkins/.azure-$subscription
 file=$fileLocation/$certName.out
 
-if [[ $env = *v2 ]]; then
-	echo "Not fetching certificate as it is not needed in the new environment"
-	exit 0
-fi
-
-vaultName="core-compute-$env"
 command="az keyvault certificate download --vault-name $vaultName --name $certName --file $file"
 
 echo "Grabbing certificate"

@@ -114,7 +114,7 @@ resource "null_resource" "ilbCert" {
   }
 
   provisioner "local-exec" {
-    command = "bash -e ${path.module}/getCert.sh infra-vault-${var.subscription} ${var.env} ${path.module} ${var.subscription}"
+    command = "bash -e ${path.module}/getCert.sh infra-vault-${var.subscription} core-compute-${var.env} ${path.module} ${var.subscription}"
   }
 }
 
