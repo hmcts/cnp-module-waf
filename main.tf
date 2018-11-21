@@ -19,11 +19,9 @@ locals {
   defaultAuthenticationCertificates = [
     {
       name = "ilbCert"
-      data = "${data.local_file.ilbCertFile.*.content[0]}"
+      data = "${element(concat({data.local_file.ilbCertFile.*.content, list("")), 0)}"
     },
   ]
-
-  ${aws_db_instance.mainfc2.*.id[0]
 
   # Adding in default Backend HTTP Settings to go to the backed on http and https
   defaultBackendHttpSettingsCollection = [
