@@ -30,7 +30,7 @@
       },
       "PickHostNameFromBackendAddress": "True"
     },
-    "conditional_ssl_properties": "[if(equals(tolower(parameters('source').Protocol), 'https'), variables('ssl_properties'), variables('empty_properties'))]",
+    "conditional_ssl_properties": "[if(and(equals(tolower(parameters('source').Protocol), 'https'), not(equals(parameters('source').AuthenticationCertificates, ''))), variables('ssl_properties'), variables('empty_properties'))]",
     "ssl_properties": {
       "AuthenticationCertificates": [
         {
