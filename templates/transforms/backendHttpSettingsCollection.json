@@ -38,7 +38,7 @@
         }
       ]
     },
-    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), variables('empty_properties')]",
+    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), variables('empty_properties'))]",
     "request_forwarding_properties": {
       "HostName": "[parameters('source').HostName]",
       "PickHostNameFromBackendAddress": "False"
