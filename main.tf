@@ -255,19 +255,3 @@ resource "azurerm_template_deployment" "waf" {
     tags = "${local.tags}"
   }
 }
-
-# resource "null_resource" "sslCerts" {
-#   triggers {
-#       trigger = "${timestamp()}"
-#       }
-#   count = "${length(var.sslCertificates)}"
-#   provisioner "local-exec" {
-#     command = "bash -e  ${path.module}/certTest.sh infra-vault-${var.subscription} ${element(var.sslCertificates, count.index)} ${path.module} ${var.subscription}"
-#   }
-
-# }
-
-# data "local_file" "certsList" {
-#     filename = "${path.module}/certs.json"
-#     depends_on = ["null_resource.sslCerts"]
-# }

@@ -96,3 +96,10 @@ variable "probes" {
 variable "use_authentication_cert" {
   default = false
 }
+
+variable "common_tags" {
+  type = "map"
+  default = {
+    "Team Name" = "pleaseTagMe"
+  }
+}
