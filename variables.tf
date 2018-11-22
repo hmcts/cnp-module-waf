@@ -28,10 +28,6 @@ variable "wafEnabled" {
   default = "true"
 }
 
-variable "wafMode" {
-  default = "Prevention"
-}
-
 variable "wafRuleSetType" {
   default = "OWASP"
 }

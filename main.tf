@@ -220,8 +220,8 @@ resource "azurerm_template_deployment" "waf" {
 
     # virtualNetworkName = "${var.vnetname}"
     # subnetName         = "${var.subnetname}"
+    wafMode           = "Prevention"
     wafEnabled        = "${var.wafEnabled}"
-    wafMode           = "${var.wafMode}"
     wafRuleSetType    = "${var.wafRuleSetType}"
     sslPolicy         = "${var.sslPolicy}"
     wafRuleSetVersion = "${var.wafRuleSetVersion}"
