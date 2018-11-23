@@ -82,7 +82,12 @@ module "waf" {
       port                           = 80
       Protocol                       = "Http"
       CookieBasedAffinity            = "Disabled"
+      
+      # For more information on using AuthenticationCertificates to enable
+      # e2e encryption with ASE, please see the "Using authentication certificates"
+      # section below
       AuthenticationCertificates     = ""
+      
       probeEnabled                   = "True"
       probe                          = "http-probe"
       PickHostNameFromBackendAddress = "True"
@@ -92,7 +97,12 @@ module "waf" {
       port                           = 443
       Protocol                       = "Https"
       CookieBasedAffinity            = "Disabled"
+      
+      # For more information on using AuthenticationCertificates to enable
+      # e2e encryption with ASE, please see the "Using authentication certificates"
+      # section below
       AuthenticationCertificates     = ""
+
       probeEnabled                   = "True"
       probe                          = "https-probe"
       PickHostNameFromBackendAddress = "True"
