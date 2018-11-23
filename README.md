@@ -214,7 +214,7 @@ backendHttpSettingsCollection = [
       probeEnabled                   = "True"
       probe                          = "http-probe"
       PickHostNameFromBackendAddress = "False"
-      HostName                       = "${local.backend_hostname}" // This is where hostname s being set
+      HostName                       = "${local.backend_hostname}" // This is where the hostname is being set
     },
     {
       name                           = "backend-443-nocookies"
