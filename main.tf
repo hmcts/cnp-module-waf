@@ -134,6 +134,7 @@ resource "azurerm_storage_account" "templateStore" {
   location                 = "${var.location}"
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags                     = "${var.common_tags}"
 }
 
 #
