@@ -7,7 +7,7 @@ To use this module you require a cert for the https listener. The cert (`certifi
 
 ```
 locals {
-  backend_name = "${var.product}-frontend-${var.env}"
+  backend_name = "${var.product}-${var.component}-${var.env}"
   backend_hostname = "${local.backend_name}.service.${var.env}.platform.hmcts.net"
 }
 
