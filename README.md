@@ -152,7 +152,7 @@ When deploying the application gateway to an environment (App Service Environmen
 The example above would have to be modified with the following properties.
 
 ```
-use_authentication_cert = true  /// This property has to be set to true
+use_authentication_cert = true  // This property has to be set to true
 
 backendHttpSettingsCollection = [
     {
