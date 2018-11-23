@@ -27,7 +27,7 @@ module "waf" {
   env                = "${var.env}"
   subscription       = "${var.subscription}"
   location           = "${var.location}"
-  wafName            = "${var.product}-shared-waf"
+  wafName            = "${var.product}"
   resourcegroupname  = "${azurerm_resource_group.shared_resource_group.name}"
   common_tags        = "${var.tags}"
   
