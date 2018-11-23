@@ -20,6 +20,5 @@ if [ -z "$AZURE_CONFIG_DIR" ]; then
 	$command
 else
 	echo "AZURE_CONFIG_DIR is set - using $subscription"
-	# env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az storage blob upload-batch --connection-string $connString --source $source --destination $destination
 	env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription $command
 fi

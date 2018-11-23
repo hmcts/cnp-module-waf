@@ -95,12 +95,6 @@ data "template_file" "wafTemplate" {
   template = "${file("${path.module}/templates/appGatewayLoader.json")}"
 }
 
-# Create the resource group
-# resource "azurerm_resource_group" "rg" {
-#   name     = "${var.resourcegroupname}-${var.env}"
-#   location = "${var.location}"
-# }
-
 ########################################################################################################################
 #
 # This section is used to grab the certificate from the vault, format it and store it for the backend authentication 
@@ -217,41 +211,23 @@ resource "azurerm_template_deployment" "waf" {
     tier     = "${var.tier}"
     capacity = "${var.capacity}"
     location = "${var.location}"
-
-    # virtualNetworkName = "${var.vnetname}"
-    # subnetName         = "${var.subnetname}"
     wafMode           = "Prevention"
     wafEnabled        = "${var.wafEnabled}"
     wafRuleSetType    = "${var.wafRuleSetType}"
     sslPolicy         = "${var.sslPolicy}"
     wafRuleSetVersion = "${var.wafRuleSetVersion}"
-    # Force update of resource on each run
-    timestamp = "${timestamp()}"
-    # Base URL of the storage account
     baseUri = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
-    # The sas token created to access the files in the storage account
     sasToken = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
-    # The front end ports to be created on the WAF
     authenticationCertificates = "${base64encode(jsonencode(local.authenticationCertificates))}"
-    # The front end ports to be created on the WAF
     frontEndPorts = "${base64encode(jsonencode(local.frontEndPorts))}"
-    # The front end IP Addresses to be created
     frontendIPConfigurations = "${base64encode(jsonencode(local.frontendIPConfigurations))}"
-    # The front HTTP listeners ports to be created on the WAF
     httpListeners = "${base64encode(jsonencode(var.httpListeners))}"
-    # The SSL Certificates to be created on the WAF
     sslCertificates = "${base64encode(jsonencode(var.sslCertificates))}"
-    # The backend address pools to be created on the WAF
     backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
-    # The http settings to be created on the WAF
     backendHttpSettingsCollection = "${base64encode(jsonencode(local.backendHttpSettingsCollection))}"
-    # The request routing rules settings to be created on the WAF
     requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
-    # The internal network settings - vNet / Subnet etc
     gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
-    # The probe settings
     probes = "${base64encode(jsonencode(local.probes))}"
-    # The request routing rules settings to be created on the WAF
     tags = "${local.tags}"
   }
 }
