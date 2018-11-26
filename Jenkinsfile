@@ -21,8 +21,8 @@ try {
     stage('Terraform Linting Checks') {
       sh 'terraform validate -check-variables=false -no-color'
     }
-}
-catch (err) {
+  }
+} catch (err) {
   throw err
 }
 
