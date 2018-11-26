@@ -10,10 +10,6 @@ try {
       checkout scm
     }
 
-    stage("get ssl certs") {
-      retrieveCert(environment)
-    }
-
     stage('Terraform init') {
       sh 'terraform init'
     }
