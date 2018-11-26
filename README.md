@@ -3,7 +3,7 @@ A module that lets you create an Application Gatewatway with WAF.
 
 ## Usage
 
-To use this module you require a cert for the https listener. The cert (`certificate_name`) must be uploaded to the infra vault for the subscription being deployed to (infra-vault-$subscription). Once the cert exists in the vault, we use a terraform data resource to read it and pass into the app gateway module for example:
+To use this module you require a cert for the https listener. The cert (`certificate_name`) must be uploaded to a key vault. Once the cert exists in the vault, you will need to use a terraform data resource to read it and pass into the app gateway module for example:
 
 ```
 locals {
@@ -27,7 +27,7 @@ module "waf" {
   env                = "${var.env}"
   subscription       = "${var.subscription}"
   location           = "${var.location}"
-  wafName            = "${var.product}-shared-waf"
+  wafName            = "${var.product}"
   resourcegroupname  = "${azurerm_resource_group.shared_resource_group.name}"
   common_tags        = "${var.tags}"
   
@@ -85,7 +85,7 @@ module "waf" {
       
       # For more information on using AuthenticationCertificates to enable
       # e2e encryption with ASE, please see the "Using authentication certificates"
-      # section below
+      # section below, this is needed if your hostname for your app ends in .internal.
       AuthenticationCertificates     = ""
       
       probeEnabled                   = "True"
@@ -100,7 +100,7 @@ module "waf" {
       
       # For more information on using AuthenticationCertificates to enable
       # e2e encryption with ASE, please see the "Using authentication certificates"
-      # section below
+      # section below, this is needed if your hostname for your app ends in .internal
       AuthenticationCertificates     = ""
 
       probeEnabled                   = "True"
