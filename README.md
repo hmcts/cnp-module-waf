@@ -18,8 +18,8 @@ data "azurerm_subnet" "app_gateway_subnet" {
 }
 
 data "azurerm_key_vault_secret" "cert" {
-  name      = "${var.certificate_name}"
-  vault_uri = "https://infra-vault-${var.subscription}.vault.azure.net/"
+  name      = "my-public-facing-domain-cert-name-stored-in-vault"
+  vault_uri = "https://my-cert-vault.vault.azure.net/" // This value should be REPLACED with a valid URL
 }
 
 module "waf" {
@@ -27,7 +27,7 @@ module "waf" {
   env                = "${var.env}"
   subscription       = "${var.subscription}"
   location           = "${var.location}"
-  wafName            = "${var.product}"
+  wafName            = "${var.product}-shared-waf"
   resourcegroupname  = "${azurerm_resource_group.shared_resource_group.name}"
   common_tags        = "${var.tags}"
   
@@ -40,7 +40,7 @@ module "waf" {
 
   sslCertificates = [
     {
-      name     = "${var.certificate_name}"
+      name     = "public-hostname-cert" // IT COULD BE ANYTHING
       data     = "${data.azurerm_key_vault_secret.cert.value}"
       password = ""
     }
@@ -60,7 +60,7 @@ module "waf" {
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort443"
       Protocol                = "Https"
-      SslCertificate          = "${var.certificate_name}"
+      SslCertificate          = "public-hostname-cert" // THIS SHOULD MATCH THE NAME SPECIFIED ABOVE IN SSL CERTIFICATES LIST
       hostName                = "${var.public_hostname}"
     },
    ]
