@@ -1,0 +1,45 @@
+{
+  "$schema":
+    "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "state": {
+      "type": "array",
+      "defaultValue": []
+    },
+    "source": {
+      "type": "object"
+    },
+    "applicationGatewayID": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "instance": [
+      {
+        "properties": {
+          "protocol": "[parameters('source').protocol]",
+          "path": "[parameters('source').path]",
+          "interval": "[parameters('source').interval]",
+          "timeout": "[parameters('source').timeout]",
+          "unhealthyThreshold": "[parameters('source').unhealthyThreshold]",
+          "host": "[parameters('source').host]",
+          "pickHostNameFromBackendHttpSettings": "false",
+          "match": {
+            "statusCodes": [
+              "[parameters('source').healthyStatusCodes]"
+            ]
+          }
+        },
+        "name": "[parameters('source').name]"
+      }
+    ]
+  },
+  "resources": [],
+  "outputs": {
+    "collection": {
+      "type": "array",
+      "value": "[concat(parameters('state'), variables('instance'))]"
+    }
+  }
+}

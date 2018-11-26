@@ -1,0 +1,61 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "state": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "source": {
+            "type": "object"
+        },
+        "applicationGatewayID": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "instance": "[if(equals(tolower(parameters('source').Protocol), 'http'), variables('instanceHTTP'), variables('instanceHTTPS'))]",
+        "instanceHTTPS": [
+            {
+                "name": "[parameters('source').name]",
+                "properties": {
+                    "FrontendIPConfiguration": {
+                        "Id": "[concat(parameters('applicationGatewayID'), '/frontendIPConfigurations/', parameters('source').FrontendIPConfiguration)]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(parameters('applicationGatewayID'), '/frontendPorts/', parameters('source').FrontendPort)]"
+                    },
+                    "Protocol": "[parameters('source').protocol]",
+                    "SslCertificate": {
+                        "Id": "[concat(parameters('applicationGatewayID'), '/sslCertificates/', parameters('source').SslCertificate)]"
+                    },
+                    "hostname": "[parameters('source').hostName]",
+                    "RequireServerNameIndication": "true"
+                }
+            }
+        ],
+        "instanceHTTP": [
+            {
+                "name": "[parameters('source').name]",
+                "properties": {
+                    "FrontendIPConfiguration": {
+                        "Id": "[concat(parameters('applicationGatewayID'), '/frontendIPConfigurations/', parameters('source').FrontendIPConfiguration)]"
+                    },
+                    "FrontendPort": {
+                        "Id": "[concat(parameters('applicationGatewayID'), '/frontendPorts/', parameters('source').FrontendPort)]"
+                    },
+                    "Protocol": "[parameters('source').protocol]",
+                    "SslCertificate": null,
+                    "hostname": "[parameters('source').hostName]"
+                }
+            }
+        ]
+    },
+    "resources": [],
+    "outputs": {
+        "collection": {
+            "type": "array",
+            "value": "[concat(parameters('state'), variables('instance'))]"
+        }
+    }
+}

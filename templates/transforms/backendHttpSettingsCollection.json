@@ -1,0 +1,55 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "state": {
+      "type": "array",
+      "defaultValue": []
+    },
+    "source": {
+      "type": "object"
+    },
+    "applicationGatewayID": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "instance": [
+      {
+        "name": "[parameters('source').name]",
+        "properties": "[union(variables('base_properties'), variables('conditional_ssl_properties'), variables('conditional_request_forwarding_properties'))]"
+      }
+    ],
+    "base_properties": {
+      "Port": "[parameters('source').port]",
+      "Protocol": "[parameters('source').Protocol]",
+      "CookieBasedAffinity": "[parameters('source').CookieBasedAffinity]",
+      "ProbeEnabled": "[parameters('source').probeEnabled]",
+      "Probe": {
+        "id": "[concat(parameters('applicationGatewayID'), '/probes/', parameters('source').probe)]"
+      },
+      "PickHostNameFromBackendAddress": "True"
+    },
+    "conditional_ssl_properties": "[if(and(equals(tolower(parameters('source').Protocol), 'https'), not(equals(parameters('source').AuthenticationCertificates, ''))), variables('ssl_properties'), variables('empty_properties'))]",
+    "ssl_properties": {
+      "AuthenticationCertificates": [
+        {
+          "Id": "[concat(parameters('applicationGatewayID'), '/authenticationCertificates/', parameters('source').AuthenticationCertificates)]"
+        }
+      ]
+    },
+    "conditional_request_forwarding_properties": "[if(equals(parameters('source').PickHostNameFromBackendAddress, 'False'), variables('request_forwarding_properties'), variables('empty_properties'))]",
+    "request_forwarding_properties": {
+      "HostName": "[parameters('source').HostName]",
+      "PickHostNameFromBackendAddress": "False"
+    },
+    "empty_properties": {}
+  },
+  "resources": [],
+  "outputs": {
+    "collection": {
+      "type": "array",
+      "value": "[concat(parameters('state'), variables('instance'))]"
+    }
+  }
+}

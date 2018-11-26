@@ -18,8 +18,7 @@ try {
       sh 'terraform validate -check-variables=false -no-color'
     }
   }
-}
-catch (err) {
+} catch (err) {
   throw err
 }
 
