@@ -16,9 +16,8 @@
     "variables": {
         "instance": [
             {
-                "Name": "[parameters('source').name]",
+                "name": "[parameters('source').name]",
                 "properties": {
-                    "RuleType": "[parameters('source').RuleType]",
                     "httpListener": {
                         "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
                     },

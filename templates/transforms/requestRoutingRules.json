@@ -16,9 +16,9 @@
     "variables": {
         "instance": [
             {
-                "Name": "[parameters('source').name]",
+                "name": "[parameters('source').name]",
                 "properties": {
-                    "RuleType": "[parameters('source').RuleType]",
+                    "ruleType": "[parameters('source').RuleType]",
                     "httpListener": {
                         "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
                     },
@@ -28,7 +28,7 @@
                     "backendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
                     },
-                    "urlPathMaps": {
+                    "urlPathMap": {
                         "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMaps)]"
                     }
                 }
