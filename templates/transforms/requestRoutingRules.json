@@ -18,7 +18,7 @@
       {
         "name": "[parameters('source').name]",
         "properties": {
-          "ruleType": "[parameters('source').ruleType]",
+          "RuleType": "[parameters('source').ruleType]",
           "urlPathMap": {
             "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
           },
