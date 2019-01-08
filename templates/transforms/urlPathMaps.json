@@ -18,9 +18,6 @@
             {
                 "name": "[parameters('source').name]",
                 "properties": {
-                    "httpListener": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
-                    },
                     "defaultBackendAddressPool": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').defaultBackendAddressPool)]"
                     },
