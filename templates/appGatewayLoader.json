@@ -203,17 +203,17 @@
             "value":
               "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[7])).outputs.result.value]"
           },
-          "probes": {
+          "urlPathMaps": {
             "value":
-              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[8])).outputs.result.value]"
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[8])).outputs.result.value]"
           },
-          "authenticationCertificates": {
+          "probes": {
             "value":
               "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[9])).outputs.result.value]"
           },
-          "urlPathMaps": {
+          "authenticationCertificates": {
             "value":
-            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
+              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
           },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
