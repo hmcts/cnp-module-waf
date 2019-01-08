@@ -88,6 +88,10 @@ variable "requestRoutingRules" {
   type = "list"
 }
 
+variable "urlPathMaps" {
+  type = "list"
+}
+
 variable "probes" {
   type    = "list"
   default = []

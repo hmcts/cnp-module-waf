@@ -1,1 +1,5 @@
 .terraform
+
+# IntelliJ IDEA files
+.idea/
+*.iml
