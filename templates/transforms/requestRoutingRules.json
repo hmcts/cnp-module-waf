@@ -1,45 +1,45 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "state": {
-            "type": "array",
-            "defaultValue": []
-        },
-        "source": {
-            "type": "object"
-        },
-        "applicationGatewayID": {
-            "type": "string"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "state": {
+      "type": "array",
+      "defaultValue": []
     },
-    "variables": {
-        "instance": [
-            {
-                "name": "[parameters('source').name]",
-                "properties": {
-                    "ruleType": "[parameters('source').ruleType]",
-                    "httpListener": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
-                    },
-                    "backendAddressPool": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
-                    },
-                    "backendHttpSettings": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
-                    },
-                    "urlPathMap": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
-                    }
-                }
-            }
-        ]
+    "source": {
+      "type": "object"
     },
-    "resources": [],
-    "outputs": {
-        "collection": {
-            "type": "array",
-            "value": "[concat(parameters('state'), variables('instance'))]"
-        }
+    "applicationGatewayID": {
+      "type": "string"
     }
+  },
+  "variables": {
+    "instance": [
+      {
+        "name": "[parameters('source').name]",
+        "properties": {
+          "ruleType": "[parameters('source').ruleType]",
+          "urlPathMap": {
+            "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
+          },
+          "httpListener": {
+            "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
+          },
+          "backendAddressPool": {
+            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
+          },
+          "backendHttpSettings": {
+            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
+          }
+        }
+      }
+    ]
+  },
+  "resources": [],
+  "outputs": {
+    "collection": {
+      "type": "array",
+      "value": "[concat(parameters('state'), variables('instance'))]"
+    }
+  }
 }
