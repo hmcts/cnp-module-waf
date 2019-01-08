@@ -18,7 +18,7 @@
       {
         "name": "[parameters('source').name]",
         "properties": {
-          "ruleType": "[parameters('source').RuleType]",
+          "RuleType": "[parameters('source').RuleType]",
           "httpListener": {
             "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
           },
@@ -29,7 +29,7 @@
             "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
           },
           "urlPathMap": {
-            "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
+            "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').backendAddressPool)]"
           }
         }
       }
