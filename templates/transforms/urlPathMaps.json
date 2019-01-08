@@ -22,15 +22,13 @@
                     "httpListener": {
                         "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
                     },
-                    "backendAddressPool": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
+                    "defaultBackendAddressPool": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').defaultBackendAddressPool)]"
                     },
-                    "backendHttpSettings": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
+                    "defaultBackendHttpSettings": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "urlPathMap": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
-                    }
+                    "pathRules": "[parameters('source').pathRules]"
                 }
             }
         ]
