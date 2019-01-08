@@ -18,7 +18,7 @@
             {
                 "name": "[parameters('source').name]",
                 "properties": {
-                    "ruleType": "[parameters('source').RuleType]",
+                    "ruleType": "[parameters('source').ruleType]",
                     "httpListener": {
                         "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
                     },
