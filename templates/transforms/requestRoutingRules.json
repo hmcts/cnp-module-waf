@@ -28,7 +28,7 @@
                     "backendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
                     },
-                    "urlPathMap": {
+                    "urlPathMaps": {
                         "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMaps)]"
                     }
                 }
