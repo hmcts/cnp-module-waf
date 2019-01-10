@@ -247,6 +247,8 @@ resource "azurerm_template_deployment" "waf" {
     requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
     # Configuration for path based rule
     urlPathMaps = "${base64encode(jsonencode(var.urlPathMaps))}"
+    # Configuration for pathRules
+    pathRules = "${base64encode(jsonencode(var.pathRules))}"
     # The internal network settings - vNet / Subnet etc
     gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
     # The probe settings
