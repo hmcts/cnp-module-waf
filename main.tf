@@ -245,6 +245,7 @@ resource "azurerm_template_deployment" "waf" {
     backendHttpSettingsCollection = "${base64encode(jsonencode(local.backendHttpSettingsCollection))}"
     # The request routing rules settings to be created on the WAF
     requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
+    requestRoutingRulesPathBased = "${base64encode(jsonencode(var.requestRoutingRulesPathBased))}"
     # Configuration for path based rule
     urlPathMaps = "${base64encode(jsonencode(var.urlPathMaps))}"
     # The internal network settings - vNet / Subnet etc
