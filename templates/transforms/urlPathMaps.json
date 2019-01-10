@@ -24,7 +24,9 @@
                     "defaultBackendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "pathRules": "[parameters('source').pathRules]"
+                    "pathRules": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/pathRules/', parameters('source').pathRules)]"
+                    }
                 }
             }
         ]
