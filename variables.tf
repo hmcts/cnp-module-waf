@@ -92,13 +92,6 @@ variable "urlPathMaps" {
   type = "list"
 }
 
-
-variable "pathRules" {
-  type = "list"
-  default = []
-}
-
-
 variable "probes" {
   type    = "list"
   default = []

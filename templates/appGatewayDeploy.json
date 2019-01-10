@@ -39,9 +39,6 @@
     "urlPathMaps": {
       "type": "array"
     },
-    "pathRules": {
-      "type": "array"
-    },
     "probes": {
       "type": "array"
     },
@@ -102,7 +99,6 @@
         "httpListeners": "[parameters('httpListeners')]",
         "requestRoutingRules": "[parameters('requestRoutingRules')]",
         "urlPathMaps": "[parameters('urlPathMaps')]",
-        "pathRules": "[parameters('pathRules')]",
         "sslCertificates": "[parameters('sslCertificates')]",
         "probes": "[parameters('probes')]",
         "webApplicationFirewallConfiguration": {
