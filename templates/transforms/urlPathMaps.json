@@ -29,11 +29,11 @@
                             "name": "pathRules",
                             "count": "[length(parameters('source').pathRules)]",
                             "input": {
-                                "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
+                                "name": "[parameters('source').pathRules[0].name]",
                                 "properties": {
-                                    "backendAddressPool": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]",
-                                    "backendHttpSettings": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]",
-                                    "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
+                                    "backendAddressPool": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[0].backendAddressPool)]",
+                                    "backendHttpSettings": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[0].backendHttpSettings)]",
+                                    "paths": "[parameters('source').pathRules[0].paths]"
                                 }
                             }
                         }
