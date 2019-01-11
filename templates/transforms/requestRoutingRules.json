@@ -17,6 +17,7 @@
     "instance": [
       {
         "name": "[parameters('source').name]",
+        "condition": "[bool('true')]",
         "properties": {
           "ruleType": "[parameters('source').ruleType]",
           "httpListener": {
