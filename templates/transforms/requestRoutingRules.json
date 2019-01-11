@@ -17,7 +17,7 @@
     "instance": [
       {
         "name": "[parameters('source').name]",
-        "condition": "[bool('true')]",
+        "condition": "[equals(parameters('source').ruleType, 'Basic')]",
         "properties": {
           "ruleType": "[parameters('source').ruleType]",
           "httpListener": {
@@ -28,6 +28,16 @@
           },
           "backendHttpSettings": {
             "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
+          }
+        }
+      },
+      {
+        "name": "[parameters('source').name]",
+        "condition": "[equals(parameters('source').ruleType, 'PathBasedRouting')]",
+        "properties": {
+          "ruleType": "[parameters('source').ruleType]",
+          "httpListener": {
+            "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
           },
           "urlPathMap": {
             "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
