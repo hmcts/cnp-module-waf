@@ -17,6 +17,7 @@
         "instance": [
             {
                 "name": "[parameters('source').name]",
+                "dependsOn": ["pathRules"],
                 "properties": {
                     "defaultBackendAddressPool": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').defaultBackendAddressPool)]"
@@ -24,20 +25,21 @@
                     "defaultBackendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "copy": [
-                        {
-                            "name": "pathRules",
-                            "count": "[length(parameters('source').pathRules)]",
-                            "input": {
-                                "name": "[parameters('source').pathRules[0].name]",
-                                "properties": {
-                                    "backendAddressPool": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[0].backendAddressPool)]",
-                                    "backendHttpSettings": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[0].backendHttpSettings)]",
-                                    "paths": "[parameters('source').pathRules[0].paths]"
-                                }
-                            }
-                        }
-                    ]
+                    "pathRules": "[variables('pathRules')]"
+                }
+            }
+        ],
+        "copy": [
+            {
+                "name": "pathRules",
+                "count": "[length(parameters('source').pathRules)]",
+                "input": {
+                    "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
+                    "properties": {
+                        "backendAddressPool": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]",
+                        "backendHttpSettings": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]",
+                        "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
+                    }
                 }
             }
         ]
