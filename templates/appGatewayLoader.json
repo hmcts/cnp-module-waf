@@ -36,6 +36,9 @@
     "requestRoutingRules": {
       "type": "string"
     },
+    "requestRoutingRulesPathBased": {
+      "type": "string"
+    },
     "urlPathMaps": {
       "type": "string"
     },
@@ -96,6 +99,8 @@
         "[base64ToJson(parameters('backendHttpSettingsCollection'))]",
       "requestRoutingRules":
         "[base64ToJson(parameters('requestRoutingRules'))]",
+      "requestRoutingRulesPathBased":
+        "[base64ToJson(parameters('requestRoutingRulesPathBased'))]",
       "urlPathMaps":
         "[base64ToJson(parameters('urlPathMaps'))]",
       "probes": "[base64ToJson(parameters('probes'))]",
@@ -113,6 +118,7 @@
       "backendHttpSettingsCollection",
       "httpListeners",
       "requestRoutingRules",
+      "requestRoutingRulesPathBased",
       "urlPathMaps",
       "probes",
       "authenticationCertificates"
@@ -203,17 +209,21 @@
             "value":
               "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[7])).outputs.result.value]"
           },
+          "requestRoutingRulesPathBased": {
+            "value":
+              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[8])).outputs.result.value]"
+          },
           "urlPathMaps": {
             "value":
-            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[8])).outputs.result.value]"
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[9])).outputs.result.value]"
           },
           "probes": {
             "value":
-              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[9])).outputs.result.value]"
+              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
           },
           "authenticationCertificates": {
             "value":
-              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
+              "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value]"
           },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
@@ -264,6 +274,10 @@
       "value": "[variables('joinedParameters').backendHttpSettingsCollection]"
     },
     "requestRoutingRules": {
+      "type": "array",
+      "value": "[variables('joinedParameters').requestRoutingRules]"
+    },
+    "requestRoutingRulesPathBased": {
       "type": "array",
       "value": "[variables('joinedParameters').requestRoutingRules]"
     },
