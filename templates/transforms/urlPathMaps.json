@@ -24,14 +24,14 @@
                     "defaultBackendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "pathRules": "[if(equals(length(parameters('source').pathRules), 0), variables('pathRules'), json('null'))]"
+                    "pathRules": "[variables('pathRules')]"
                 }
             }
         ],
         "copy": [
             {
                 "name": "pathRules",
-                "count": "[0]",
+                "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source').pathRules))]",
                 "input": {
                     "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
                     "properties": {
