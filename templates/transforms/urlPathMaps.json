@@ -25,14 +25,14 @@
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
                     "pathRules": {
-                        "name": "[parameters('source').pathRules[0].name]",
+                        "name": "[parameters('source').pathRules.name]",
                         "backendAddressPool": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[0].backendAddressPool)]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules.backendAddressPool)]"
                         },
                         "backendHttpSettings": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[0].backendHttpSettings)]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules.backendHttpSettings)]"
                         },
-                        "paths": "[parameters('source').pathRules[0].paths]"
+                        "paths": "[parameters('source').pathRules.paths]"
                 }
                 }
             }
