@@ -1,6 +1,6 @@
 # Define local variables
 locals {
-  wafName   = "${var.wafName}-${var.env}"
+  wafName   = "${var.wafName}-${var.env}${var.deployment_target}"
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
 
@@ -114,7 +114,7 @@ resource "null_resource" "ilbCert" {
 
 data "local_file" "ilbCertFile" {
   count = "${var.use_authentication_cert ? 1 : 0}"
-  filename   = "${path.module}/core-compute-${var.env}.out.2"
+  filename   = "${path.module}/core-compute-${var.env}${var.deployment_target}.out.2"
   depends_on = ["null_resource.ilbCert"]
 }
 
