@@ -100,7 +100,8 @@
         "backendHttpSettingsCollection":
           "[parameters('backendHttpSettingsCollection')]",
         "httpListeners": "[parameters('httpListeners')]",
-        "requestRoutingRules": "[parameters('requestRoutingRules')]",
+        "requestRoutingRules": "[concat(parameters('requestRoutingRules'), parameters('requestRoutingRulesPathBased'))]",
+        "urlPathMaps": "[parameters('urlPathMaps')]",
         "sslCertificates": "[parameters('sslCertificates')]",
         "probes": "[parameters('probes')]",
         "webApplicationFirewallConfiguration": {
