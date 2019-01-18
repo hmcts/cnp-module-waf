@@ -84,6 +84,7 @@
       "name": "[parameters('appGatewaySettings').name]",
       "type": "Microsoft.Network/applicationGateways",
       "location": "[parameters('location')]",
+      "condition": "[equals(length(parameters('requestRoutingRulesPathBased'), 0)]",
       "dependsOn": ["pipCopy"],
       "properties": {
         "sku": {
@@ -99,6 +100,52 @@
         "backendAddressPools": "[parameters('backendAddressPools')]",
         "backendHttpSettingsCollection":
           "[parameters('backendHttpSettingsCollection')]",
+        "httpListeners": "[parameters('httpListeners')]",
+        "requestRoutingRules": "[parameters('requestRoutingRules')]",
+        "sslCertificates": "[parameters('sslCertificates')]",
+        "probes": "[parameters('probes')]",
+        "webApplicationFirewallConfiguration": {
+          "enabled": "[parameters('wafEnabled')]",
+          "firewallMode": "[parameters('wafMode')]",
+          "ruleSetType": "[parameters('wafRuleSetType')]",
+          "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
+          "disabledRuleGroups": [
+            {
+              "ruleGroupName": "REQUEST-931-APPLICATION-ATTACK-RFI",
+              "rules":[
+                931130
+              ]
+            }
+          ]
+        },
+        "sslPolicy": {
+          "policyType": "Custom",
+          "cipherSuites":["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"],
+          "minProtocolVersion": "TLSv1_2"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-06-01",
+      "name": "[parameters('appGatewaySettings').name]",
+      "type": "Microsoft.Network/applicationGateways",
+      "location": "[parameters('location')]",
+      "condition": "[greater(length(parameters('requestRoutingRulesPathBased'), 0)]",
+      "dependsOn": ["pipCopy"],
+      "properties": {
+        "sku": {
+          "name": "[parameters('appGatewaySettings').size]",
+          "tier": "[parameters('appGatewaySettings').tier]",
+          "capacity": "[parameters('appGatewaySettings').capacity]"
+        },
+        "gatewayIPConfigurations": "[parameters('gatewayIPConfigurations')]",
+        "authenticationCertificates":
+        "[parameters('authenticationCertificates')]",
+        "frontendIPConfigurations": "[parameters('frontendIPConfigurations')]",
+        "frontendPorts": "[parameters('frontendPorts')]",
+        "backendAddressPools": "[parameters('backendAddressPools')]",
+        "backendHttpSettingsCollection":
+        "[parameters('backendHttpSettingsCollection')]",
         "httpListeners": "[parameters('httpListeners')]",
         "requestRoutingRules": "[concat(parameters('requestRoutingRules'), parameters('requestRoutingRulesPathBased'))]",
         "urlPathMaps": "[parameters('urlPathMaps')]",
