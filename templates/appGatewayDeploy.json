@@ -36,6 +36,12 @@
     "requestRoutingRules": {
       "type": "array"
     },
+    "requestRoutingRulesPathBased": {
+      "type": "array"
+    },
+    "urlPathMaps": {
+      "type": "array"
+    },
     "probes": {
       "type": "array"
     },

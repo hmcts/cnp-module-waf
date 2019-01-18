@@ -227,6 +227,8 @@ resource "azurerm_template_deployment" "waf" {
     backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
     backendHttpSettingsCollection = "${base64encode(jsonencode(local.backendHttpSettingsCollection))}"
     requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
+    requestRoutingRulesPathBased = "${base64encode(jsonencode(var.requestRoutingRulesPathBased))}"
+    urlPathMaps = "${base64encode(jsonencode(var.urlPathMaps))}"
     gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
     probes = "${base64encode(jsonencode(local.probes))}"
     tags = "${local.tags}"

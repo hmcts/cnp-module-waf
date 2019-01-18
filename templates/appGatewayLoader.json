@@ -33,6 +33,12 @@
     "requestRoutingRules": {
       "type": "string"
     },
+    "requestRoutingRulesPathBased": {
+      "type": "string"
+    },
+    "urlPathMaps": {
+      "type": "string"
+    },
     "gatewayIpConfigurations": {
       "type": "string"
     },
@@ -90,6 +96,10 @@
         "[base64ToJson(parameters('backendHttpSettingsCollection'))]",
       "requestRoutingRules":
         "[base64ToJson(parameters('requestRoutingRules'))]",
+      "requestRoutingRulesPathBased":
+        "[base64ToJson(parameters('requestRoutingRulesPathBased'))]",
+      "urlPathMaps":
+        "[base64ToJson(parameters('urlPathMaps'))]",
       "probes": "[base64ToJson(parameters('probes'))]",
       "gatewayIPConfigurations":
         "[base64ToJson(parameters('gatewayIpConfigurations'))]",
@@ -106,7 +116,9 @@
       "httpListeners",
       "requestRoutingRules",
       "probes",
-      "authenticationCertificates"
+      "authenticationCertificates",
+      "requestRoutingRulesPathBased",
+      "urlPathMaps"
     ]
   },
   "resources": [
@@ -202,6 +214,14 @@
             "value":
               "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[9])).outputs.result.value]"
           },
+          "requestRoutingRulesPathBased": {
+            "value":
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
+          },
+          "urlPathMaps": {
+            "value":
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value]"
+          },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
           },
@@ -253,6 +273,14 @@
     "requestRoutingRules": {
       "type": "array",
       "value": "[variables('joinedParameters').requestRoutingRules]"
+    },
+    "requestRoutingRulesPathBased": {
+      "type": "array",
+      "value": "[variables('joinedParameters').requestRoutingRules]"
+    },
+    "urlPathMaps": {
+      "type": "array",
+      "value": "[variables('joinedParameters').urlPathMaps]"
     },
     "probes": {
       "type": "array",
