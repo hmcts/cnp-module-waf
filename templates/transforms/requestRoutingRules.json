@@ -17,7 +17,7 @@
         "instance": [
             {
                 "Name": "[parameters('source').name]",
-                "properties": "[union(variables('base_properties'), if(equals(parameters('source').RuleType, 'Basic'), variables('basicRule'), variables('pathBasedRule'))]"
+                "properties": "[union(variables('base_properties'), if(equals(parameters('source').RuleType, 'Basic'), variables('basicRule'), variables('pathBasedRule')))]"
             }
         ],
         "base_properties": {
