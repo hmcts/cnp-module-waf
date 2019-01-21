@@ -17,20 +17,28 @@
         "instance": [
             {
                 "Name": "[parameters('source').name]",
-                "properties": {
-                    "RuleType": "[parameters('source').RuleType]",
-                    "httpListener": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
-                    },
-                    "backendAddressPool": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
-                    },
-                    "backendHttpSettings": {
-                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
-                    }
-                }
+                "properties": "[union(variables('base_properties'), if(equals(parameters('source').RuleType, 'Basic'), variables('basicRule'), variables('pathBasedRule'))]"
             }
-        ]
+        ],
+        "base_properties": {
+            "RuleType": "[parameters('source').RuleType]",
+            "httpListener": {
+                "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
+            }
+        },
+        "basicRule": {
+            "backendAddressPool": {
+                "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
+            },
+            "backendHttpSettings": {
+                "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
+            }
+        },
+        "pathBasedRule": {
+            "urlPathMap": {
+                "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
+            }
+        }
     },
     "resources": [],
     "outputs": {

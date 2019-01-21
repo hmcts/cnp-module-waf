@@ -36,9 +36,6 @@
     "requestRoutingRules": {
       "type": "array"
     },
-    "requestRoutingRulesPathBased": {
-      "type": "array"
-    },
     "urlPathMaps": {
       "type": "array"
     },
@@ -100,7 +97,7 @@
         "backendHttpSettingsCollection":
           "[parameters('backendHttpSettingsCollection')]",
         "httpListeners": "[parameters('httpListeners')]",
-        "requestRoutingRules": "[concat(parameters('requestRoutingRules'), parameters('requestRoutingRulesPathBased'))]",
+        "requestRoutingRules": "[parameters('requestRoutingRules')]",
         "urlPathMaps": "[parameters('urlPathMaps')]",
         "sslCertificates": "[parameters('sslCertificates')]",
         "probes": "[parameters('probes')]",
