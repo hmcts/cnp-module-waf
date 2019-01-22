@@ -189,6 +189,55 @@ backendHttpSettingsCollection = [
   ]
 ```
 
+## Using Path Based Rules
+It is possible to apply request routing based on the routes. For example, for diverting requests for a specific path (e.g. /uploads) to another backend the following changes need to be done to the configuration above.
+
+```
+  requestRoutingRules = [
+   {
+      name                = "http-gateway"
+      ruleType            = "PathBasedRouting"
+      httpListener        = "${var.product}-http-listener-gateway"
+      urlPathMap          = "http-url-path-map-gateway"
+    },
+    {
+      name                = "https-gateway"
+      ruleType            = "PathBasedRouting"
+      httpListener        = "${var.product}-https-listener-gateway"
+      urlPathMap          = "https-url-path-map-gateway"
+    }
+  ]
+
+  urlPathMaps = [
+    {
+      name                       = "http-url-path-map-gateway"
+      defaultBackendAddressPool  = "${var.product}-${var.env}-backend-pool"
+      defaultBackendHttpSettings = "backend-80-nocookies-gateway"
+      pathRules                  = [
+        {
+          name                = "http-url-path-map-gateway-rule-palo-alto"
+          paths               = ["/documents"]
+          backendAddressPool  = "${var.product}-${var.env}-palo-alto"
+          backendHttpSettings = "backend-80-nocookies-gateway"
+        }
+      ]
+    },
+    {
+      name                       = "https-url-path-map-gateway"
+      defaultBackendAddressPool  = "${var.product}-${var.env}-backend-pool"
+      defaultBackendHttpSettings = "backend-80-nocookies-gateway"
+      pathRules                  = [
+        {
+          name                = "https-url-path-map-gateway-rule-palo-alto"
+          paths               = ["/documents"]
+          backendAddressPool  = "${var.product}-${var.env}-palo-alto"
+          backendHttpSettings = "backend-80-nocookies-gateway"
+        }
+      ]
+    }
+  ]
+```
+
 ## Configuring the backends
 The Application Service Environment (ASE) uses the hostname from the request to determine which application will receive the request. For this reason, is necessary that the correct hostname to be forwarded from the Application Gateway (WAF) to the ILB.
 

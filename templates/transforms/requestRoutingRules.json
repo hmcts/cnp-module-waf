@@ -17,7 +17,7 @@
         "instance": [
             {
                 "Name": "[parameters('source').name]",
-                "properties": "[union(variables('base_properties'), if(equals(parameters('source').RuleType, 'Basic'), variables('basicRule'), variables('pathBasedRule')))]"
+                "properties": "[union(variables('base_properties'), variables('conditional_basic_rule'), variables('conditional_pb_rule'))]"
             }
         ],
         "base_properties": {
@@ -26,6 +26,7 @@
                 "id": "[concat(parameters('applicationGatewayID'), '/httpListeners/', parameters('source').httpListener)]"
             }
         },
+        "conditional_basic_rule": "[if(equals(parameters('source').RuleType, 'Basic'), variables('basicRule'), variables('empty_properties'))]",
         "basicRule": {
             "backendAddressPool": {
                 "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').backendAddressPool)]"
@@ -34,11 +35,13 @@
                 "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').backendHttpSettings)]"
             }
         },
+        "conditional_pb_rule": "[if(equals(parameters('source').RuleType, 'PathBasedRouting'), variables('pathBasedRule'), variables('empty_properties'))]",
         "pathBasedRule": {
             "urlPathMap": {
                 "id": "[concat(parameters('applicationGatewayID'), '/urlPathMaps/', parameters('source').urlPathMap)]"
             }
-        }
+        },
+        "empty_properties": {}
     },
     "resources": [],
     "outputs": {
