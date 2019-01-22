@@ -101,4 +101,5 @@ variable "common_tags" {
 }
 
 variable deployment_target {
+    default = ""
 }
