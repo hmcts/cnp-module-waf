@@ -24,24 +24,24 @@
                     "defaultBackendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "pathRules": "[[if(bool('true')), json('[]'), variables('pathRules'))]"
+                    "pathRules": "[variables('pathRules')]"
                 }
             }
         ],
         "copy": [
             {
                 "name": "pathRules",
-                "count": "[if(bool('true')), 1, length(parameters('source').pathRules))]",
+                "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source').pathRules))]",
                 "input": {
-                    "name": "[if(bool('true')), '1', parameters('source').pathRules[copyIndex('pathRules')].name)]",
+                    "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
                     "properties": {
                         "backendAddressPool": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', if(bool('true')), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool))]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]"
                         },
                         "backendHttpSettings": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', if(bool('true')), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings))]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]"
                         },
-                        "paths": "[if(bool('true')), 0), '', parameters('source').pathRules[copyIndex('pathRules')].paths)]"
+                        "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
                     }
                 }
             }
