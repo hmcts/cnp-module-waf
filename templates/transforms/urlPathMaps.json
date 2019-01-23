@@ -31,9 +31,9 @@
         "copy": [
             {
                 "name": "pathRules",
-                "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source')))]",
+                "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source').pathRules))]",
                 "input": {
-                    "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
+                    "name": "[if(equals(length(parameters('source').pathRules), 0), '1', parameters('source').pathRules[copyIndex('pathRules')].name)]",
                     "properties": {
                         "backendAddressPool": {
                             "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', if(equals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool))]"
