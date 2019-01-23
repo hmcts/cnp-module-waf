@@ -24,24 +24,24 @@
                     "defaultBackendHttpSettings": {
                         "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
                     },
-                    "pathRules": "[[if(lessOrEquals(length(parameters('source').pathRules), 0), json('[]'), variables('pathRules'))]"
+                    "pathRules": "[[if(empty(parameters('source'))), json('[]'), variables('pathRules'))]"
                 }
             }
         ],
         "copy": [
             {
                 "name": "pathRules",
-                "count": "[if(lessOrEquals(length(parameters('source').pathRules), 0), 1, length(parameters('source').pathRules))]",
+                "count": "[if(empty(parameters('source'))), 1, length(parameters('source').pathRules))]",
                 "input": {
-                    "name": "[if(lessOrEquals(length(parameters('source').pathRules), 0), '1', parameters('source').pathRules[copyIndex('pathRules')].name)]",
+                    "name": "[if(empty(parameters('source'))), '1', parameters('source').pathRules[copyIndex('pathRules')].name)]",
                     "properties": {
                         "backendAddressPool": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', if(lessOrEquals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool))]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', if(empty(parameters('source'))), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool))]"
                         },
                         "backendHttpSettings": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', if(lessOrEquals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings))]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', if(empty(parameters('source'))), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings))]"
                         },
-                        "paths": "[if(lessOrEquals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].paths)]"
+                        "paths": "[if(empty(parameters('source'))), 0), '', parameters('source').pathRules[copyIndex('pathRules')].paths)]"
                     }
                 }
             }
