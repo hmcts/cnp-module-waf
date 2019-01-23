@@ -84,6 +84,11 @@ variable "requestRoutingRules" {
   type = "list"
 }
 
+variable "requestRoutingRulesPathBased" {
+  type = "list"
+  default = []
+}
+
 variable "urlPathMaps" {
   type = "list"
   default = []

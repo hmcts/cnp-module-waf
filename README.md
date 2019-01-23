@@ -189,12 +189,30 @@ backendHttpSettingsCollection = [
   ]
 ```
 
-## Using Path Based Rules
-It is possible to apply request routing based on the routes. For example, for diverting requests for a specific path (e.g. /uploads) to another backend the following changes need to be done to the configuration above.
+## Using Path Based Routing Rules
+In Azure Application Gateway, it's possible to apply request routing based on the routes. For example, for diverting requests for a specific path (e.g. /uploads) to another backend pool the following changes need to be done to the configuration above. 
+This configuration diverts those requests made to `/uploads` to another backed (i.e. palo-alto) while the others are sent to the default backend address pool.
 
+The `PathBased` routing requires sections identified with `requestRoutingRulesPathBased` and `urlPathMaps` and these sections are optional in case only `Basic` routing is used. It is possible to mix the Basic rule setting and PathBasedRouting as in the following sample. 
 ```
   requestRoutingRules = [
    {
+      name                = "http-www"
+      ruleType            = "Basic"
+      httpListener        = "${var.product}-http-listener-www"
+      backendAddressPool  = "${var.product}-${var.env}-backend-pool"
+      backendHttpSettings = "backend-80-nocookies-www"
+    },
+    {
+      name                = "https-www"
+      ruleType            = "Basic"
+      httpListener        = "${var.product}-https-listener-www"
+      backendAddressPool  = "${var.product}-${var.env}-backend-pool"
+      backendHttpSettings = "backend-443-nocookies-www"
+  ]
+
+  requestRoutingRulesPathBased = [
+    {
       name                = "http-gateway"
       ruleType            = "PathBasedRouting"
       httpListener        = "${var.product}-http-listener-gateway"
@@ -216,7 +234,7 @@ It is possible to apply request routing based on the routes. For example, for di
       pathRules                  = [
         {
           name                = "http-url-path-map-gateway-rule-palo-alto"
-          paths               = ["/documents"]
+          paths               = ["/uploads"]
           backendAddressPool  = "${var.product}-${var.env}-palo-alto"
           backendHttpSettings = "backend-80-nocookies-gateway"
         }
@@ -229,7 +247,7 @@ It is possible to apply request routing based on the routes. For example, for di
       pathRules                  = [
         {
           name                = "https-url-path-map-gateway-rule-palo-alto"
-          paths               = ["/documents"]
+          paths               = ["/uploads"]
           backendAddressPool  = "${var.product}-${var.env}-palo-alto"
           backendHttpSettings = "backend-80-nocookies-gateway"
         }
@@ -237,6 +255,7 @@ It is possible to apply request routing based on the routes. For example, for di
     }
   ]
 ```
+See `ccd-shared-infrastructure` project for a fully working sample of the `PathBasedRouting`
 
 ## Configuring the backends
 The Application Service Environment (ASE) uses the hostname from the request to determine which application will receive the request. For this reason, is necessary that the correct hostname to be forwarded from the Application Gateway (WAF) to the ILB.
