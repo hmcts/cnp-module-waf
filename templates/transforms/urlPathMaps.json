@@ -7,17 +7,7 @@
             "defaultValue": []
         },
         "source": {
-            "type": "object",
-          "defaultValue": [
-            {
-              "pathRules": [{
-                "name": "",
-                "backendAddressPool": "",
-                "backendHttpSettings": "",
-                "paths": []
-              }]
-            }
-          ]
+            "type": "object"
         },
         "applicationGatewayID": {
             "type": "string"
@@ -41,17 +31,17 @@
         "copy": [
             {
                 "name": "pathRules",
-                "count": "[length(parameters('source').pathRules)]",
+                "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source')))]",
                 "input": {
                     "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
                     "properties": {
                         "backendAddressPool": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', if(equals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool))]"
                         },
                         "backendHttpSettings": {
-                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]"
+                            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', if(equals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings))]"
                         },
-                        "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
+                        "paths": "[if(equals(length(parameters('source').pathRules), 0), '', parameters('source').pathRules[copyIndex('pathRules')].paths)]"
                     }
                 }
             }
