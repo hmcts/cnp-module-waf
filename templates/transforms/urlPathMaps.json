@@ -1,58 +1,59 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "state": {
-      "type": "array",
-      "defaultValue": []
-    },
-    "source": {
-      "type": "object"
-    },
-    "applicationGatewayID": {
-      "type": "string"
-    }
-  },
-  "variables": {
-    "instance": [
-      {
-        "name": "[parameters('source').name]",
-        "properties": {
-          "defaultBackendAddressPool": {
-            "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').defaultBackendAddressPool)]"
-          },
-          "defaultBackendHttpSettings": {
-            "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
-          },
-          "pathRules": {
-            "copy": [
-              {
-                "name": "pathRules",
-                "count": "1",
-                "input": {
-                  "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
-                  "properties": {
-                    "backendAddressPool": {
-                      "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]"
-                    },
-                    "backendHttpSettings": {
-                      "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]"
-                    },
-                    "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
-                  }
-                }
-              }
-            ]
-          }
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "state": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "source": {
+            "type": "object"
+        },
+        "applicationGatewayID": {
+            "type": "string"
         }
-      }
-    ]
-  },
-  "resources": [],
-  "outputs": {
-    "collection": {
-      "type": "array",
-      "value": "[concat(parameters('state'), variables('instance'))]"
+    },
+    "variables": {
+        "instance": [
+            {
+                "name": "[parameters('source').name]",
+                "properties": {
+                    "defaultBackendAddressPool": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').defaultBackendAddressPool)]"
+                    },
+                    "defaultBackendHttpSettings": {
+                        "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').defaultBackendHttpSettings)]"
+                    },
+                    "pathRules": {
+                      "copy": [
+                        {
+                          "name": "pathRules",
+                          "count": "[if(equals(length(parameters('source').pathRules), 0), 1, length(parameters('source').pathRules))]",
+                          "input": {
+                            "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
+                            "properties": {
+                              "backendAddressPool": {
+                                "id": "[concat(parameters('applicationGatewayID'), '/backendAddressPools/', parameters('source').pathRules[copyIndex('pathRules')].backendAddressPool)]"
+                              },
+                              "backendHttpSettings": {
+                                "id": "[concat(parameters('applicationGatewayID'), '/backendHttpSettingsCollection/', parameters('source').pathRules[copyIndex('pathRules')].backendHttpSettings)]"
+                              },
+                              "paths": "[parameters('source').pathRules[copyIndex('pathRules')].paths]"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                }
+            }
+        ],
+
+    },
+    "resources": [],
+    "outputs": {
+        "collection": {
+            "type": "array",
+            "value": "[concat(parameters('state'), variables('instance'))]"
+        }
     }
-  }
 }
