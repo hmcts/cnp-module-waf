@@ -154,7 +154,7 @@
         }
       },
       "copy": {
-        "count": "[length(variables('appGWSections')) - 2]",
+        "count": "[length(variables('appGWSections'))]",
         "mode": "Parallel",
         "name": "agwCollector"
       }
