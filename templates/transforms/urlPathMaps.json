@@ -28,7 +28,7 @@
             "copy": [
               {
                 "name": "pathRules",
-                "count": "[1]",
+                "count": "1",
                 "input": {
                   "name": "[parameters('source').pathRules[copyIndex('pathRules')].name]",
                   "properties": {
