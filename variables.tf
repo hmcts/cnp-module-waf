@@ -99,3 +99,7 @@ variable "common_tags" {
     "Team Name" = "pleaseTagMe"
   }
 }
+
+variable deployment_target {
+    default = ""
+}
