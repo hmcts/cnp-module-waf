@@ -283,5 +283,5 @@ backendHttpSettingsCollection = [
   ]
 ```
 
-### DEPLOYMENT TARGET
+### Deployment target
 `deployment_target` parameter, type = String, Required = No, Default value = "", Description = Name of the Deployment Target. If `deployment_target` is empty it works in legacy mode
