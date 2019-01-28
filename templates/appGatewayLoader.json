@@ -214,11 +214,11 @@
           },
           "requestRoutingRulesPathBased": {
             "value":
-            "[if(greaterOrEquals(length(variables('appGWSections')), 11),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value, empty_properties)]"
+            "[if(greaterOrEquals(length(variables('appGWSections')), 11),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value, '')]"
           },
           "urlPathMaps": {
             "value":
-            "[if(greaterOrEquals(length(variables('appGWSections')), 12),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value, empty_properties)]"
+            "[if(greaterOrEquals(length(variables('appGWSections')), 12),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value, '')]"
           },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
@@ -237,8 +237,7 @@
           },
           "location": {
             "value": "[parameters('location')]"
-          },
-          "empty_properties": {}
+          }
         }
       },
       "dependsOn": ["agwCollector"]
