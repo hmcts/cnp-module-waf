@@ -23,7 +23,8 @@
         }
     },
     "variables": {
-        "count": "[length(parameters('source')[parameters('section')])]"
+        "count": "[length(parameters('source')[parameters('section')])]",
+        "empty": {}
     },
     "resources": [
         {
@@ -67,10 +68,10 @@
                 },
                 "parameters": {
                     "source": {
-                        "value": "[parameters('source')[parameters('section')][copyindex()]]"
+                        "value": "[if(lessOrEquals(variables('count'), 0), variables('empty'), parameters('source')[parameters('section')][copyindex()])]"
                     },
                     "state": {
-                        "value": "[reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value]"
+                        "value": "[if(lessOrEquals(variables('count'), 0), variables('empty'), reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value)]"
                     },
                     "applicationGatewayID": {
                         "value": "[parameters('appGWID')]"
