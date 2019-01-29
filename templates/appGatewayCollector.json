@@ -53,9 +53,10 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "name": "[concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex(1))]",
+            "condition": "[greaterOrEquals(variables('count'), 1)]",
             "copy": {
                 "name": "iterator",
-                "count": "[if(lessOrEquals(variables('count'), 0), 1, variables('count'))]",
+                "count": "[variables('count')]",
                 "mode": "serial"
             },
             "dependsOn": [
@@ -68,7 +69,7 @@
                 },
                 "parameters": {
                     "source": {
-                        "value": "[if(lessOrEquals(variables('count'), 0), variables('empty'), parameters('source')[parameters('section')][copyindex()])]"
+                        "value": "[parameters('source')[parameters('section')][copyindex()]]"
                     },
                     "state": {
                         "value": "[reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value]"
