@@ -116,7 +116,9 @@
       "httpListeners",
       "requestRoutingRules",
       "probes",
-      "authenticationCertificates"
+      "authenticationCertificates",
+      "requestRoutingRulesPathBased",
+      "urlPathMaps"
     ]
   },
   "resources": [
@@ -214,11 +216,11 @@
           },
           "requestRoutingRulesPathBased": {
             "value":
-            "[if(greaterOrEquals(length(variables('appGWSections')), 11),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value, '')]"
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[10])).outputs.result.value]"
           },
           "urlPathMaps": {
             "value":
-            "[if(greaterOrEquals(length(variables('appGWSections')), 12),reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value, '')]"
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[11])).outputs.result.value]"
           },
           "wafEnabled": {
             "value": "[parameters('wafEnabled')]"
