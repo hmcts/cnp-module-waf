@@ -7,17 +7,7 @@
             "defaultValue": []
         },
         "source": {
-            "type": "object",
-          "defaultValue": [
-            {
-              "pathRules": [{
-                "name": "",
-                "backendAddressPool": "",
-                "backendHttpSettings": "",
-                "paths": []
-              }]
-            }
-          ]
+            "type": "object"
         },
         "applicationGatewayID": {
             "type": "string"
