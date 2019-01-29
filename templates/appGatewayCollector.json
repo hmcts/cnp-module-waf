@@ -71,7 +71,7 @@
                         "value": "[if(lessOrEquals(variables('count'), 0), variables('empty'), parameters('source')[parameters('section')][copyindex()])]"
                     },
                     "state": {
-                        "value": "[if(lessOrEquals(variables('count'), 0), variables('empty'), reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value)]"
+                        "value": "[reference(concat('transform-waf-', substring(uniquestring(parameters('appGWName')),0,4), '-', parameters('section'), '-', copyindex())).outputs.collection.value]"
                     },
                     "applicationGatewayID": {
                         "value": "[parameters('appGWID')]"
