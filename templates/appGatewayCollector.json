@@ -23,7 +23,8 @@
         }
     },
     "variables": {
-        "count": "[length(parameters('source')[parameters('section')])]"
+        "count": "[length(parameters('source')[parameters('section')])]",
+        "empty": {}
     },
     "resources": [
         {

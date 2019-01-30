@@ -1,6 +1,6 @@
 # Define local variables
 locals {
-  wafName   = "${var.wafName}-${var.env}"
+  wafName   = "${var.wafName}-${var.env}${var.deployment_target}"
   saAccount = "templates${random_id.randomKey.hex}"
   tags      = ""
 
