@@ -82,6 +82,7 @@ variable "backendHttpSettingsCollection" {
 
 variable "requestRoutingRules" {
   type = "list"
+  default = []
 }
 
 variable "requestRoutingRulesPathBased" {
