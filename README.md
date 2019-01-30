@@ -190,10 +190,18 @@ backendHttpSettingsCollection = [
 ```
 
 ## Using Path Based Routing Rules
-In Azure Application Gateway, it's possible to apply request routing based on the routes. For example, for diverting requests for a specific path (e.g. /uploads) to another backend pool the following changes need to be done to the configuration above. 
-This configuration diverts those requests made to `/uploads` to another backed (i.e. palo-alto) while the others are sent to the default backend address pool.
+In Azure Application Gateway, it's possible to apply request routing based on
+the routes. For example, for diverting requests for a specific path (e.g.
+/uploads) to another backend pool the following changes need to be done to the
+configuration above.
 
-The `PathBased` routing requires sections identified with `requestRoutingRulesPathBased` and `urlPathMaps` and these sections are optional in case only `Basic` routing is used. It is possible to mix the Basic rule setting and PathBasedRouting as in the following sample. 
+This configuration diverts those requests made to `/uploads` to another backed
+(i.e. palo-alto) while the others are sent to the default backend address pool.
+
+The `PathBased` routing requires sections identified with
+`requestRoutingRulesPathBased` and `urlPathMaps` and these sections are
+optional in case only `Basic` routing is used. It is possible to mix the Basic
+rule setting and PathBasedRouting as in the following sample.
 ```
   requestRoutingRules = [
    {
