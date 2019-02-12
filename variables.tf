@@ -95,9 +95,6 @@ variable "use_authentication_cert" {
 
 variable "common_tags" {
   type = "map"
-  default = {
-    "Team Name" = "pleaseTagMe"
-  }
 }
 
 variable deployment_target {
