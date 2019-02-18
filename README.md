@@ -185,6 +185,7 @@ backendHttpSettingsCollection = [
       probeEnabled                   = "True"
       probe                          = "https-probe"
       PickHostNameFromBackendAddress = "True"
+      HostName                       = ""
     },
   ]
 ```
