@@ -107,8 +107,7 @@
       "gatewayIPConfigurations":
         "[base64ToJson(parameters('gatewayIpConfigurations'))]",
       "authenticationCertificates":
-        "[base64ToJson(parameters('authenticationCertificates'))]",
-      "tags": "[base64ToJson(parameters('tags'))]"
+        "[base64ToJson(parameters('authenticationCertificates'))]"
     },
     "appGWSections": [
       "sslCertificates",
@@ -154,6 +153,9 @@
           },
           "section": {
             "value": "[variables('appGWSections')[copyindex()]]"
+          },
+          "tags": {
+            "value": "[base64ToJson(parameters('tags'))]"
           }
         }
       },
