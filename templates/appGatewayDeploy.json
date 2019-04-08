@@ -62,6 +62,9 @@
     },
     "logAnalyticsWorkspaceId": {
       "type": "string"
+    },
+    "tags": {
+      "type": "object"
     }
   },
   "variables": {},
@@ -86,6 +89,7 @@
       "apiVersion": "2017-06-01",
       "name": "[parameters('appGatewaySettings').name]",
       "type": "Microsoft.Network/applicationGateways",
+      "tags": "[parameters('tags')]",
       "location": "[parameters('location')]",
       "dependsOn": ["pipCopy"],
       "properties": {
