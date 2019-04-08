@@ -52,7 +52,7 @@ locals {
       protocol           = "Http"
       path               = "/health"
       interval           = 30
-      timeout            = 30
+      timeout            = 90
       unhealthyThreshold = 3
 
       # Can be used if backed is resolvable in DNS
@@ -65,7 +65,7 @@ locals {
       protocol           = "Https"
       path               = "/health"
       interval           = 30
-      timeout            = 30
+      timeout            = 90
       unhealthyThreshold = 3
       host               = ""
 
@@ -216,7 +216,7 @@ resource "azurerm_template_deployment" "waf" {
     tier     = "${var.tier}"
     capacity = "${var.capacity}"
     location = "${var.location}"
-    wafMode           = "Prevention"
+    wafMode           = "Detection"
     wafEnabled        = "${var.wafEnabled}"
     wafRuleSetType    = "${var.wafRuleSetType}"
     wafMaxRequestBodySize = "${var.wafMaxRequestBodySize}"
