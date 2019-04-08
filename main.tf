@@ -2,7 +2,6 @@
 locals {
   wafName   = "${var.wafName}-${var.env}${var.deployment_target}"
   saAccount = "templates${random_id.randomKey.hex}"
-  tags      = ""
 
   defaultFrontEndPorts = [
     {
@@ -235,8 +234,8 @@ resource "azurerm_template_deployment" "waf" {
     requestRoutingRulesPathBased = "${base64encode(jsonencode(var.requestRoutingRulesPathBased))}"
     urlPathMaps = "${base64encode(jsonencode(var.urlPathMaps))}"
     gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
-    probes = "${base64encode(jsonencode(local.probes))}"
+    probes                  = "${base64encode(jsonencode(local.probes))}"
     logAnalyticsWorkspaceId = "${data.azurerm_log_analytics_workspace.log_analytics.id}"
-    tags = "${local.tags}"
+    tags = "${base64encode(jsonencode(var.common_tags))}"
   }
 }

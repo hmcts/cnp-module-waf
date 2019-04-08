@@ -130,13 +130,13 @@
       "resources": [
         {
           "type": "providers/diagnosticSettings",
-          "name": "[concat('Microsoft.Insights/', parameters('appGatewaySettings').name, '-logs')]",
+          "name": "[concat('Microsoft.Insights/', 'service')]",
           "dependsOn": [
             "[resourceId('Microsoft.Network/applicationGateways', parameters('appGatewaySettings').name)]"
           ],
           "apiVersion": "2017-05-01-preview",
           "properties": {
-            "name": "[concat(parameters('appGatewaySettings').name, '-logs')]",
+            "name": "service",
             "workspaceId": "[parameters('logAnalyticsWorkspaceId')]",
             "logs": [
               {
