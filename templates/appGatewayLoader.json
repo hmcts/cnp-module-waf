@@ -77,6 +77,9 @@
     },
     "authenticationCertificates": {
       "type": "string"
+    },
+    "logAnalyticsWorkspaceId": {
+      "type": "string"
     }
   },
   "variables": {
@@ -236,6 +239,9 @@
           },
           "sslPolicy": {
             "value": "[parameters('sslPolicy')]"
+          },
+          "logAnalyticsWorkspaceId": {
+            "value": "[parameters('logAnalyticsWorkspaceId')]"
           },
           "location": {
             "value": "[parameters('location')]"
