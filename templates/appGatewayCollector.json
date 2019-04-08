@@ -20,6 +20,9 @@
         },
         "section": {
             "type": "string"
+        },
+        "tags": {
+            "type": "object"
         }
     },
     "variables": {

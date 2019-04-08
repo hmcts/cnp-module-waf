@@ -153,9 +153,6 @@
           },
           "section": {
             "value": "[variables('appGWSections')[copyindex()]]"
-          },
-          "tags": {
-            "value": "[base64ToJson(parameters('tags'))]"
           }
         }
       },
