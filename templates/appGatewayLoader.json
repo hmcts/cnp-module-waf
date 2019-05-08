@@ -72,6 +72,12 @@
     "wafRuleSetVersion": {
       "type": "string"
     },
+    "wafMaxRequestBodySize": {
+      "type": "string"
+    },
+    "wafFileUploadLimit": {
+      "type": "string"
+    },
     "sslPolicy": {
       "type": "string"
     },
@@ -236,6 +242,12 @@
           },
           "wafRuleSetVersion": {
             "value": "[parameters('wafRuleSetVersion')]"
+          },
+          "wafMaxRequestBodySize": {
+            "value": "[parameters('wafMaxRequestBodySize')]"
+          },
+          "wafFileUploadLimit": {
+            "value": "[parameters('wafFileUploadLimit')]"
           },
           "sslPolicy": {
             "value": "[parameters('sslPolicy')]"

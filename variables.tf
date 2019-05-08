@@ -36,6 +36,16 @@ variable "wafRuleSetVersion" {
   default = "3.0"
 }
 
+variable "wafMaxRequestBodySize" {
+  description = "Maximum request body size in kB for WAF"
+  default = "128"
+}
+
+variable "wafFileUploadLimit" {
+  description = "Maximum file upload size in MB for WAF"
+  default = "100"
+}
+
 variable "sslPolicy" {
   default = "AppGwSslPolicy20170401S"
 }
