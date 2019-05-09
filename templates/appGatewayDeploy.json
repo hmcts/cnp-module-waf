@@ -62,6 +62,12 @@
     },
     "logAnalyticsWorkspaceId": {
       "type": "string"
+    },
+    "wafMaxRequestBodySize": {
+      "type": "string"
+    },
+    "wafFileUploadLimit": {
+      "type": "string"
     }
   },
   "variables": {},
@@ -83,7 +89,7 @@
       }
     },
     {
-      "apiVersion": "2017-06-01",
+      "apiVersion": "2018-11-01",
       "name": "[parameters('appGatewaySettings').name]",
       "type": "Microsoft.Network/applicationGateways",
       "location": "[parameters('location')]",
@@ -119,7 +125,9 @@
                 931130
               ]
             }
-          ]
+          ],
+          "maxRequestBodySizeInKb": "[parameters('wafMaxRequestBodySize')]",
+          "fileUploadLimitInMb": "[parameters('wafFileUploadLimit')]"
         },
         "sslPolicy": {
           "policyType": "Custom",

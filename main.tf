@@ -219,6 +219,8 @@ resource "azurerm_template_deployment" "waf" {
     wafMode           = "Prevention"
     wafEnabled        = "${var.wafEnabled}"
     wafRuleSetType    = "${var.wafRuleSetType}"
+    wafMaxRequestBodySize = "${var.wafMaxRequestBodySize}"
+    wafFileUploadLimit = "${var.wafFileUploadLimit}"
     sslPolicy         = "${var.sslPolicy}"
     wafRuleSetVersion = "${var.wafRuleSetVersion}"
     baseUri = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
