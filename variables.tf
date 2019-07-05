@@ -51,7 +51,7 @@ variable "sslPolicy" {
 }
 
 variable "capacity" {
-  default = "3"
+  default = "4"
 }
 
 variable "authenticationCertificates" {
