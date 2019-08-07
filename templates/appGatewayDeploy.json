@@ -124,6 +124,18 @@
               "rules":[
                 931130
               ]
+            },
+            {
+              "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
+              "rules":[
+                942420,
+                942421,
+                942430,
+                942431,
+                942432,
+                942440,
+                942450
+              ]
             }
           ],
           "maxRequestBodySizeInKb": "[parameters('wafMaxRequestBodySize')]",
