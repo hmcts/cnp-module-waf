@@ -125,14 +125,12 @@
                 931130
               ]
             },
-
             {
               "ruleGroupName": "REQUEST-933-APPLICATION-ATTACK-PHP",
               "rules":[
                 933160
               ]
             },
-
             {
               "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
               "rules":[
