@@ -124,6 +124,87 @@
               "rules":[
                 931130
               ]
+            },
+
+            {
+              "ruleGroupName": "REQUEST-933-APPLICATION-ATTACK-PHP",
+              "rules":[
+                933160
+              ]
+            },
+
+            {
+              "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
+              "rules":[
+                911100
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-932-APPLICATION-ATTACK-RCE",
+              "rules":[
+                932140,
+                932100,
+                932110,
+                932115
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-913-SCANNER-DETECTION",
+              "rules":[
+                913101
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
+              "rules":[
+                920300,
+                920440,
+                920320
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-921-PROTOCOL-ATTACK",
+              "rules":[
+                921110
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-941-APPLICATION-ATTACK-XSS",
+              "rules":[
+                941160,
+                941330,
+                941340,
+                941100
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
+              "rules":[
+                942200,
+                942260,
+                942340,
+                942370,
+                942430,
+                942440,
+                942210,
+                942450,
+                942130,
+                942400,
+                942150,
+                942410,
+                942330,
+                942190,
+                942310,
+                942380,
+                942240,
+                942110,
+                942250,
+                942180,
+                942390,
+                942300,
+                942230,
+                942100
+              ]
             }
           ],
           "maxRequestBodySizeInKb": "[parameters('wafMaxRequestBodySize')]",
