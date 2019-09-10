@@ -102,7 +102,7 @@ data "template_file" "wafTemplate" {
 
 resource "null_resource" "ilbCert" {
   count = "${var.use_authentication_cert ? 1 : 0}"
-  triggers {
+  triggers = {
     trigger = "${timestamp()}"
   }
 
@@ -141,7 +141,6 @@ resource "azurerm_storage_account" "templateStore" {
 #
 resource "azurerm_storage_container" "templates" {
   name                  = "templates"
-  resource_group_name   = "${var.resourcegroupname}"
   storage_account_name  = "${local.saAccount}"
   container_access_type = "private"
   depends_on            = ["azurerm_storage_account.templateStore"]
@@ -188,7 +187,7 @@ data "azurerm_storage_account_sas" "templateStoreSas" {
 resource "null_resource" "uploadTemplate" {
   depends_on = ["azurerm_storage_account.templateStore"]
 
-  triggers {
+  triggers = {
     trigger = "${timestamp()}"
   }
 
