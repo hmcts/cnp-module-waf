@@ -121,3 +121,11 @@ variable "common_tags" {
 variable deployment_target {
     default = ""
 }
+
+variable "log_analytics_resource_group_name" {
+  default = "oms-automation"
+}
+
+variable "log_analytics_resource_suffix" {
+  default = ""
+}

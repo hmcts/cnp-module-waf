@@ -197,8 +197,8 @@ resource "null_resource" "uploadTemplate" {
 }
 
 data "azurerm_log_analytics_workspace" "log_analytics" {
-  name                = "hmcts-${var.subscription}"
-  resource_group_name = "oms-automation"
+  name                = "hmcts-${var.subscription}${var.log_analytics_resource_suffix}"
+  resource_group_name = "${var.log_analytics_resource_group_name}"
 }
 
 # Run the WAF Template
