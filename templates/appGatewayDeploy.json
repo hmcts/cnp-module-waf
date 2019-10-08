@@ -120,9 +120,90 @@
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
           "disabledRuleGroups": [
             {
+              "ruleGroupName": "General",
+              "rules":[
+                200004
+              ]
+            },
+            {
               "ruleGroupName": "REQUEST-931-APPLICATION-ATTACK-RFI",
               "rules":[
                 931130
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
+              "rules":[
+                920120,
+                920130,
+                920140,
+                920300,
+                920310,
+                920320                
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-932-APPLICATION-ATTACK-RCE",
+              "rules":[
+                932110,
+                932115,
+                932140,
+                932150
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-941-APPLICATION-ATTACK-XSS",
+              "rules":[
+                941140,
+                941160,
+                941200,
+                941310,
+                941330,
+                941340,
+                941350
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-921-PROTOCOL-ATTACK",
+              "rules":[
+                921110
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
+              "rules":[
+                911100
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-913-SCANNER-DETECTION",
+              "rules":[
+                913102
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
+              "rules":[
+                942100,
+                942110,
+                942130,
+                942150,
+                942190,
+                942200,
+                942230,
+                942240,
+                942260,
+                942310,
+                942330,
+                942360,
+                942370,
+                942380,
+                942390,
+                942400,
+                942410,
+                942430,
+                942440,
+                942450
               ]
             }
           ],
