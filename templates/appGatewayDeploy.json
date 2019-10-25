@@ -129,6 +129,7 @@
               "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
               "rules":[
                 942200,
+                942230,
                 942260,
                 942340,
                 942370
