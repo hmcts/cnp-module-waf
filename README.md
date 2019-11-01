@@ -1,11 +1,12 @@
 # cnp-module-waf
+
 A module that lets you create an Application Gatewatway with WAF.
 
 ## Usage
 
 To use this module you require a cert for the https listener. The cert (`certificate_name`) must be uploaded to a key vault. Once the cert exists in the vault, you will need to use a terraform data resource to read it and pass into the app gateway module for example:
 
-```
+```terraform
 locals {
   backend_name = "${var.product}-${var.component}-${var.env}"
   backend_hostname = "${local.backend_name}.service.${var.env}.platform.hmcts.net"
@@ -153,15 +154,24 @@ module "waf" {
       healthyStatusCodes                  = "200-399"
     },
   ]
-}
+  
+  exclusions = [
+    {
+      "matchVariable" = "RequestArgNames",
+      "selectorMatchOperator" = "StartsWith",
+      "selector" = "password"
+    }
+  ]
+  ...
 ```
 
 ## Using authentication certificates
+
 When deploying the application gateway to an environment (App Service Environment) which has a self-signed certificate associated to its internal load balancer (ILB), it will be necessary to whitelist this certificate in order to achieve end-to-end SSL encryption.
 
 The example above would have to be modified with the following properties.
 
-```
+```terraform
 use_authentication_cert = true  // This property has to be set to true
 
 backendHttpSettingsCollection = [
@@ -190,6 +200,7 @@ backendHttpSettingsCollection = [
 ```
 
 ## Using Path Based Routing Rules
+
 In Azure Application Gateway, it's possible to apply request routing based on
 the routes. For example, for diverting requests for a specific path (e.g.
 /uploads) to another backend pool the following changes need to be done to the
@@ -202,7 +213,8 @@ The `PathBased` routing requires sections identified with
 `requestRoutingRulesPathBased` and `urlPathMaps` and these sections are
 optional in case only `Basic` routing is used. It is possible to mix the Basic
 rule setting and PathBasedRouting as in the following sample.
-```
+
+```terraform
   requestRoutingRules = [
    {
       name                = "http-www"
@@ -263,22 +275,26 @@ rule setting and PathBasedRouting as in the following sample.
     }
   ]
 ```
+
 See `ccd-shared-infrastructure` project for a fully working sample of the `PathBasedRouting`
 
 ## Configuring the backends
+
 The Application Service Environment (ASE) uses the hostname from the request to determine which application will receive the request. For this reason, is necessary that the correct hostname to be forwarded from the Application Gateway (WAF) to the ILB.
 
 There are 3 possible configurations that fulfill this requirements.
 
 ### Pick hostname from backend address
+
 This is the option followed in the main example. The idea behind it lies on using the the FQDN internal domain name of the frontend or service as the backend address, and then use that same FQDN as the hostname for the forwarded request by setting the property `PickHostNameFromBackendAddress` to `True`.
 
 Is worth mentioning that with this approach the FE service would not need the public domain name listed in the `Custom Domains` section.
 
 ### Force/Override Hostname
+
 For this option the backend address could either be the FQDN of the service or the Application Service Environment ILB IP address. The property `PickHostNameFromBackendAddress` would be set to `False` and a new property called "HostName" will need to be added.
 
-```
+```terraform
  backendAddressPools = [
     {
       name = "${local.backend_name}"
@@ -319,9 +335,10 @@ backendHttpSettingsCollection = [
 With this approach the FE service would not need the public domain name listed in the `Custom Domains` section.
 
 ### ILB IP
+
 In case of choosing the ILB IP address as a backend address and not using the HostName property, it will be required that the frontend service has the public domain name added to the `Custom Domains` list.
 
-```
+```terraform
  backendAddressPools = [
     {
       name = "${local.backend_name}"
@@ -360,4 +377,53 @@ backendHttpSettingsCollection = [
 ```
 
 ### Deployment target
+
 `deployment_target` parameter, type = String, Required = No, Default value = "", Description = Name of the Deployment Target. If `deployment_target` is empty it works in legacy mode
+
+
+## Using Application Gateway Firewall Exclusions
+
+Exclusions default to none. The current configuration for exclusions supports one match variable and operator option and multiple selectors.
+
+```terraform
+module "waf" {
+  ...
+  exclusions = [
+    {
+      "matchVariable" = "RequestArgNames",
+      "selectorMatchOperator" = "StartsWith",
+      "selector" = "password"
+    }
+  ]
+  ...
+}
+```
+
+**Exclusion Match Variable**
+
+Options: 
+- `RequestArgNames`
+- `RequestHeaderNames`
+- `RequestCookieNames`
+
+Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.matchVariable.
+
+**Exclusion Operator**
+
+Options: 
+- `Equals`
+- `StartsWith`
+- `EndsWith`
+- `Contains`
+- `EqualsAny`
+
+Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.selectorMatchOperator.
+
+**Exclusion Selector**
+
+Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.selector.
+
+> Reference: 
+> * https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-waf-configuration
+> * https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-08-01/applicationgateways#applicationgatewaywebapplicationfirewallconfiguration-object
+> * https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-08-01/applicationgateways#ApplicationGatewayFirewallExclusion

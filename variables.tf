@@ -38,12 +38,12 @@ variable "wafRuleSetVersion" {
 
 variable "wafMaxRequestBodySize" {
   description = "Maximum request body size in kB for WAF"
-  default = "128"
+  default     = "128"
 }
 
 variable "wafFileUploadLimit" {
   description = "Maximum file upload size in MB for WAF"
-  default = "100"
+  default     = "100"
 }
 
 variable "sslPolicy" {
@@ -91,17 +91,17 @@ variable "backendHttpSettingsCollection" {
 }
 
 variable "requestRoutingRules" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
 variable "requestRoutingRulesPathBased" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
 variable "urlPathMaps" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
@@ -118,6 +118,38 @@ variable "common_tags" {
   type = "map"
 }
 
-variable deployment_target {
-    default = ""
+variable "deployment_target" {
+  default = ""
+}
+
+variable "exclusions" {
+  type = "list"
+  default = []
+  description = <<EOF
+Example:
+  [
+    {
+      "matchVariable": "RequestArgNames",
+      "selectorMatchOperator": "Starts with",
+      "selector": "example"
+    }
+  ]
+
+matchVariable: Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.matchVariable.
+Options: 
+- RequestArgNames
+- RequestHeaderNames
+- RequestCookieNames
+
+selectorMatchOperator: Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.selectorMatchOperator.
+Options: 
+- Equals
+- Starts with
+- Ends with
+- Contains
+- Equals any
+
+selector: Also known as ApplicationGatewayWebApplicationFirewallConfiguration.exclusions.selector.
+https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-08-01/applicationgateways#applicationgatewaywebapplicationfirewallconfiguration-object
+EOF
 }
