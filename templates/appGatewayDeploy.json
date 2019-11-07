@@ -68,6 +68,10 @@
     },
     "wafFileUploadLimit": {
       "type": "string"
+    },
+    "exclusions": {
+      "type": "array",
+      "defaultValue": []
     }
   },
   "variables": {},
@@ -139,7 +143,8 @@
             }
           ],
           "maxRequestBodySizeInKb": "[parameters('wafMaxRequestBodySize')]",
-          "fileUploadLimitInMb": "[parameters('wafFileUploadLimit')]"
+          "fileUploadLimitInMb": "[parameters('wafFileUploadLimit')]",
+          "exclusions": "[parameters('exclusions')]"
         },
         "sslPolicy": {
           "policyType": "Custom",

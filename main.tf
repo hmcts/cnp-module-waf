@@ -58,7 +58,7 @@ locals {
       # Can be used if backed is resolvable in DNS
       pickHostNameFromBackendHttpSettings = "true"
       backendHttpSettings                 = "ilb-http"
-      host = ""
+      host                                = ""
     },
     {
       name               = "default-https-probe"
@@ -102,6 +102,7 @@ data "template_file" "wafTemplate" {
 
 resource "null_resource" "ilbCert" {
   count = "${var.use_authentication_cert ? 1 : 0}"
+
   triggers {
     trigger = "${timestamp()}"
   }
@@ -112,7 +113,7 @@ resource "null_resource" "ilbCert" {
 }
 
 data "local_file" "ilbCertFile" {
-  count = "${var.use_authentication_cert ? 1 : 0}"
+  count      = "${var.use_authentication_cert ? 1 : 0}"
   filename   = "${path.module}/core-compute-${var.env}.out.2"
   depends_on = ["null_resource.ilbCert"]
 }
@@ -211,33 +212,34 @@ resource "azurerm_template_deployment" "waf" {
   deployment_mode     = "Incremental"
 
   parameters = {
-    name     = "${local.wafName}"
-    size     = "${var.size}"
-    tier     = "${var.tier}"
-    capacity = "${var.capacity}"
-    location = "${var.location}"
-    wafMode           = "Prevention"
-    wafEnabled        = "${var.wafEnabled}"
-    wafRuleSetType    = "${var.wafRuleSetType}"
-    wafMaxRequestBodySize = "${var.wafMaxRequestBodySize}"
-    wafFileUploadLimit = "${var.wafFileUploadLimit}"
-    sslPolicy         = "${var.sslPolicy}"
-    wafRuleSetVersion = "${var.wafRuleSetVersion}"
-    baseUri = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
-    sasToken = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
-    authenticationCertificates = "${base64encode(jsonencode(local.authenticationCertificates))}"
-    frontEndPorts = "${base64encode(jsonencode(local.frontEndPorts))}"
-    frontendIPConfigurations = "${base64encode(jsonencode(local.frontendIPConfigurations))}"
-    httpListeners = "${base64encode(jsonencode(var.httpListeners))}"
-    sslCertificates = "${base64encode(jsonencode(var.sslCertificates))}"
-    backendAddressPools = "${base64encode(jsonencode(var.backendAddressPools))}"
+    name                          = "${local.wafName}"
+    size                          = "${var.size}"
+    tier                          = "${var.tier}"
+    capacity                      = "${var.capacity}"
+    location                      = "${var.location}"
+    wafMode                       = "Prevention"
+    wafEnabled                    = "${var.wafEnabled}"
+    wafRuleSetType                = "${var.wafRuleSetType}"
+    wafMaxRequestBodySize         = "${var.wafMaxRequestBodySize}"
+    wafFileUploadLimit            = "${var.wafFileUploadLimit}"
+    sslPolicy                     = "${var.sslPolicy}"
+    wafRuleSetVersion             = "${var.wafRuleSetVersion}"
+    baseUri                       = "${azurerm_storage_account.templateStore.primary_blob_endpoint}${azurerm_storage_container.templates.name}/"
+    sasToken                      = "${data.azurerm_storage_account_sas.templateStoreSas.sas}"
+    authenticationCertificates    = "${base64encode(jsonencode(local.authenticationCertificates))}"
+    frontEndPorts                 = "${base64encode(jsonencode(local.frontEndPorts))}"
+    frontendIPConfigurations      = "${base64encode(jsonencode(local.frontendIPConfigurations))}"
+    httpListeners                 = "${base64encode(jsonencode(var.httpListeners))}"
+    sslCertificates               = "${base64encode(jsonencode(var.sslCertificates))}"
+    backendAddressPools           = "${base64encode(jsonencode(var.backendAddressPools))}"
     backendHttpSettingsCollection = "${base64encode(jsonencode(local.backendHttpSettingsCollection))}"
-    requestRoutingRules = "${base64encode(jsonencode(var.requestRoutingRules))}"
-    requestRoutingRulesPathBased = "${base64encode(jsonencode(var.requestRoutingRulesPathBased))}"
-    urlPathMaps = "${base64encode(jsonencode(var.urlPathMaps))}"
-    gatewayIPConfigurations = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
-    probes                  = "${base64encode(jsonencode(local.probes))}"
-    logAnalyticsWorkspaceId = "${data.azurerm_log_analytics_workspace.log_analytics.id}"
-    tags = "${base64encode(jsonencode(var.common_tags))}"
+    requestRoutingRules           = "${base64encode(jsonencode(var.requestRoutingRules))}"
+    requestRoutingRulesPathBased  = "${base64encode(jsonencode(var.requestRoutingRulesPathBased))}"
+    urlPathMaps                   = "${base64encode(jsonencode(var.urlPathMaps))}"
+    gatewayIPConfigurations       = "${base64encode(jsonencode(var.gatewayIpConfigurations))}"
+    probes                        = "${base64encode(jsonencode(local.probes))}"
+    logAnalyticsWorkspaceId       = "${data.azurerm_log_analytics_workspace.log_analytics.id}"
+    exclusions                    = "${base64encode(jsonencode(var.exclusions))}"
+    tags                          = "${base64encode(jsonencode(var.common_tags))}"
   }
 }

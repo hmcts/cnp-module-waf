@@ -86,6 +86,9 @@
     },
     "logAnalyticsWorkspaceId": {
       "type": "string"
+    },
+    "exclusions": {
+      "type": "string"
     }
   },
   "variables": {
@@ -113,7 +116,8 @@
       "gatewayIPConfigurations":
         "[base64ToJson(parameters('gatewayIpConfigurations'))]",
       "authenticationCertificates":
-        "[base64ToJson(parameters('authenticationCertificates'))]"
+        "[base64ToJson(parameters('authenticationCertificates'))]",
+      "exclusions": "[base64ToJson(parameters('exclusions'))]"
     },
     "appGWSections": [
       "sslCertificates",
@@ -127,7 +131,8 @@
       "probes",
       "authenticationCertificates",
       "requestRoutingRulesPathBased",
-      "urlPathMaps"
+      "urlPathMaps",
+      "exclusions"
     ]
   },
   "resources": [
@@ -257,6 +262,10 @@
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "exclusions": {
+            "value":
+            "[reference(concat('collector-waf-', substring(uniquestring(variables('joinedParameters').name),0,4), '-',variables('appGWSections')[12])).outputs.result.value]"
           }
         }
       },
@@ -303,6 +312,10 @@
     "probes": {
       "type": "array",
       "value": "[variables('joinedParameters').probes]"
+    },
+    "exclusions": {
+      "type": "array",
+      "value": "[variables('joinedParameters').exclusions]"
     }
   }
 }
