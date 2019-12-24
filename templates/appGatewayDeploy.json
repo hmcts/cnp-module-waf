@@ -120,6 +120,12 @@
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
           "disabledRuleGroups": [
             {
+              "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
+              "rules":[
+                911100
+              ]
+            },
+            {
               "ruleGroupName": "REQUEST-931-APPLICATION-ATTACK-RFI",
               "rules":[
                 931130
@@ -132,7 +138,8 @@
                 942230,
                 942260,
                 942340,
-                942370
+                942370,
+                942440
               ]
             }
           ],
