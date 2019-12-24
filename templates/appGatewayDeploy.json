@@ -126,6 +126,12 @@
               ]
             },
             {
+              "ruleGroupName": "921-PROTOCOL-ATTACK",
+              "rules":[
+                921151
+              ]
+            },
+            {
               "ruleGroupName": "REQUEST-931-APPLICATION-ATTACK-RFI",
               "rules":[
                 931130
@@ -139,6 +145,7 @@
                 942260,
                 942340,
                 942370,
+                942380,
                 942440
               ]
             }
