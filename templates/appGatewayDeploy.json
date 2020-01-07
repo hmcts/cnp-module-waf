@@ -126,7 +126,7 @@
               ]
             },
             {
-              "ruleGroupName": "921-PROTOCOL-ATTACK",
+              "ruleGroupName": "REQUEST-921-PROTOCOL-ATTACK",
               "rules":[
                 921151
               ]
