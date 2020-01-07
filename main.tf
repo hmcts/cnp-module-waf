@@ -239,5 +239,6 @@ resource "azurerm_template_deployment" "waf" {
     probes                  = "${base64encode(jsonencode(local.probes))}"
     logAnalyticsWorkspaceId = "${data.azurerm_log_analytics_workspace.log_analytics.id}"
     tags = "${base64encode(jsonencode(var.common_tags))}"
+    lastupdate = "${timestamp()}"
   }
 }
