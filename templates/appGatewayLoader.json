@@ -6,6 +6,9 @@
     "location": {
       "type": "string"
     },
+    "lastupdate": {
+      "type": "string"
+    },
     "sasToken": {
       "type": "string"
     },
