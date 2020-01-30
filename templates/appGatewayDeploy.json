@@ -138,6 +138,12 @@
               ]
             },
             {
+              "ruleGroupName": "REQUEST-941-APPLICATION-ATTACK-XSS",
+              "rules":[
+                941330
+              ]
+            },
+            {
               "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
               "rules":[
                 942200,
