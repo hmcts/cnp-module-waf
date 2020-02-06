@@ -132,12 +132,6 @@
               ]
             },
             {
-              "ruleGroupName": "REQUEST-932-APPLICATION-ATTACK-RCE",
-              "rules":[
-                932100
-              ]
-            },
-            {
               "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
               "rules":[
                 920120,
@@ -151,6 +145,7 @@
             {
               "ruleGroupName": "REQUEST-932-APPLICATION-ATTACK-RCE",
               "rules":[
+                932100,
                 932110,
                 932115,
                 932140,
