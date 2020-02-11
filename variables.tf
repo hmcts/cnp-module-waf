@@ -15,7 +15,7 @@ variable "resourcegroupname" {
 }
 
 variable "size" {
-  default = "WAF_Medium"
+  default = "WAF_Large"
 }
 
 variable "tier" {
