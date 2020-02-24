@@ -45,7 +45,7 @@
     },
     "conditional_request_timeout_properties": "[if(contains(parameters('source'), 'requestTimeout'), variables('request_timeout_properties'), variables('empty_properties'))]",
     "request_timeout_properties": {
-      "requestTimeout": "[parameters('source').requestTimeout]"
+      "requestTimeout": "[if(contains(parameters('source'), 'requestTimeout'), parameters('source').requestTimeout, '')]"
     },
     "empty_properties": {}
   },
