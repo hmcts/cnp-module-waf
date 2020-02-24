@@ -17,7 +17,7 @@
     "instance": [
       {
         "name": "[parameters('source').name]",
-        "properties": "[union(variables('base_properties'), variables('conditional_ssl_properties'), variables('conditional_request_forwarding_properties'))]"
+        "properties": "[union(variables('base_properties'), variables('conditional_request_timeout_properties'), variables('conditional_ssl_properties'), variables('conditional_request_forwarding_properties'))]"
       }
     ],
     "base_properties": {
@@ -42,6 +42,10 @@
     "request_forwarding_properties": {
       "HostName": "[parameters('source').HostName]",
       "PickHostNameFromBackendAddress": "False"
+    },
+    "conditional_request_timeout_properties": "[if(contains(parameters('source'), 'requestTimeout'), variables('request_timeout_properties'), variables('empty_properties'))]",
+    "request_timeout_properties": {
+      "requestTimeout": "[if(contains(parameters('source'), 'requestTimeout'), parameters('source').requestTimeout, '')]"
     },
     "empty_properties": {}
   },
