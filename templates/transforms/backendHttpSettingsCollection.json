@@ -43,7 +43,7 @@
       "HostName": "[parameters('source').HostName]",
       "PickHostNameFromBackendAddress": "False"
     },
-    "conditional_request_timeout_properties": "[if(equals(parameters('source').requestTimeout, ''), variables('empty_properties'), variables('request_timeout_properties'))]",
+    "conditional_request_timeout_properties": "[if(contains(parameters('source'), 'requestTimeout'), variables('request_timeout_properties'), variables('empty_properties'))]",
     "request_timeout_properties": {
       "requestTimeout": "[parameters('source').requestTimeout]"
     },
