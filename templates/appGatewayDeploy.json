@@ -120,15 +120,9 @@
           "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
           "disabledRuleGroups": [
             {
-              "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
+              "ruleGroupName": "General",
               "rules":[
-                911100
-              ]
-            },
-            {
-              "ruleGroupName": "REQUEST-921-PROTOCOL-ATTACK",
-              "rules":[
-                921151
+                200004
               ]
             },
             {
@@ -138,15 +132,54 @@
               ]
             },
             {
+              "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
+              "rules":[
+                920210,
+                920300,
+                920310              
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-932-APPLICATION-ATTACK-RCE",
+              "rules":[
+                932140
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-921-PROTOCOL-ATTACK",
+              "rules":[
+                921151
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-911-METHOD-ENFORCEMENT",
+              "rules":[
+                911100
+              ]
+            },
+            {
+              "ruleGroupName": "REQUEST-913-SCANNER-DETECTION",
+              "rules":[
+                913102
+              ]
+            },
+            {
               "ruleGroupName": "REQUEST-942-APPLICATION-ATTACK-SQLI",
               "rules":[
+                942110,
+                942130,
                 942200,
                 942230,
                 942260,
+                942300,
                 942340,
                 942370,
                 942380,
-                942440
+                942390,
+                942400,
+                942430,
+                942440,
+                942450
               ]
             }
           ],
