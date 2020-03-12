@@ -152,6 +152,12 @@
                 932150
               ]
             },
+             {
+              "ruleGroupName": "REQUEST-933-APPLICATION-ATTACK-PHP",
+              "rules":[
+                933160
+              ]
+            },
             {
               "ruleGroupName": "REQUEST-941-APPLICATION-ATTACK-XSS",
               "rules":[
@@ -195,6 +201,7 @@
                 942230,
                 942240,
                 942260,
+                942300,
                 942310,
                 942330,
                 942340,
