@@ -148,6 +148,14 @@
                 942380,
                 942440
               ]
+            },
+            {
+              "ruleGroupName": "REQUEST-920-PROTOCOL-ENFORCEMENT",
+              "rules":[
+                920300,
+                920440,
+                920420
+              ]
             }
           ],
           "maxRequestBodySizeInKb": "[parameters('wafMaxRequestBodySize')]",
